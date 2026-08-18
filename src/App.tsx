@@ -9,6 +9,8 @@ import galleryImg5 from "@/imports/image-19.png"
 import galleryImg6 from "@/imports/image-20.png"
 import trainer1Img from "@/imports/image-26.png"
 import trainer2Img from "@/imports/WhatsApp_Image_2026-08-16_at_7.24.30_PM.jpeg"
+import thareshImg from "@/imports/THARESH.png"
+import sujayImg from "@/imports/SUJAY.png"
 import gymVideo from "@/imports/AB_fitness_v.mp4"
 import abtImg from "@/imports/ABabt.jpeg"
 import eventFlyerImg from "@/imports/IMG-20260816-WA0003-1.jpg"
@@ -2222,24 +2224,24 @@ function Trainers() {
   const [selected, setSelected] = useState<number | null>(null)
   const trainers = [
     {
-      name: "Priya Nair",
-      role: "Yoga & Mobility",
-      exp: "7 yrs",
-      cert: "RYT-500",
-      icon: "lotus",
+      name: "SUJAY POOJARY",
+      role: "MMA Coach & Gym Trainer",
+      exp: "4+ yrs",
+      cert: "Mangalore, D.K. | Ph: 8431293951",
+      icon: "zap",
       color: c.cyan,
-      img: "https://images.unsplash.com/photo-1571732154690-f6d1c3e5178a?w=400&h=500&fit=crop&auto=format&q=80",
-      bio: "Priya helps members improve flexibility, recovery, posture, and mobility through mindful movement and structured yoga routines.",
+      img: sujayImg,
+      bio: "SUJAY POOJARY is a specialized MMA coach and gym trainer with 4+ years of experience. He combines combat sports expertise with functional fitness training to deliver comprehensive athletic development and conditioning.",
     },
     {
-      name: "Rahul Shetty",
-      role: "Head Strength Coach",
-      exp: "10 yrs",
-      cert: "NSCA-CSCS",
+      name: "THARESH",
+      role: "Fat Loss & Strength Coach",
+      exp: "8+ yrs",
+      cert: "Mangalore, D.K. | Ph: 7760745826",
       icon: "dumbbell",
       color: c.orange,
-      img: trainer1Img,
-      bio: "Rahul specializes in strength building, body transformation, and progressive training plans designed for real, sustainable results.",
+      img: thareshImg,
+      bio: "THARESH specializes in fat loss, strength training, and muscle building workouts. With 8+ years of lifting experience, he provides customized diet plans, expert exercise techniques, and personalized workout strategies for sustainable results and optimal performance.",
     },
   ]
   const activeTrainer = selected !== null ? trainers[selected] : null
