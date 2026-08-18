@@ -1,0 +1,10 @@
+{
+  "description": "Plan weekly meals effortlessly with curated menus and recipe ideas designed to simplify cooking and inspire healthy eating habits.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
