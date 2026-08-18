@@ -76,7 +76,7 @@ const LIGHT_C: Colors = {
   isDark: false,
 }
 
-type ThemeCtx = { isDark: boolean toggle: () => void }
+type ThemeCtx = { isDark: boolean; toggle: () => void }
 const ThemeContext = createContext<ThemeCtx>({ isDark: true, toggle: () => {} })
 const useTheme = () => useContext(ThemeContext)
 const useC = (): Colors => {
@@ -117,9 +117,9 @@ const reducedMotion = () =>
   typeof window !== "undefined" &&
   window.matchMedia("(prefers-reduced-motion: reduce)").matches
 
-function useTilt(strength = 12) {
-  const ref = useRef<HTMLDivElement>(null)
-  const onMove = (e: React.MouseEvent<HTMLDivElement>) => {
+function useTilt<T extends HTMLElement = HTMLDivElement>(strength = 12) {
+  const ref = useRef<T>(null)
+  const onMove = (e: React.MouseEvent<T>) => {
     if (reducedMotion()) return
     const el = ref.current
     if (!el) return
@@ -2132,7 +2132,7 @@ function TrainerCard({
   onClick: () => void
   active: boolean
 }) {
-  const { ref, onMove, onLeave } = useTilt(10)
+  const { ref, onMove, onLeave } = useTilt<HTMLButtonElement>(10)
   return (
     <button
       type="button"
@@ -2429,7 +2429,7 @@ function Schedule() {
     },
   ]
 
-  const classPill: Record<string, { bg: string color: string }> = c.isDark
+  const classPill: Record<string, { bg: string; color: string }> = c.isDark
     ? {
         Strength: { bg: `${c.orange}20`, color: c.orange },
         Yoga: { bg: "#00ff8820", color: "#00cc66" },
@@ -3603,7 +3603,7 @@ function Events() {
   )
 }
 
-function CompletedEventCard({ ev, c }: { ev: EventItem c: Colors }) {
+function CompletedEventCard({ ev, c }: { ev: EventItem; c: Colors }) {
   const TIMELINE = [
     "Announced",
     "Event Day",
