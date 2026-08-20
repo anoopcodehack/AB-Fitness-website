@@ -2241,7 +2241,7 @@ function Trainers() {
       icon: "dumbbell",
       color: c.orange,
       img: thareshImg,
-      bio: "THARESH specializes in fat loss, strength training, and muscle building workouts. With 8+ years of lifting experience, he provides customized diet plans, expert exercise techniques, and personalized workout strategies for sustainable results and optimal performance.",
+      bio: "THARESH specializes in personal trainire, weight training and fat loss, strength training, and muscle building workouts. With 8+ years of lifting experience, he provides customized diet plans, expert exercise techniques, and personalized workout strategies for sustainable results and optimal performance.",
     },
   ]
   const activeTrainer = selected !== null ? trainers[selected] : null
