@@ -4007,7 +4007,16 @@ function Contact() {
             <form
               onSubmit={(e) => {
                 e.preventDefault()
-                const message = `Hello AB Fitness Hub! 👋I want to book a free trial.Name: ${form.name}Email: ${form.email}Phone: ${form.phone}Message: ${form.message || "No message provided"}Thank you!`
+                const message = `🏋️ AB FITNESS HUB — FREE TRIAL ENQUIRY
+
+Hello! I'd like to book a free trial.
+
+👤 Name: ${form.name}
+📧 Email: ${form.email}
+📱 Phone: ${form.phone}
+💬 Message: ${form.message || "No message provided"}
+
+Thank you! 🙏`
                 const whatsappUrl = `https://wa.me/918660563719?text=${encodeURIComponent(message)}`
                 window.open(whatsappUrl, "_blank")
               }}
