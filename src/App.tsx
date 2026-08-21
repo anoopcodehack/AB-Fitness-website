@@ -2234,14 +2234,14 @@ function Trainers() {
       bio: "SUJAY POOJARY is a specialized MMA coach and gym trainer with 4+ years of experience. He combines combat sports expertise with functional fitness training to deliver comprehensive athletic development and conditioning.",
     },
     {
-      name: "THARESH",
+      name: "THARESH K U",
       role: "Fat Loss & Strength Coach",
       exp: "8+ yrs",
       cert: "Mangalore, D.K. | Ph: 7760745826",
       icon: "dumbbell",
       color: c.orange,
       img: thareshImg,
-      bio: "THARESH specializes in personal trainire, weight training and fat loss, strength training, and muscle building workouts. With 8+ years of lifting experience, he provides customized diet plans, expert exercise techniques, and personalized workout strategies for sustainable results and optimal performance.",
+      bio: "THARESH K U specializes in personal trainire, weight training and fat loss, strength training, and muscle building workouts. With 8+ years of lifting experience, he provides customized diet plans, expert exercise techniques, and personalized workout strategies for sustainable results and optimal performance.",
     },
   ]
   const activeTrainer = selected !== null ? trainers[selected] : null
@@ -4403,7 +4403,16 @@ function AppInner() {
   }
 
   return (
-    <div style={{ background: c.bg, minHeight: "100vh" }}>
+    <div
+      style={{
+        background: c.bg,
+        minHeight: "100vh",
+        width: "100%",
+        maxWidth: "100%",
+        margin: 0,
+        padding: 0,
+      }}
+    >
       {showIntro && <CinematicIntro onDone={handleIntroDone} />}
       <Nav />
       <Hero />
