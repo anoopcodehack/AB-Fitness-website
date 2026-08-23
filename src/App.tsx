@@ -909,7 +909,7 @@ function Hero() {
 
   // Count-up animation
   useEffect(() => {
-    const targets = { members: 300, trainers: 2, years: 2 }
+    const targets = { members: 300, trainers: 4, years: 2 }
     let frame = 0
     const t = setInterval(() => {
       frame++
@@ -3934,7 +3934,7 @@ function Contact() {
                   icon: "clock",
                   label: "Hours",
                   value:
-                    "Mon–Sat:\n 5:00 AM – 11:00 AM\n3:30 PM – 11:00 PM\nSunday: Holiday",
+                    "Mon–Sat:\n 5:30 AM – 11:00 AM\n3:30 PM – 11:00 PM\nSunday: Holiday",
                   color: c.orange,
                 },
               ].map((item) => (
