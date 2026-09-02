@@ -2235,7 +2235,7 @@ function Trainers() {
     },
     {
       name: "THARESH K U",
-      role: "Fat Loss & Strength Coach",
+      role: "Personal Trainer &  Weight Trainer & Fat Loss & Nutrition",
       exp: "8+ yrs",
       cert: "Mangalore, D.K. | Ph: 7760745826",
       icon: "dumbbell",
