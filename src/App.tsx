@@ -2241,7 +2241,7 @@ function Trainers() {
       icon: "dumbbell",
       color: c.orange,
       img: thareshImg,
-      bio: "THARESH K U is a dedicated personal trainer specializing in personalized fitness training, weight training, fat loss, nutrition awareness, strength development, and muscle building. With 8+ years of lifting experience, he provides customized workout strategies, proper exercise techniques, and practical fitness guidance designed to help clients achieve sustainable results and improve overall performance.",
+      bio: "THARESH K U specializes in personal trainire, weight training and fat loss, strength training, and muscle building workouts. With 8+ years of lifting experience, he provides customized diet plans, expert exercise techniques, and personalized workout strategies for sustainable results and optimal performance.",
     },
   ]
   const activeTrainer = selected !== null ? trainers[selected] : null
