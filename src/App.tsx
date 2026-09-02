@@ -2235,13 +2235,13 @@ function Trainers() {
     },
     {
       name: "THARESH K U",
-      role: "Fat Loss & Strength Coach",
+      role: "Personal Trainer & Weight training, Fat loss Coach ",
       exp: "8+ yrs",
       cert: "Mangalore, D.K. | Ph: 7760745826",
       icon: "dumbbell",
       color: c.orange,
       img: thareshImg,
-      bio: "THARESH K U specializes in personal trainire, weight training and fat loss, strength training, and muscle building workouts. With 8+ years of lifting experience, he provides customized diet plans, expert exercise techniques, and personalized workout strategies for sustainable results and optimal performance.",
+      bio: "THARESH K U specializes in personal trainer, weight training and fat loss, strength training, and muscle building workouts. With 8+ years of lifting experience, he provides customized diet plans, expert exercise techniques, and personalized workout strategies for sustainable results and optimal performance.",
     },
   ]
   const activeTrainer = selected !== null ? trainers[selected] : null
