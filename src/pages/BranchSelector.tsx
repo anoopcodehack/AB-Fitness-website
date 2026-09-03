@@ -301,10 +301,10 @@ function BranchSelectorContent() {
                 <BranchCard
                   name="Deralakatte"
                   location="Mangalore"
-                  desc="Our newest branch in Deralakatte bringing premium fitness facilities and expert guidance to the community."
+                  desc="Our flagship branch in Kavoor featuring state-of-the-art equipment, expert trainers, and a motivating atmosphere for your fitness journey."
                   href="/deralakatte"
                   accent={c.cyan}
-                  badge="New"
+                  badge="Flagship"
                 />
               </div>
 
