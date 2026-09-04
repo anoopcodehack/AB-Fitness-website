@@ -4245,7 +4245,7 @@ function CTABanner() {
             Book a Free Trial <Icon name="arrow" size={18} color="#fff" />
           </a>
           <a
-            href="tel:+918660563719"
+            href="tel:+917019844639"
             className="inline-flex items-center gap-2 font-semibold text-[14px] px-8 py-4 rounded-full transition-all"
             style={{
               border: `1.5px solid ${c.border}`,
@@ -4382,7 +4382,7 @@ Hello! I'd like to book a free trial.
 💬 Message: ${form.message || "No message provided"}
 
 Thank you! 🙏`
-                const whatsappUrl = `https://wa.me/918660563719?text=${encodeURIComponent(message)}`
+                const whatsappUrl = `https://wa.me/917019844639?text=${encodeURIComponent(message)}`
                 window.open(whatsappUrl, "_blank")
               }}
               className="space-y-4"
