@@ -597,7 +597,7 @@ function CinematicIntro({ onDone }: { onDone: () => void }) {
               marginTop: 4,
             }}
           >
-            KAVOOR &middot; MANGALORE
+            DERALAKATTE &middot; MANGALORE
           </div>
         </div>
 
@@ -796,7 +796,7 @@ function Nav() {
               className="text-[9px] font-semibold tracking-[0.3em] uppercase"
               style={{ color: c.orange }}
             >
-              Kavoor · Mangalore
+              Deralakatte · Mangalore
             </div>
           </div>
         </a>
@@ -1065,7 +1065,7 @@ function Hero() {
                 border: `1px solid ${c.orange}33`,
               }}
             >
-              <Icon name="flame" size={14} color={c.orange} /> #1 Gym in Kavoor,
+              <Icon name="flame" size={14} color={c.orange} /> #1 Gym in Deralakatte,
               Mangalore
             </div>
             <h1
@@ -1225,7 +1225,7 @@ function Hero() {
                 className="text-[11px] font-bold uppercase tracking-[0.35em]"
                 style={{ color: c.orange }}
               >
-                #1 Gym in Kavoor, Mangalore
+                #1 Gym in Deralakatte, Mangalore
               </span>
             </div>
             <h1
@@ -1604,7 +1604,7 @@ function About() {
     {
       icon: "dumbbell",
       title: "Cutting-Edge Facilities",
-      body: "State-of-the-art gym floor, cardio zone, boxing ring, yoga studio, and recovery lounge — everything under one roof in Kavoor, Mangalore.",
+      body: "State-of-the-art gym floor, cardio zone, MMA area, yoga studio, and therapy lounge — everything under one roof in Deralakatte, Mangalore.",
     },
     {
       icon: "diamond",
@@ -1671,7 +1671,7 @@ function About() {
             >
               Connect with fellow members, participate in group classes, and
               share your achievements as we celebrate success together. AB
-              Fitness Hub in Kavoor has been Mangalore's most trusted fitness
+              Fitness Hub in Deralakatte has been Mangalore&apos;s most trusted fitness
               community since 2016.
             </p>
           </Reveal>
@@ -1807,7 +1807,7 @@ function About() {
                 Watch AB Fitness Hub in Action
               </div>
               <div className="text-white/60 text-[12px] font-light">
-                Kavoor, Mangalore
+                Deralakatte, Mangalore
               </div>
             </div>
           )}
@@ -1823,51 +1823,51 @@ function Programs() {
   const programs = [
     {
       icon: "dumbbell",
-      title: "Strength Training",
-      desc: "Build raw power and muscle with structured progressive overload programs guided by certified coaches.",
+      title: "General Gym",
+      desc: "Full gym floor access with state-of-the-art equipment. Build strength, endurance, and physique with structured progressive overload programs guided by certified coaches.",
       tag: "Popular",
       color: c.orange,
       img: "https://images.unsplash.com/photo-1722925541142-5db2668ca492?w=600&h=400&fit=crop&auto=format&q=80",
     },
     {
-      icon: "lightning",
-      title: "CrossFit & HIIT",
-      desc: "High-intensity functional training that torches calories and builds full-body athletic conditioning.",
+      icon: "fist",
+      title: "Mixed Martial Arts",
+      desc: "Train in MMA with our specialized coach. Combines combat sports expertise with functional fitness for comprehensive athletic development and conditioning.",
+      tag: null,
+      color: c.cyan,
+      img: "https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?w=600&h=400&fit=crop&auto=format&q=80",
+    },
+    {
+      icon: "lotus",
+      title: "Zumba & Yoga",
+      desc: "High-energy Zumba dance workouts paired with yoga sessions to boost flexibility, burn calories, and improve mental clarity. Perfect for all fitness levels.",
+      tag: null,
+      color: c.lime,
+      img: "https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?w=600&h=400&fit=crop&auto=format&q=80",
+    },
+    {
+      icon: "trophy",
+      title: "Personal Training",
+      desc: "One-on-one PT sessions tailored exclusively to your body composition, goals, and fitness level. Available for both general and student members.",
+      tag: "Premium",
+      color: c.orange,
+      img: "https://images.unsplash.com/photo-1648542036561-e1d66a5ae2b1?w=600&h=400&fit=crop&auto=format&q=80",
+    },
+    {
+      icon: "group",
+      title: "Couple PT",
+      desc: "Train together and achieve goals together. Couple personal training sessions designed for pairs — general and student rates available.",
       tag: null,
       color: c.cyan,
       img: "https://images.unsplash.com/photo-1599058917212-d750089bc07e?w=600&h=400&fit=crop&auto=format&q=80",
     },
     {
-      icon: "fist",
-      title: "Boxing & Combat",
-      desc: "Master technique, explosiveness, and reflexes in our fully equipped boxing ring.",
+      icon: "heart",
+      title: "Therapy & Wellness",
+      desc: "Steam bath, cupping therapy, Swedish therapy, deep tissue therapy, salt glow, Kairali therapy, Thai massage, aromatherapy and more — full spa services available.",
       tag: null,
       color: c.lime,
-      img: "https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?w=600&h=400&fit=crop&auto=format&q=80",
-    },
-    {
-      icon: "lotus",
-      title: "Yoga & Mobility",
-      desc: "Restore balance, flexibility, and mental clarity with guided yoga and functional mobility.",
-      tag: null,
-      color: c.cyan,
-      img: "https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?w=600&h=400&fit=crop&auto=format&q=80",
-    },
-    {
-      icon: "running",
-      title: "Cardio Zone",
-      desc: "State-of-the-art treadmills, ellipticals, bikes, and rowing machines for every cardio goal.",
-      tag: null,
-      color: c.orange,
       img: "https://images.unsplash.com/photo-1633394782240-f81aba3f850d?w=600&h=400&fit=crop&auto=format&q=80",
-    },
-    {
-      icon: "trophy",
-      title: "Personal Training",
-      desc: "One-on-one sessions tailored exclusively to your body composition, goals, and fitness level.",
-      tag: "Premium",
-      color: c.lime,
-      img: "https://images.unsplash.com/photo-1648542036561-e1d66a5ae2b1?w=600&h=400&fit=crop&auto=format&q=80",
     },
   ]
   return (
@@ -2539,46 +2539,53 @@ function Memberships() {
     duration: string
     months: number
     price: number
+    offerPrice: number | null
     perMonth: number
     saving: number
     savingPct: number
     best: boolean
+    admission?: number
   }[]> = {
     general: [
       {
         duration: "1 Month",
         months: 1,
         price: 1500,
+        offerPrice: null,
         perMonth: 1500,
         saving: 0,
         savingPct: 0,
         best: false,
+        admission: 2000,
       },
       {
         duration: "3 Months",
         months: 3,
-        price: 3300,
-        perMonth: 1100,
-        saving: 1200,
-        savingPct: 27,
+        price: 4500,
+        offerPrice: 3999,
+        perMonth: 1333,
+        saving: 501,
+        savingPct: 11,
         best: false,
       },
       {
         duration: "6 Months",
         months: 6,
-        price: 5999,
-        perMonth: 1000,
-        saving: 3001,
-        savingPct: 33,
+        price: 9000,
+        offerPrice: 7499,
+        perMonth: 1250,
+        saving: 1501,
+        savingPct: 17,
         best: false,
       },
       {
-        duration: "12 Months",
+        duration: "1 Year",
         months: 12,
-        price: 9999,
-        perMonth: 833,
-        saving: 8001,
-        savingPct: 44,
+        price: 18000,
+        offerPrice: 11999,
+        perMonth: 1000,
+        saving: 6001,
+        savingPct: 33,
         best: true,
       },
     ],
@@ -2586,37 +2593,42 @@ function Memberships() {
       {
         duration: "1 Month",
         months: 1,
-        price: 1300,
-        perMonth: 1300,
+        price: 1200,
+        offerPrice: null,
+        perMonth: 1200,
         saving: 0,
         savingPct: 0,
         best: false,
+        admission: 1500,
       },
       {
         duration: "3 Months",
         months: 3,
-        price: 3000,
+        price: 3600,
+        offerPrice: 2999,
         perMonth: 1000,
-        saving: 900,
-        savingPct: 23,
+        saving: 601,
+        savingPct: 17,
         best: false,
       },
       {
         duration: "6 Months",
         months: 6,
-        price: 5500,
+        price: 7200,
+        offerPrice: 5499,
         perMonth: 917,
-        saving: 2300,
-        savingPct: 29,
+        saving: 1701,
+        savingPct: 24,
         best: false,
       },
       {
-        duration: "12 Months",
+        duration: "1 Year",
         months: 12,
-        price: 8999,
-        perMonth: 750,
-        saving: 6601,
-        savingPct: 42,
+        price: 14400,
+        offerPrice: 9999,
+        perMonth: 833,
+        saving: 4401,
+        savingPct: 31,
         best: true,
       },
     ],
@@ -2762,21 +2774,59 @@ function Memberships() {
                   >
                     {plan.duration}
                   </div>
-                  <div
-                    className="font-black leading-none"
-                    style={{
-                      fontFamily: "Barlow Condensed, sans-serif",
-                      fontSize: "clamp(2.2rem, 5vw, 2.8rem)",
-                      color: plan.best ? "#fff" : c.orange,
-                      textShadow: plan.best
-                        ? "none"
-                        : c.isDark
-                          ? `0 0 20px ${c.orange}55`
-                          : "none",
-                    }}
-                  >
-                    ₹{plan.price.toLocaleString("en-IN")}
-                  </div>
+                  {plan.offerPrice ? (
+                    <div>
+                      <div
+                        className="font-black leading-none"
+                        style={{
+                          fontFamily: "Barlow Condensed, sans-serif",
+                          fontSize: "clamp(2.2rem, 5vw, 2.8rem)",
+                          color: plan.best ? "#fff" : c.orange,
+                          textShadow: plan.best
+                            ? "none"
+                            : c.isDark
+                              ? `0 0 20px ${c.orange}55`
+                              : "none",
+                        }}
+                      >
+                        ₹{plan.offerPrice.toLocaleString("en-IN")}
+                      </div>
+                      <div
+                        className="text-[13px] font-medium mt-0.5 line-through"
+                        style={{
+                          color: plan.best ? "rgba(255,255,255,0.5)" : c.muted,
+                        }}
+                      >
+                        ₹{plan.price.toLocaleString("en-IN")}
+                      </div>
+                    </div>
+                  ) : (
+                    <div
+                      className="font-black leading-none"
+                      style={{
+                        fontFamily: "Barlow Condensed, sans-serif",
+                        fontSize: "clamp(2.2rem, 5vw, 2.8rem)",
+                        color: plan.best ? "#fff" : c.orange,
+                        textShadow: plan.best
+                          ? "none"
+                          : c.isDark
+                            ? `0 0 20px ${c.orange}55`
+                            : "none",
+                      }}
+                    >
+                      ₹{plan.price.toLocaleString("en-IN")}
+                    </div>
+                  )}
+                  {plan.admission && (
+                    <div
+                      className="text-[11px] font-medium mt-1"
+                      style={{
+                        color: plan.best ? "rgba(255,255,255,0.6)" : c.muted,
+                      }}
+                    >
+                      + ₹{plan.admission.toLocaleString("en-IN")} admission
+                    </div>
+                  )}
                   <div
                     className="text-[12px] font-medium mt-1"
                     style={{
@@ -2859,19 +2909,334 @@ function Memberships() {
         </div>
 
         {/* Bottom note */}
-        <Reveal delay={300} className="text-center">
+        <Reveal delay={300} className="text-center mb-12">
           <p className="text-[12px] font-light" style={{ color: c.muted }}>
             Student discount available with valid ID &nbsp;·&nbsp; Free trial
             session for new members &nbsp;·&nbsp;
             <a
-              href="tel:+918660563719"
+              href="tel:+917019844639"
               className="font-semibold"
               style={{ color: c.orange }}
             >
               {" "}
-              Call 8660563719
+              Call +91 7019844639
             </a>
           </p>
+        </Reveal>
+
+        {/* ── GYM + COUPLES (STUDENTS) ── */}
+        <Reveal delay={100} className="mb-10">
+          <div
+            className="rounded-[20px] overflow-hidden"
+            style={{ border: `1px solid ${c.orange}33`, background: c.card }}
+          >
+            <div
+              className="px-6 py-3 font-black text-[13px] uppercase tracking-widest text-center"
+              style={{ background: c.orange, color: "#fff" }}
+            >
+              Gym + Couples (Students)
+            </div>
+            <div className="overflow-x-auto">
+              <table className="w-full text-[13px]">
+                <thead>
+                  <tr style={{ borderBottom: `1px solid ${c.border}` }}>
+                    {["Duration", "Price", "Offer Price"].map((h) => (
+                      <th
+                        key={h}
+                        className="px-5 py-3 text-left font-bold uppercase tracking-wider text-[11px]"
+                        style={{ color: c.orange }}
+                      >
+                        {h}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {[
+                    { d: "3 Months", p: "₹6,000/-", o: "₹5,500/-" },
+                    { d: "6 Months", p: "₹11,000/-", o: "₹9,500/-" },
+                    { d: "1 Year", p: "₹20,000/-", o: "₹20,000/-" },
+                  ].map((r, i) => (
+                    <tr
+                      key={r.d}
+                      style={{
+                        borderBottom: i < 2 ? `1px solid ${c.border}` : "none",
+                        background: i % 2 === 0 ? c.faint : "transparent",
+                      }}
+                    >
+                      <td className="px-5 py-3 font-medium" style={{ color: c.text }}>{r.d}</td>
+                      <td className="px-5 py-3 line-through" style={{ color: c.muted }}>{r.p}</td>
+                      <td className="px-5 py-3 font-bold" style={{ color: c.orange }}>{r.o}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </Reveal>
+
+        {/* ── GENERAL GYM ── */}
+        <Reveal delay={120} className="mb-10">
+          <div
+            className="rounded-[20px] overflow-hidden"
+            style={{ border: `1px solid ${c.orange}33`, background: c.card }}
+          >
+            <div
+              className="px-6 py-3 font-black text-[13px] uppercase tracking-widest text-center"
+              style={{ background: c.orange, color: "#fff" }}
+            >
+              General Gym
+            </div>
+            <div className="overflow-x-auto">
+              <table className="w-full text-[13px]">
+                <thead>
+                  <tr style={{ borderBottom: `1px solid ${c.border}` }}>
+                    {["Duration", "Price", "Offer Price"].map((h) => (
+                      <th
+                        key={h}
+                        className="px-5 py-3 text-left font-bold uppercase tracking-wider text-[11px]"
+                        style={{ color: c.orange }}
+                      >
+                        {h}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {[
+                    { d: "3 Months", p: "₹8,000/-", o: "₹7,500/-" },
+                    { d: "6 Months", p: "₹15,000/-", o: "₹13,000/-" },
+                    { d: "1 Year", p: "₹24,000/-", o: "₹18,000/-" },
+                  ].map((r, i) => (
+                    <tr
+                      key={r.d}
+                      style={{
+                        borderBottom: i < 2 ? `1px solid ${c.border}` : "none",
+                        background: i % 2 === 0 ? c.faint : "transparent",
+                      }}
+                    >
+                      <td className="px-5 py-3 font-medium" style={{ color: c.text }}>{r.d}</td>
+                      <td className="px-5 py-3 line-through" style={{ color: c.muted }}>{r.p}</td>
+                      <td className="px-5 py-3 font-bold" style={{ color: c.orange }}>{r.o}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </Reveal>
+
+        {/* ── PERSONAL TRAINING + COUPLE PT ── */}
+        <div className="grid sm:grid-cols-2 gap-6 mb-10">
+          <Reveal delay={140}>
+            <div
+              className="rounded-[20px] overflow-hidden h-full"
+              style={{ border: `1px solid ${c.orange}33`, background: c.card }}
+            >
+              <div
+                className="px-6 py-3 font-black text-[13px] uppercase tracking-widest text-center"
+                style={{ background: c.orange, color: "#fff" }}
+              >
+                Personal Training
+              </div>
+              <div className="overflow-x-auto">
+                <table className="w-full text-[13px]">
+                  <thead>
+                    <tr style={{ borderBottom: `1px solid ${c.border}` }}>
+                      {["Type", "12 Days", "24 Days"].map((h) => (
+                        <th
+                          key={h}
+                          className="px-4 py-3 text-left font-bold uppercase tracking-wider text-[11px]"
+                          style={{ color: c.orange }}
+                        >
+                          {h}
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {[
+                      { t: "PT – General", d12: "₹6,000/-", d24: "₹9,000/-" },
+                      { t: "PT – Student", d12: "₹5,000/-", d24: "₹7,500/-" },
+                    ].map((r, i) => (
+                      <tr
+                        key={r.t}
+                        style={{
+                          borderBottom: i < 1 ? `1px solid ${c.border}` : "none",
+                          background: i % 2 === 0 ? c.faint : "transparent",
+                        }}
+                      >
+                        <td className="px-4 py-3 font-medium" style={{ color: c.text }}>{r.t}</td>
+                        <td className="px-4 py-3 font-bold" style={{ color: c.orange }}>{r.d12}</td>
+                        <td className="px-4 py-3 font-bold" style={{ color: c.orange }}>{r.d24}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </Reveal>
+
+          <Reveal delay={160}>
+            <div
+              className="rounded-[20px] overflow-hidden h-full"
+              style={{ border: `1px solid ${c.orange}33`, background: c.card }}
+            >
+              <div
+                className="px-6 py-3 font-black text-[13px] uppercase tracking-widest text-center"
+                style={{ background: c.orange, color: "#fff" }}
+              >
+                Couple PT
+              </div>
+              <div className="overflow-x-auto">
+                <table className="w-full text-[13px]">
+                  <thead>
+                    <tr style={{ borderBottom: `1px solid ${c.border}` }}>
+                      {["Type", "12 Days", "24 Days"].map((h) => (
+                        <th
+                          key={h}
+                          className="px-4 py-3 text-left font-bold uppercase tracking-wider text-[11px]"
+                          style={{ color: c.orange }}
+                        >
+                          {h}
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {[
+                      { t: "Couple PT – General", d12: "₹10,000/-", d24: "₹15,000/-" },
+                      { t: "Couple PT – Student", d12: "₹8,000/-", d24: "₹12,500/-" },
+                    ].map((r, i) => (
+                      <tr
+                        key={r.t}
+                        style={{
+                          borderBottom: i < 1 ? `1px solid ${c.border}` : "none",
+                          background: i % 2 === 0 ? c.faint : "transparent",
+                        }}
+                      >
+                        <td className="px-4 py-3 font-medium" style={{ color: c.text }}>{r.t}</td>
+                        <td className="px-4 py-3 font-bold" style={{ color: c.orange }}>{r.d12}</td>
+                        <td className="px-4 py-3 font-bold" style={{ color: c.orange }}>{r.d24}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </Reveal>
+        </div>
+
+        {/* ── MMA + ZUMBA & YOGA ── */}
+        <div className="grid sm:grid-cols-2 gap-6 mb-10">
+          <Reveal delay={180}>
+            <div
+              className="rounded-[20px] overflow-hidden h-full"
+              style={{ border: `1px solid ${c.orange}33`, background: c.card }}
+            >
+              <div
+                className="px-6 py-3 font-black text-[13px] uppercase tracking-widest text-center"
+                style={{ background: c.orange, color: "#fff" }}
+              >
+                Mixed Martial Arts
+              </div>
+              <div className="p-5 space-y-2">
+                {[
+                  { label: "Admission", price: "₹2,000/-" },
+                  { label: "Monthly", price: "₹1,800/-" },
+                  { label: "3 Months", price: "₹5,400/-", offer: "₹4,999/-" },
+                  { label: "6 Months", price: "₹10,800/-", offer: "₹8,999/-" },
+                  { label: "1 Year", price: "₹21,600/-", offer: "₹12,900/-" },
+                ].map((r) => (
+                  <div key={r.label} className="flex items-center justify-between text-[13px]">
+                    <span style={{ color: c.muted }}>{r.label}</span>
+                    <div className="flex items-center gap-3">
+                      {r.offer && (
+                        <span className="line-through text-[12px]" style={{ color: c.muted }}>{r.price}</span>
+                      )}
+                      <span className="font-bold" style={{ color: c.orange }}>
+                        {r.offer ?? r.price}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </Reveal>
+
+          <Reveal delay={200}>
+            <div
+              className="rounded-[20px] overflow-hidden h-full"
+              style={{ border: `1px solid ${c.orange}33`, background: c.card }}
+            >
+              <div
+                className="px-6 py-3 font-black text-[13px] uppercase tracking-widest text-center"
+                style={{ background: c.orange, color: "#fff" }}
+              >
+                Zumba + Yoga Classes
+              </div>
+              <div className="p-5 space-y-2">
+                {[
+                  { label: "Monthly", price: "₹2,000/-" },
+                  { label: "3 Months", price: "₹6,000/-", offer: "₹5,499/-" },
+                ].map((r) => (
+                  <div key={r.label} className="flex items-center justify-between text-[13px]">
+                    <span style={{ color: c.muted }}>{r.label}</span>
+                    <div className="flex items-center gap-3">
+                      {r.offer && (
+                        <span className="line-through text-[12px]" style={{ color: c.muted }}>{r.price}</span>
+                      )}
+                      <span className="font-bold" style={{ color: c.orange }}>
+                        {r.offer ?? r.price}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </Reveal>
+        </div>
+
+        {/* ── THERAPY & SERVICES ── */}
+        <Reveal delay={220} className="mb-4">
+          <div
+            className="rounded-[20px] overflow-hidden"
+            style={{ border: `1px solid ${c.orange}33`, background: c.card }}
+          >
+            <div
+              className="px-6 py-3 font-black text-[13px] uppercase tracking-widest text-center"
+              style={{ background: c.orange, color: "#fff" }}
+            >
+              Therapy &amp; Services
+            </div>
+            <div className="p-5 grid sm:grid-cols-2 gap-x-8 gap-y-2">
+              {[
+                { label: "Steam Bath", price: "₹300" },
+                { label: "Personal Nutrition", price: "₹500" },
+                { label: "Cupping Therapy (Full Body)", price: "₹650" },
+                { label: "Partial Cupping", price: "₹350" },
+                { label: "Oil Cupping Therapy", price: "₹750" },
+                { label: "Oil Cupping (Partial)", price: "₹400" },
+                { label: "Swedish Therapy", price: "₹1,000" },
+                { label: "Deep Tissue Therapy", price: "₹2,000" },
+                { label: "Salt Glow Therapy", price: "₹1,500" },
+                { label: "Vibro Therapy", price: "₹900" },
+                { label: "Kairali Therapy", price: "₹1,500" },
+                { label: "Thai Massage", price: "₹1,250" },
+                { label: "Partial Massage", price: "₹500" },
+                { label: "Foot Reflexology", price: "₹550" },
+                { label: "Aromatherapy", price: "₹1,450" },
+              ].map((r) => (
+                <div key={r.label} className="flex items-center justify-between text-[13px] py-1" style={{ borderBottom: `1px solid ${c.borderFaint}` }}>
+                  <span className="flex items-center gap-2" style={{ color: c.muted }}>
+                    <span style={{ color: c.orange, fontSize: 8 }}>■</span>
+                    {r.label}
+                  </span>
+                  <span className="font-bold" style={{ color: c.orange }}>{r.price}</span>
+                </div>
+              ))}
+            </div>
+          </div>
         </Reveal>
       </div>
     </Section>
@@ -3304,7 +3669,7 @@ function FAQ() {
             Frequently Asked <span style={{ color: c.orange }}>Questions</span>
           </Heading>
           <p className="font-light text-[14px] mt-3" style={{ color: c.muted }}>
-            Everything you need to know about AB Fitness Hub, Kavoor.
+            Everything you need to know about AB Fitness Hub, Deralakatte.
           </p>
         </Reveal>
         <div className="space-y-3">
@@ -3394,8 +3759,8 @@ const EVENTS: EventItem[] = [
     image: eventFlyerImg,
     date: "24.08.2025",
     time: "10:00 AM",
-    location: "2nd Floor, Durgaprasad Complex, Kavoor, Mangalore",
-    phone: "+91 8277299541",
+    location: "Hotel Plaza Avenue, Deralakatte, Mangalore",
+    phone: "+91 7019844639",
     description:
       "AB Fitness Gym celebrated its 1st year anniversary with an Events Building Show, awarding medals and mementos to all event winners.",
     activities: [
@@ -3852,7 +4217,7 @@ function CTABanner() {
           style={{ color: c.muted }}
         >
           Your first trial session is completely free. Visit AB Fitness Hub in
-          Kavoor, Mangalore.
+          Deralakatte, Mangalore.
         </p>
         <div className="flex flex-wrap justify-center gap-4">
           <a
@@ -3912,7 +4277,7 @@ function Contact() {
           <div>
             <SectionLabel text="Contact Us" />
             <Heading size="md">
-              Visit Us in <span style={{ color: c.orange }}>Kavoor</span>,
+              Visit Us in <span style={{ color: c.orange }}>Deralakatte</span>,
               Mangalore
             </Heading>
             <div className="space-y-5 my-8">
@@ -3921,20 +4286,20 @@ function Contact() {
                   icon: "location",
                   label: "Location",
                   value:
-                    "AB Fitness Hub,2nd Floor Durga Prasad Complex, Kavoor, Mangalore, Karnataka – 575015",
+                    "AB Fitness Hub, Hotel Plaza Avenue, beside NITTE University, near Yenepoya Hospital, Deralakatte, Ullal, Karnataka – 575018",
                   color: c.orange,
                 },
                 {
                   icon: "phone",
                   label: "Phone",
-                  value: "+91 8660563719 ,8277299541",
+                  value: "+91 7019844639",
                   color: c.cyan,
                 },
                 {
                   icon: "clock",
                   label: "Hours",
                   value:
-                    "Mon–Sat:\n 5:30 AM – 11:00 AM\n3:30 PM – 11:00 PM\nSunday: Holiday",
+                    "General: 6:00 AM – 11:00 PM\nLadies Batch: 11:00 AM – 2:00 PM",
                   color: c.orange,
                 },
               ].map((item) => (
@@ -3971,7 +4336,7 @@ function Contact() {
             >
               <iframe
                 title="AB Fitness Hub"
-                src="https://maps.google.com/maps?q=Kavoor+Mangalore+Karnataka&output=embed&z=15"
+                src="https://maps.google.com/maps?q=Deralakatte+Mangalore+Karnataka&output=embed&z=15"
                 className="w-full h-full border-0 opacity-80"
                 loading="lazy"
               />
@@ -4215,7 +4580,7 @@ function Footer() {
                   className="text-[9px] font-bold uppercase tracking-widest"
                   style={{ color: c.orange }}
                 >
-                  Kavoor · Mangalore
+                  Deralakatte · Mangalore
                 </div>
               </div>
             </div>
@@ -4332,7 +4697,7 @@ function Footer() {
             { icon: "phone", val: "+91 8660563719 ,8277299541", col: c.cyan },
             {
               icon: "location",
-              val: "2nd Floor Durga Prasad Complex,Kavoor, Mangalore, Karnataka",
+              val: "Hotel Plaza Avenue, beside NITTE University, Deralakatte, Mangalore, Karnataka",
               col: c.orange,
             },
           ].map((item) => (
@@ -4363,7 +4728,7 @@ function Footer() {
           }}
         >
           <p className="text-[12px]" style={{ color: c.muted }}>
-            © 2024 AB Fitness Hub,2nd Floor Durga Prasad Complex, Kavoor,
+            © 2024 AB Fitness Hub, Hotel Plaza Avenue, Deralakatte,
             Mangalore. All rights reserved.
           </p>
           <a
