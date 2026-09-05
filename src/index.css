@@ -99,15 +99,39 @@ html.theme-switching *::after {
 .animate-fade-up    { animation: fade-up 0.6s ease forwards; }
 
 /* ── CINEMATIC INTRO ── */
-@keyframes intro-logo-rise {
-  from { opacity: 0; transform: translateY(72px) scale(0.82); }
-  65%  { opacity: 1; }
-  to   { opacity: 1; transform: translateY(0) scale(1); }
+
+/* Logo: falls from top, bounces at center */
+@keyframes intro-logo-drop {
+  0%   { opacity: 0;   transform: translateY(-340px) scale(0.7); }
+  55%  { opacity: 1;   transform: translateY(22px)   scale(1.08); }
+  72%  { transform: translateY(-10px) scale(0.97); }
+  84%  { transform: translateY(8px)  scale(1.03); }
+  93%  { transform: translateY(-3px) scale(0.99); }
+  100% { opacity: 1;   transform: translateY(0)      scale(1); }
 }
-@keyframes intro-wordmark-rise {
-  from { opacity: 0; transform: translateY(14px); }
+
+/* Shadow squish under logo — appears on each bounce landing */
+@keyframes intro-shadow-squish {
+  0%   { opacity: 0;   transform: scaleX(0.2); }
+  55%  { opacity: 0.5; transform: scaleX(1); }
+  72%  { opacity: 0.2; transform: scaleX(0.6); }
+  84%  { opacity: 0.45; transform: scaleX(0.9); }
+  93%  { opacity: 0.15; transform: scaleX(0.65); }
+  100% { opacity: 0.35; transform: scaleX(0.75); }
+}
+
+/* Name slides up from below logo after it lands */
+@keyframes intro-name-rise {
+  from { opacity: 0; transform: translateY(28px); }
   to   { opacity: 1; transform: translateY(0); }
 }
+
+/* Sub-label fades in */
+@keyframes intro-sub-fade {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
 @keyframes intro-quote-rise {
   from { opacity: 0; transform: translateY(18px); }
   to   { opacity: 1; transform: translateY(0); }
@@ -130,13 +154,23 @@ html.theme-switching *::after {
 }
 
 .intro-logo-in {
-  animation: intro-logo-rise 0.85s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: intro-logo-drop 0.95s cubic-bezier(0.33, 1, 0.68, 1) forwards;
+}
+.intro-shadow-in {
+  animation: intro-shadow-squish 0.95s cubic-bezier(0.33, 1, 0.68, 1) forwards;
 }
 .intro-logo-glow {
   animation: intro-logo-glow 1.8s ease-in-out infinite;
 }
+.intro-name-in {
+  animation: intro-name-rise 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+.intro-sub-in {
+  animation: intro-sub-fade 0.45s ease forwards;
+}
+/* keep .intro-quote-in for quote + divider reuse */
 .intro-wordmark-in {
-  animation: intro-wordmark-rise 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: intro-name-rise 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 .intro-quote-in {
   animation: intro-quote-rise 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
@@ -225,4 +259,35 @@ html.theme-switching *::after {
   .intro-progress-fill { animation-duration: 0.3s !important; }
   .intro-content-exit { animation-duration: 0.15s !important; }
   .intro-overlay-exit { animation-duration: 0.15s !important; animation-delay: 0.1s !important; }
+}
+
+/* ── NAV LOGO HOVER ANIMATION ── */
+@keyframes logo-ring-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+@keyframes logo-glow-pop {
+  0%   { opacity: 0; transform: scale(0.85); }
+  50%  { opacity: 1; transform: scale(1.1); }
+  100% { opacity: 0.6; transform: scale(1); }
+}
+
+.logo-hover-wrap img {
+  border-radius: 50%;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s ease;
+}
+.logo-hover-wrap:hover img {
+  transform: scale(1.12) rotate(-4deg);
+  box-shadow: 0 0 0 2px #ff4800, 0 0 20px #ff480088;
+}
+.logo-hover-wrap .logo-spin-ring {
+  transition: opacity 0.2s ease;
+  opacity: 0;
+}
+.logo-hover-wrap:hover .logo-spin-ring {
+  opacity: 1;
+  animation: logo-ring-spin 0.9s linear infinite;
+}
+.logo-hover-wrap:hover .logo-glow-pulse {
+  animation: logo-glow-pop 0.55s ease forwards;
 }

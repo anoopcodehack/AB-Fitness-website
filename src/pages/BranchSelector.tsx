@@ -34,7 +34,7 @@ function TP({ children }: { children: React.ReactNode }) {
 }
 
 function Logo({ size = 40 }: { size?: number }) {
-  return <img src={logoImg} alt="AB Fitness" style={{ width: size, height: size, objectFit: "contain" }} />
+  return <img src={logoImg} alt="AB Fitness" style={{ width: size, height: size, objectFit: "cover", borderRadius: "50%" }} />
 }
 
 const IK = "ab-intro-played"
@@ -42,168 +42,155 @@ const IK = "ab-intro-played"
 // ─── CINEMATIC INTRO ──────────────────────────────────────────────────────────
 // Timing constants (ms) — easy to tune
 const INTRO_TIMING = {
-  logoDelay: 0,
-  wordmarkDelay: 550,
-  quoteDelay: 950,
-  progressDelay: 1350,
-  exitStart: 2700, // when content starts fading
-  unmount: 3380, // when overlay is fully gone
+  logoDelay: 100,       // logo starts falling
+  nameDelay: 900,       // name rises after logo lands
+  subDelay: 1100,       // "MANGALORE" sub label
+  quoteDelay: 1300,     // tagline
+  progressDelay: 1550,  // progress bar
+  exitStart: 3000,      // overlay starts leaving
+  unmount: 3700,        // fully gone
 } as const
 
 function CinematicIntro({ onDone }: { onDone: () => void }) {
   const c = useC()
-  const [logoIn, setLogoIn] = useState(false)
+  const [logoIn, setLogoIn]       = useState(false)
   const [glowActive, setGlowActive] = useState(false)
-  const [wordmarkIn, setWordmarkIn] = useState(false)
-  const [quoteIn, setQuoteIn] = useState(false)
+  const [nameIn, setNameIn]       = useState(false)
+  const [subIn, setSubIn]         = useState(false)
+  const [quoteIn, setQuoteIn]     = useState(false)
   const [progressIn, setProgressIn] = useState(false)
-  const [exiting, setExiting] = useState(false)
+  const [exiting, setExiting]     = useState(false)
 
   useEffect(() => {
-    const t0 = setTimeout(() => setLogoIn(true), INTRO_TIMING.logoDelay)
-    const t1 = setTimeout(() => setGlowActive(true), 650)
-    const t2 = setTimeout(() => setWordmarkIn(true), INTRO_TIMING.wordmarkDelay)
-    const t3 = setTimeout(() => setQuoteIn(true), INTRO_TIMING.quoteDelay)
-    const t4 = setTimeout(() => setProgressIn(true), INTRO_TIMING.progressDelay)
-    const t5 = setTimeout(() => setExiting(true), INTRO_TIMING.exitStart)
-    const t6 = setTimeout(() => {
+    const t0 = setTimeout(() => setLogoIn(true),      INTRO_TIMING.logoDelay)
+    const t1 = setTimeout(() => setGlowActive(true),  INTRO_TIMING.logoDelay + 950)
+    const t2 = setTimeout(() => setNameIn(true),      INTRO_TIMING.nameDelay)
+    const t3 = setTimeout(() => setSubIn(true),       INTRO_TIMING.subDelay)
+    const t4 = setTimeout(() => setQuoteIn(true),     INTRO_TIMING.quoteDelay)
+    const t5 = setTimeout(() => setProgressIn(true),  INTRO_TIMING.progressDelay)
+    const t6 = setTimeout(() => setExiting(true),     INTRO_TIMING.exitStart)
+    const t7 = setTimeout(() => {
       try { sessionStorage.setItem(IK, "1") } catch {}
       onDone()
     }, INTRO_TIMING.unmount)
-    return () => [t0, t1, t2, t3, t4, t5, t6].forEach(clearTimeout)
+    return () => [t0,t1,t2,t3,t4,t5,t6,t7].forEach(clearTimeout)
   }, [onDone])
 
   return (
     <div
       aria-hidden="true"
-      className={`fixed inset-0 z-[9999] flex flex-col items-center justify-center overflow-hidden${
-        exiting ? " intro-overlay-exit" : ""
-      }`}
+      className={`fixed inset-0 z-[9999] flex flex-col items-center justify-center overflow-hidden${exiting ? " intro-overlay-exit" : ""}`}
       style={{ background: "#080808" }}
     >
-      {/* Ambient radial — deliberately subtle */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background: `radial-gradient(ellipse 60% 50% at 50% 50%, ${c.orange}12 0%, transparent 70%)`,
-        }}
-      />
+      {/* Ambient radial */}
+      <div className="absolute inset-0 pointer-events-none" style={{ background: `radial-gradient(ellipse 60% 50% at 50% 50%, ${c.orange}12 0%, transparent 70%)` }} />
+      {/* Scanline texture */}
+      <div className="absolute inset-0 pointer-events-none opacity-[0.025]" style={{ backgroundImage: "repeating-linear-gradient(0deg, #fff 0px, #fff 1px, transparent 1px, transparent 3px)" }} />
 
-      {/* Thin scanline texture */}
-      <div
-        className="absolute inset-0 pointer-events-none opacity-[0.025]"
-        style={{
-          backgroundImage:
-            "repeating-linear-gradient(0deg, #fff 0px, #fff 1px, transparent 1px, transparent 3px)",
-        }}
-      />
+      {/* Content */}
+      <div className={`flex flex-col items-center select-none${exiting ? " intro-content-exit" : ""}`}>
 
-      {/* Content block */}
-      <div
-        className={`flex flex-col items-center gap-0 select-none${
-          exiting ? " intro-content-exit" : ""
-        }`}
-      >
-        {/* Logo */}
-        <div className={`opacity-0${logoIn ? " intro-logo-in" : ""}`}>
+        {/* ── LOGO DROP ── */}
+        <div style={{ position: "relative", display: "flex", flexDirection: "column", alignItems: "center" }}>
           <div
-            className={glowActive ? "intro-logo-glow" : ""}
-            style={{ borderRadius: "50%" }}
+            className={`opacity-0${logoIn ? " intro-logo-in" : ""}`}
+            style={{ position: "relative", zIndex: 1 }}
           >
-            <img
-              src={logoImg}
-              alt="AB Fitness Hub"
-              style={{
-                width: 88,
-                height: 88,
-                borderRadius: "50%",
-                objectFit: "cover",
-                display: "block",
-                boxShadow: `0 0 0 1.5px ${c.orange}80, 0 0 32px ${c.orange}33`,
-              }}
-            />
+            <div className={glowActive ? "intro-logo-glow" : ""} style={{ borderRadius: "50%" }}>
+              <img
+                src={logoImg}
+                alt="AB Fitness Hub"
+                style={{
+                  width: 96,
+                  height: 96,
+                  borderRadius: "50%",
+                  objectFit: "cover",
+                  display: "block",
+                  boxShadow: `0 0 0 2px ${c.orange}99, 0 0 36px ${c.orange}44`,
+                }}
+              />
+            </div>
+          </div>
+
+          {/* Shadow squish on floor */}
+          <div
+            className={`opacity-0${logoIn ? " intro-shadow-in" : ""}`}
+            style={{
+              width: 72,
+              height: 10,
+              borderRadius: "50%",
+              background: `radial-gradient(ellipse, ${c.orange}55 0%, transparent 75%)`,
+              marginTop: 6,
+              filter: "blur(4px)",
+            }}
+          />
+        </div>
+
+        {/* ── NAME — slides up after logo lands ── */}
+        <div
+          className={`opacity-0${nameIn ? " intro-name-in" : ""}`}
+          style={{ marginTop: 18, textAlign: "center" }}
+        >
+          <div style={{
+            fontFamily: "'Barlow Condensed', sans-serif",
+            fontSize: "clamp(1.4rem, 4vw, 1.9rem)",
+            fontWeight: 900,
+            letterSpacing: "0.3em",
+            color: "#ffffff",
+            textTransform: "uppercase",
+            lineHeight: 1,
+          }}>
+            AB FITNESS HUB
           </div>
         </div>
 
-        {/* Wordmark */}
+        {/* ── SUB LABEL ── */}
         <div
-          className={`mt-5 opacity-0${wordmarkIn ? " intro-wordmark-in" : ""}`}
+          className={`opacity-0${subIn ? " intro-sub-in" : ""}`}
+          style={{ marginTop: 6, textAlign: "center" }}
         >
-          <div
-            style={{
-              fontFamily: "'Barlow Condensed', sans-serif",
-              fontSize: "clamp(1.1rem, 3.5vw, 1.5rem)",
-              fontWeight: 800,
-              letterSpacing: "0.35em",
-              color: c.text,
-              textTransform: "uppercase",
-              textAlign: "center",
-            }}
-          >
-            AB FITNESS HUB
-          </div>
-          <div
-            style={{
-              fontFamily: "'Barlow Condensed', sans-serif",
-              fontSize: "0.6rem",
-              fontWeight: 700,
-              letterSpacing: "0.45em",
-              color: c.orange,
-              textTransform: "uppercase",
-              textAlign: "center",
-              marginTop: 4,
-            }}
-          >
+          <div style={{
+            fontFamily: "'Barlow Condensed', sans-serif",
+            fontSize: "0.62rem",
+            fontWeight: 700,
+            letterSpacing: "0.5em",
+            color: c.orange,
+            textTransform: "uppercase",
+          }}>
             MANGALORE
           </div>
         </div>
 
-        {/* Divider */}
+        {/* ── DIVIDER ── */}
         <div
-          className={`mt-7 mb-6 opacity-0${
-            wordmarkIn ? " intro-wordmark-in" : ""
-          }`}
-          style={{ width: 32, height: 1, background: `${c.orange}66` }}
+          className={`opacity-0${quoteIn ? " intro-quote-in" : ""}`}
+          style={{ width: 32, height: 1, background: `${c.orange}66`, margin: "20px 0 14px" }}
         />
 
-        {/* Quote */}
-        <div className={`opacity-0 px-6${quoteIn ? " intro-quote-in" : ""}`}>
-          <p
-            style={{
-              fontFamily: "'Barlow Condensed', sans-serif",
-              fontSize: "clamp(0.85rem, 2.5vw, 1.1rem)",
-              fontWeight: 700,
-              letterSpacing: "0.3em",
-              color: c.muted,
-              textTransform: "uppercase",
-              textAlign: "center",
-              lineHeight: 1.6,
-            }}
-          >
+        {/* ── TAGLINE ── */}
+        <div className={`opacity-0 px-6${quoteIn ? " intro-quote-in" : ""}`} style={{ animationDelay: "0.08s" }}>
+          <p style={{
+            fontFamily: "'Barlow Condensed', sans-serif",
+            fontSize: "clamp(0.78rem, 2.2vw, 1rem)",
+            fontWeight: 700,
+            letterSpacing: "0.28em",
+            color: "rgba(255,255,255,0.38)",
+            textTransform: "uppercase",
+            textAlign: "center",
+            lineHeight: 1.6,
+          }}>
             DISCIPLINE&nbsp;&nbsp;&middot;&nbsp;&nbsp;STRENGTH&nbsp;&nbsp;&middot;&nbsp;&nbsp;CONSISTENCY
           </p>
         </div>
 
-        {/* Progress line */}
+        {/* ── PROGRESS BAR ── */}
         <div
           className={`mt-8 opacity-0${progressIn ? " intro-quote-in" : ""}`}
-          style={{
-            width: "clamp(100px, 20vw, 140px)",
-            height: 1.5,
-            background: c.border,
-            borderRadius: 2,
-            overflow: "hidden",
-          }}
+          style={{ width: "clamp(100px, 20vw, 140px)", height: 1.5, background: "rgba(255,255,255,0.08)", borderRadius: 2, overflow: "hidden" }}
         >
           <div
             className={progressIn ? "intro-progress-fill" : ""}
-            style={{
-              width: "100%",
-              height: "100%",
-              background: `linear-gradient(90deg, ${c.orange}, #ff8c00)`,
-              borderRadius: 2,
-              transform: "scaleX(0)",
-            }}
+            style={{ width: "100%", height: "100%", background: `linear-gradient(90deg, ${c.orange}, #ff8c00)`, borderRadius: 2, transform: "scaleX(0)" }}
           />
         </div>
       </div>
@@ -216,7 +203,7 @@ function BranchCard({ name, location, desc, href, accent, badge }: { name: strin
   const c = useC()
   const navigate = useNavigate()
   return (
-    <div onClick={() => navigate(href)} className="group relative rounded-[28px] overflow-hidden cursor-pointer transition-all duration-500 hover:scale-[1.02]" style={{ background: c.card, border: `1px solid ${c.border}`, boxShadow: c.isDark ? "0 0 40px rgba(0,0,0,0.4)" : "0 8px 32px rgba(0,0,0,0.1)" }}>
+    <div onClick={() => navigate(href)} className="group relative rounded-[28px] overflow-hidden cursor-pointer transition-all duration-500 hover:scale-[1.02]" style={{ background: c.isDark ? "rgba(15,15,15,0.75)" : "rgba(255,255,255,0.82)", backdropFilter: "blur(16px)", border: `1px solid ${c.isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.1)"}`, boxShadow: c.isDark ? "0 0 40px rgba(0,0,0,0.5)" : "0 8px 32px rgba(0,0,0,0.15)" }}>
       <div className="h-1.5 w-full" style={{ background: accent }} />
       <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" style={{ background: `radial-gradient(ellipse at 50% 0%, ${accent}18 0%, transparent 60%)` }} />
       {badge && (
@@ -254,13 +241,68 @@ function BranchSelectorContent() {
   })
   const done = () => { try { sessionStorage.setItem(IK, "1") } catch {}; setShowIntro(false) }
   return (
-    <div style={{ background: c.bg, minHeight: "100vh", width: "100%" }}>
+    <div style={{ minHeight: "100vh", width: "100%", position: "relative" }}>
+      {/* Full-screen background image */}
+      <div
+        aria-hidden="true"
+        style={{
+          position: "fixed",
+          inset: 0,
+          zIndex: 0,
+          backgroundImage: `url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1920&h=1080&fit=crop&auto=format&q=85')`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+        }}
+      />
+      {/* Dark overlay so content stays readable */}
+      <div
+        aria-hidden="true"
+        style={{
+          position: "fixed",
+          inset: 0,
+          zIndex: 1,
+          background: c.isDark
+            ? "rgba(8,8,8,0.82)"
+            : "rgba(244,244,244,0.88)",
+        }}
+      />
       {showIntro && <CinematicIntro onDone={done} />}
       {!showIntro && (
         <>
-          <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 sm:px-10 h-20" style={{ background: c.isDark ? "rgba(8,8,8,0.95)" : "rgba(244,244,244,0.96)", borderBottom: `1px solid ${c.isDark ? "#ff480022" : "rgba(217,60,8,0.2)"}`, backdropFilter: "blur(20px)" }}>
+          <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 sm:px-10 h-20" style={{ background: c.isDark ? "rgba(8,8,8,0.85)" : "rgba(244,244,244,0.92)", borderBottom: `1px solid ${c.isDark ? "#ff480022" : "rgba(217,60,8,0.2)"}`, backdropFilter: "blur(20px)" }}>
             <div className="flex items-center gap-3">
-              <Logo size={40} />
+              <div
+                className="logo-hover-wrap"
+                style={{
+                  position: "relative",
+                  width: 46,
+                  height: 46,
+                  flexShrink: 0,
+                  cursor: "default",
+                }}
+              >
+                {/* spinning ring on hover */}
+                <div className="logo-spin-ring" style={{
+                  position: "absolute",
+                  inset: -3,
+                  borderRadius: "50%",
+                  border: `2px solid transparent`,
+                  borderTopColor: c.orange,
+                  borderRightColor: c.orange + "55",
+                  pointerEvents: "none",
+                }} />
+                {/* glow pulse on hover */}
+                <div className="logo-glow-pulse" style={{
+                  position: "absolute",
+                  inset: -6,
+                  borderRadius: "50%",
+                  background: `radial-gradient(circle, ${c.orange}44 0%, transparent 70%)`,
+                  pointerEvents: "none",
+                  opacity: 0,
+                }} />
+                <Logo size={46} />
+              </div>
               <div>
                 <div className="font-black text-[16px] leading-none uppercase tracking-wider" style={{ fontFamily: "Barlow Condensed, sans-serif", color: c.text }}>AB Fitness Hub</div>
                 <div className="text-[9px] font-medium uppercase tracking-[0.25em] mt-0.5" style={{ color: c.orange }}>Mangalore</div>
@@ -273,7 +315,7 @@ function BranchSelectorContent() {
             </button>
           </header>
 
-          <main className="pt-32 pb-20 px-6 sm:px-10">
+          <main className="pt-32 pb-20 px-6 sm:px-10 relative z-10">
             <div className="max-w-5xl mx-auto">
               <div className="text-center mb-14">
                 <div className="inline-flex items-center gap-3 mb-4">
@@ -314,7 +356,7 @@ function BranchSelectorContent() {
             </div>
           </main>
 
-          <footer className="py-8 px-6 text-center" style={{ borderTop: `1px solid ${c.border}` }}>
+          <footer className="py-8 px-6 text-center relative z-10" style={{ borderTop: `1px solid ${c.border}` }}>
             <div className="flex items-center justify-center gap-2 mb-3">
               <Logo size={24} />
               <span className="font-bold text-[13px] uppercase tracking-wider" style={{ fontFamily: "Barlow Condensed, sans-serif", color: c.text }}>AB Fitness Hub</span>
