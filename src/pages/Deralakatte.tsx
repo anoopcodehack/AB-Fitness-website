@@ -7,10 +7,10 @@ import galleryImg3 from "@/imports/image-18.png"
 import galleryImg4 from "@/imports/image-16.png"
 import galleryImg5 from "@/imports/image-19.png"
 import galleryImg6 from "@/imports/image-20.png"
-import trainer1Img from "@/imports/image-26.png"
-import trainer2Img from "@/imports/WhatsApp_Image_2026-08-16_at_7.24.30_PM.jpeg"
-import thareshImg from "@/imports/THARESH.png"
-import sujayImg from "@/imports/SUJAY.png"
+import afeelImg from "@/imports/Afeel.jpeg"
+import akshithaImg from "@/imports/Akshitha.jpeg"
+import prakashImg from "@/imports/Prakash P.jpeg"
+import vishnuImg from "@/imports/Vishnu.jpeg"
 import gymVideo from "@/imports/AB_fitness_v.mp4"
 import abtImg from "@/imports/ABabt.jpeg"
 import eventFlyerImg from "@/imports/IMG-20260816-WA0003-1.jpg"
@@ -1827,7 +1827,8 @@ function Programs() {
       desc: "Full gym floor access with state-of-the-art equipment. Build strength, endurance, and physique with structured progressive overload programs guided by certified coaches.",
       tag: "Popular",
       color: c.orange,
-      img: "https://images.unsplash.com/photo-1722925541142-5db2668ca492?w=600&h=400&fit=crop&auto=format&q=80",
+      img: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&h=400&fit=crop&auto=format&q=80",
+      fees: ["Admission: ₹2,000 (General) / ₹1,500 (Student)", "Monthly: ₹1,500 / ₹1,200", "3 Months: ₹3,999 / ₹2,999", "6 Months: ₹7,499 / ₹5,499", "1 Year: ₹11,999 / ₹9,999"],
     },
     {
       icon: "fist",
@@ -1836,6 +1837,7 @@ function Programs() {
       tag: null,
       color: c.cyan,
       img: "https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?w=600&h=400&fit=crop&auto=format&q=80",
+      fees: ["Admission: ₹2,000", "Monthly: ₹1,800", "3 Months: ₹4,999", "6 Months: ₹8,999", "1 Year: ₹12,900"],
     },
     {
       icon: "lotus",
@@ -1843,7 +1845,8 @@ function Programs() {
       desc: "High-energy Zumba dance workouts paired with yoga sessions to boost flexibility, burn calories, and improve mental clarity. Perfect for all fitness levels.",
       tag: null,
       color: c.lime,
-      img: "https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?w=600&h=400&fit=crop&auto=format&q=80",
+      img: "https://images.unsplash.com/photo-1518611012118-696072aa579a?w=600&h=400&fit=crop&auto=format&q=80",
+      fees: ["Monthly: ₹2,000", "3 Months: ₹5,499"],
     },
     {
       icon: "trophy",
@@ -1851,7 +1854,8 @@ function Programs() {
       desc: "One-on-one PT sessions tailored exclusively to your body composition, goals, and fitness level. Available for both general and student members.",
       tag: "Premium",
       color: c.orange,
-      img: "https://images.unsplash.com/photo-1648542036561-e1d66a5ae2b1?w=600&h=400&fit=crop&auto=format&q=80",
+      img: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=600&h=400&fit=crop&auto=format&q=80",
+      fees: ["PT General — 12 Days: ₹6,000 | 24 Days: ₹9,000", "PT Student — 12 Days: ₹5,000 | 24 Days: ₹7,500"],
     },
     {
       icon: "group",
@@ -1860,6 +1864,7 @@ function Programs() {
       tag: null,
       color: c.cyan,
       img: "https://images.unsplash.com/photo-1599058917212-d750089bc07e?w=600&h=400&fit=crop&auto=format&q=80",
+      fees: ["General — 12 Days: ₹10,000 | 24 Days: ₹15,000", "Student — 12 Days: ₹8,000 | 24 Days: ₹12,500", "Gym + Couples (Student) 3M: ₹5,500 | 6M: ₹9,500 | 1Y: ₹20,000"],
     },
     {
       icon: "heart",
@@ -1867,7 +1872,8 @@ function Programs() {
       desc: "Steam bath, cupping therapy, Swedish therapy, deep tissue therapy, salt glow, Kairali therapy, Thai massage, aromatherapy and more — full spa services available.",
       tag: null,
       color: c.lime,
-      img: "https://images.unsplash.com/photo-1633394782240-f81aba3f850d?w=600&h=400&fit=crop&auto=format&q=80",
+      img: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=600&h=400&fit=crop&auto=format&q=80",
+      fees: ["Steam Bath: ₹300", "Swedish Therapy: ₹1,000", "Deep Tissue: ₹2,000", "Thai Massage: ₹1,250", "Aromatherapy: ₹1,450"],
     },
   ]
   return (
@@ -1951,17 +1957,25 @@ function Programs() {
                     {p.title}
                   </h3>
                   <p
-                    className="text-[13px] leading-relaxed font-light flex-1"
+                    className="text-[13px] leading-relaxed font-light"
                     style={{ color: c.muted }}
                   >
                     {p.desc}
                   </p>
-                  <div
-                    className="mt-4 flex items-center gap-1.5 text-[13px] font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+                  <div className="mt-4 space-y-1 flex-1">
+                    {p.fees.map((f) => (
+                      <div key={f} className="flex items-start gap-1.5 text-[11px]" style={{ color: c.muted }}>
+                        <span style={{ color: p.color, fontSize: 7, marginTop: 3 }}>●</span>{f}
+                      </div>
+                    ))}
+                  </div>
+                  <a
+                    href="#contact"
+                    className="mt-3 flex items-center gap-1.5 text-[13px] font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-200"
                     style={{ color: p.color }}
                   >
-                    Learn More <Icon name="arrow" size={14} color={p.color} />
-                  </div>
+                    Enquire Now <Icon name="arrow" size={14} color={p.color} />
+                  </a>
                 </div>
               </div>
             </Reveal>
@@ -1972,7 +1986,7 @@ function Programs() {
   )
 }
 
-// ─── HOW WE WORK ──────────────────────────────────────────────────────────────
+// ─── HOW WE WORK
 function HowWeWork() {
   const c = useC()
   return (
@@ -2224,24 +2238,48 @@ function Trainers() {
   const [selected, setSelected] = useState<number | null>(null)
   const trainers = [
     {
-      name: "SUJAY POOJARY",
-      role: "MMA Coach & Gym Trainer",
-      exp: "4+ yrs",
-      cert: "Mangalore, D.K. | Ph: 8431293951",
-      icon: "zap",
-      color: c.cyan,
-      img: sujayImg,
-      bio: "SUJAY POOJARY is a specialized MMA coach and gym trainer with 4+ years of experience. He combines combat sports expertise with functional fitness training to deliver comprehensive athletic development and conditioning.",
+      name: "Afeel",
+      role: "Certified Nutrition Coach | Fat Loss Specialist",
+      exp: "Specialist",
+      cert: "Evidence-Based Fat Loss · Physique Transformation",
+      icon: "target",
+      color: c.lime,
+      img: afeelImg,
+      imgPos: "center 20%",
+      bio: "Transforming physiques through science-backed, sustainable strategies. Afeel specializes in personalized nutrition and targeted training to help you shed fat, build lean muscle, and maintain long-term results without restrictive diets.",
     },
     {
-      name: "THARESH K U",
-      role: "Personal Trainer &  Weight Trainer & Fat Loss & Nutrition",
-      exp: "8+ yrs",
-      cert: "Mangalore, D.K. | Ph: 7760745826",
+      name: "Vishnu C.",
+      role: "Fitness & Integrative Health Coach",
+      exp: "Coach",
+      cert: "Functional Training · Animal Flow · Certified Zumba · Yoga · Ayurveda · Naturopathy & Spa Therapy",
+      icon: "running",
+      color: c.cyan,
+      img: vishnuImg,
+      imgPos: "center 15%",
+      bio: "Bringing dynamic energy and holistic movement to your fitness journey. Vishnu combines strength, mobility, and fun—using Functional Training and Animal Flow to build real-world athleticism, alongside high-energy Zumba sessions. Also specializes in Yoga, Ayurveda, Naturopathy & Spa Therapy — harmonizing mind, body, and spirit through ancient healing traditions and modern wellness practices.",
+    },
+    {
+      name: "Prakash P.",
+      role: "Senior Head Coach & Gym Manager",
+      exp: "Senior",
+      cert: "Elite Strength Coaching · Program Design · Leadership",
+      icon: "trophy",
+      color: c.orange,
+      img: prakashImg,
+      imgPos: "center 18%",
+      bio: "Guiding your transformation with years of industry-leading experience. As Head Coach, Prakash designs top-tier training frameworks and ensures an empowering, result-driven environment for every member on the gym floor.",
+    },
+    {
+      name: "Akshitha Arun Basavaraj",
+      role: "CPT Personal Trainer | PG Diploma in Nutrition & Dietetics",
+      exp: "CPT",
+      cert: "Powerlifting · Functional Strength · Clinical Nutrition",
       icon: "dumbbell",
       color: c.orange,
-      img: thareshImg,
-      bio: "THARESH K U specializes in personal trainer, weight training and fat loss, strength training, and muscle building workouts. With 8+ years of lifting experience, he provides customized diet plans, expert exercise techniques, and personalized workout strategies for sustainable results and optimal performance.",
+      img: akshithaImg,
+      imgPos: "center 15%",
+      bio: "Blending raw strength with elite nutritional science. Akshitha helps clients unlock peak physical power through technical lifting, functional conditioning, and advanced dietitian-backed meal strategies.",
     },
   ]
   const activeTrainer = selected !== null ? trainers[selected] : null
@@ -2256,16 +2294,32 @@ function Trainers() {
           </Heading>
         </Reveal>
 
-        <div className="grid md:grid-cols-2 gap-5 relative">
+        {/* Horizontally scrollable trainer row — 2 visible at a time */}
+        <div
+          className="flex gap-5 overflow-x-auto pb-4"
+          style={{
+            scrollSnapType: "x mandatory",
+            WebkitOverflowScrolling: "touch",
+            scrollbarWidth: "none",
+          }}
+        >
           {trainers.map((t, idx) => (
-            <Reveal key={t.name} delay={idx * 90} dir="up">
+            <div
+              key={t.name}
+              className="shrink-0"
+              style={{
+                width: "calc(50% - 10px)",
+                minWidth: 280,
+                scrollSnapAlign: "start",
+              }}
+            >
               <button
                 type="button"
                 onClick={() => setSelected(idx)}
                 className="w-full overflow-hidden rounded-[22px] text-left transition-all"
                 style={{
                   background: c.card,
-                  border: `1px solid ${c.borderFaint}`,
+                  border: `1px solid ${selected === idx ? t.color + "55" : c.borderFaint}`,
                   boxShadow: selected === idx ? `0 18px 40px ${t.color}18` : "none",
                 }}
               >
@@ -2274,40 +2328,51 @@ function Trainers() {
                     src={t.img}
                     alt={t.name}
                     className="w-full h-full object-cover"
-                    style={{ filter: "grayscale(18%)" }}
+                    style={{ filter: "grayscale(18%)", objectPosition: t.imgPos }}
                   />
                   <div
                     className="absolute inset-0"
                     style={{
-                      background: `linear-gradient(to top, rgba(0,0,0,0.12), transparent 60%)`,
+                      background: `linear-gradient(to top, rgba(0,0,0,0.18), transparent 60%)`,
                     }}
                   />
                 </div>
-
                 <div className="p-5">
-                  <h3 className="font-black text-[26px] leading-none mb-2" style={{ color: c.text }}>
+                  <h3 className="font-black text-[22px] leading-none mb-2" style={{ color: c.text }}>
                     {t.name}
                   </h3>
-                  <div
-                    className="text-[16px] font-semibold mb-3"
-                    style={{ color: t.color }}
-                  >
+                  <div className="text-[13px] font-semibold mb-3" style={{ color: t.color }}>
                     {t.role}
                   </div>
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 flex-wrap">
                     <span
-                      className="text-[11px] font-bold px-2.5 py-1 rounded-full"
+                      className="text-[10px] font-bold px-2.5 py-1 rounded-full"
                       style={{ background: `${t.color}22`, color: t.color }}
                     >
                       {t.exp}
                     </span>
-                    <span className="text-[11px]" style={{ color: c.muted }}>
+                    <span className="text-[10px]" style={{ color: c.muted }}>
                       {t.cert}
                     </span>
                   </div>
                 </div>
               </button>
-            </Reveal>
+            </div>
+          ))}
+        </div>
+
+        {/* Scroll hint dots */}
+        <div className="flex justify-center gap-1.5 mt-4">
+          {Array.from({ length: Math.ceil(trainers.length / 2) }).map((_, i) => (
+            <div
+              key={i}
+              className="rounded-full transition-all duration-300"
+              style={{
+                width: 7,
+                height: 7,
+                background: i === 0 ? c.orange : c.border,
+              }}
+            />
           ))}
         </div>
 
@@ -4296,6 +4361,12 @@ function Contact() {
                   color: c.cyan,
                 },
                 {
+                  icon: "mail",
+                  label: "Instagram",
+                  value: "@ab_fitness_hub_deralakatte",
+                  color: c.lime,
+                },
+                {
                   icon: "clock",
                   label: "Hours",
                   value:
@@ -4518,7 +4589,7 @@ function Newsletter() {
               Follow us on Instagram
             </p>
             <a
-              href="https://www.instagram.com/abfitnesshub_official/"
+              href="https://www.instagram.com/ab_fitness_hub_deralakatte/"
               target="_blank"
               rel="noopener noreferrer"
               className="w-[52px] h-[52px] flex items-center justify-center rounded-[14px] transition-all hover:scale-105"
@@ -4593,7 +4664,7 @@ function Footer() {
             </p>
             <div className="flex gap-2 flex-wrap">
               <a
-                href="https://www.instagram.com/abfitnesshub_official/"
+                href="https://www.instagram.com/ab_fitness_hub_deralakatte/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-9 h-9 rounded-full flex items-center justify-center transition-all hover:scale-110 hover:-translate-y-0.5"
@@ -4690,11 +4761,11 @@ function Footer() {
           {[
             {
               icon: "instagram",
-              val: "@abfitnesshub_official",
+              val: "@ab_fitness_hub_deralakatte",
               col: c.lime,
-              href: "https://www.instagram.com/abfitnesshub_official/",
+              href: "https://www.instagram.com/ab_fitness_hub_deralakatte/",
             },
-            { icon: "phone", val: "+91 8660563719 ,8277299541", col: c.cyan },
+            { icon: "phone", val: "+91 7019844639", col: c.cyan },
             {
               icon: "location",
               val: "Hotel Plaza Avenue, beside NITTE University, Deralakatte, Mangalore, Karnataka",
