@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom"
 import BranchSelector from "./pages/BranchSelector"
 import KavoorPage from "./pages/Kavoor"
 import DeralakattePage from "./pages/Deralakatte"
+import ProteinHubPage from "./pages/ProteinHub"
 
 function AppRoutes() {
   const location = useLocation()
@@ -14,6 +15,7 @@ function AppRoutes() {
       <Route path="/" element={<BranchSelector />} />
       <Route path="/kavoor" element={<KavoorPage />} />
       <Route path="/deralakatte" element={<DeralakattePage />} />
+      <Route path="/protein-hub" element={<ProteinHubPage />} />
     </Routes>
   )
 }

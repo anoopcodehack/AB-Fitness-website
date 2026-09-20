@@ -200,19 +200,60 @@ function Icon({
 }) {
   const icons: Record<string, React.ReactElement> = {
     dumbbell: (
-      <svg
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke={color}
-        strokeWidth="1.8"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
+      <svg viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
         <path d="M6.5 6.5h11M6.5 17.5h11" />
         <rect x="2" y="5" width="3" height="14" rx="1.5" />
         <rect x="19" y="5" width="3" height="14" rx="1.5" />
         <rect x="5" y="9" width="2" height="6" rx="1" />
         <rect x="17" y="9" width="2" height="6" rx="1" />
+      </svg>
+    ),
+    calendar: (
+      <svg viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="3" y="4" width="18" height="18" rx="2" fill={color + "11"} />
+        <line x1="16" y1="2" x2="16" y2="6" />
+        <line x1="8" y1="2" x2="8" y2="6" />
+        <line x1="3" y1="10" x2="21" y2="10" />
+      </svg>
+    ),
+    time: (
+      <svg viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="12" r="10" />
+        <polyline points="12 6 12 12 16 14" />
+      </svg>
+    ),
+    user: (
+      <svg viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+        <circle cx="12" cy="7" r="4" fill={color + "22"} />
+      </svg>
+    ),
+    message: (
+      <svg viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" fill={color + "11"} />
+      </svg>
+    ),
+    sparkle: (
+      <svg viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z" fill={color + "22"} />
+      </svg>
+    ),
+    hands: (
+      <svg viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M4.5 12.5c0-1 .8-1.5 1.5-1.5s1.5.5 1.5 1.5v5" />
+        <path d="M7.5 12c0-1 .8-1.5 1.5-1.5s1.5.5 1.5 1.5v1" />
+        <path d="M10.5 11.5c0-1 .8-1.5 1.5-1.5s1.5.5 1.5 1.5v1" />
+        <path d="M13.5 12c0-1 .8-1.5 1.5-1.5s1.5.5 1.5 1.5v5c0 2-1.5 3-3 3h-4c-1.5 0-2.5-1-3-2.5L4 14" />
+        <path d="M4 14l-1-1a1.5 1.5 0 0 1 2-2l2 2" />
+      </svg>
+    ),
+    currency: (
+      <svg viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="12" r="10" fill={color + "11"} />
+        <path d="M15 9a3 3 0 0 0-3-3H9v6h3a3 3 0 0 0 0-6z" />
+        <path d="M9 12v6" />
+        <line x1="7" y1="9" x2="15" y2="9" />
+        <line x1="7" y1="15" x2="12" y2="15" />
       </svg>
     ),
     lightning: (
@@ -457,17 +498,25 @@ function Icon({
       </svg>
     ),
     kettle: (
-      <svg
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke={color}
-        strokeWidth="1.8"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
+      <svg viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
         <circle cx="12" cy="14" r="7" fill={color + "11"} />
         <rect x="10" y="4" width="4" height="4" rx="1" />
         <line x1="12" y1="8" x2="12" y2="7" />
+      </svg>
+    ),
+    cup: (
+      <svg viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M17 8h1a4 4 0 0 1 0 8h-1" />
+        <path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V8z" fill={color + "11"} />
+        <line x1="6" y1="2" x2="6" y2="4" />
+        <line x1="10" y1="2" x2="10" y2="4" />
+        <line x1="14" y1="2" x2="14" y2="4" />
+      </svg>
+    ),
+    leaf: (
+      <svg viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z" fill={color + "22"} />
+        <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12" />
       </svg>
     ),
   }
@@ -3147,18 +3196,10 @@ function ReviewCard({
 
 function TrustSummary({ c }: { c: Colors }) {
   const points = [
-    {
-      emoji: "⭐",
-      label: "Great equipment",
-      sub: "Machines worth like heaven",
-    },
-    {
-      emoji: "🧹",
-      label: "Clean environment",
-      sub: "Especially clean and perfect",
-    },
-    { emoji: "💰", label: "Affordable fees", sub: "For students and elders" },
-    { emoji: "🤝", label: "Friendly atmosphere", sub: "Fun and organised" },
+    { icon: "sparkle", color: c.cyan,   label: "Great Equipment",     sub: "Machines worth like heaven" },
+    { icon: "shield",  color: c.lime,   label: "Clean Environment",   sub: "Especially clean and perfect" },
+    { icon: "currency",color: c.orange, label: "Affordable Fees",     sub: "For students and elders" },
+    { icon: "hands",   color: c.cyan,   label: "Friendly Atmosphere", sub: "Fun and organised" },
   ]
   return (
     <div
@@ -3175,15 +3216,29 @@ function TrustSummary({ c }: { c: Colors }) {
         {points.map((p) => (
           <div
             key={p.label}
-            className="flex flex-col items-center text-center gap-2"
+            className="group flex flex-col items-center text-center gap-3 p-4 rounded-[16px] transition-all duration-300 cursor-default hover:-translate-y-1"
+            style={{ border: `1px solid transparent` }}
+            onMouseEnter={e => {
+              const el = e.currentTarget as HTMLElement
+              el.style.background = p.color + "10"
+              el.style.borderColor = p.color + "33"
+              el.style.boxShadow = c.isDark ? `0 0 20px ${p.color}18` : `0 4px 16px ${p.color}22`
+            }}
+            onMouseLeave={e => {
+              const el = e.currentTarget as HTMLElement
+              el.style.background = "transparent"
+              el.style.borderColor = "transparent"
+              el.style.boxShadow = "none"
+            }}
           >
-            <div className="text-[28px]">{p.emoji}</div>
-            <div className="font-bold text-[13px]" style={{ color: c.text }}>
-              {p.label}
+            <div
+              className="w-12 h-12 rounded-[14px] flex items-center justify-center transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3"
+              style={{ background: p.color + "18" }}
+            >
+              <Icon name={p.icon} size={24} color={p.color} />
             </div>
-            <div className="text-[11px] font-light" style={{ color: c.muted }}>
-              {p.sub}
-            </div>
+            <div className="font-bold text-[13px]" style={{ color: c.text }}>{p.label}</div>
+            <div className="text-[11px] font-light" style={{ color: c.muted }}>{p.sub}</div>
           </div>
         ))}
       </div>
@@ -3554,14 +3609,18 @@ function Events() {
                           className="flex gap-4 text-[12px] mb-4"
                           style={{ color: c.muted }}
                         >
-                          <span>📅 {ev.date}</span>
-                          <span>🕙 {ev.time}</span>
+                          <span className="flex items-center gap-1.5">
+                            <Icon name="calendar" size={13} color={c.orange} /> {ev.date}
+                          </span>
+                          <span className="flex items-center gap-1.5">
+                            <Icon name="time" size={13} color={c.cyan} /> {ev.time}
+                          </span>
                         </div>
                         <div
-                          className="text-[12px] mb-5"
+                          className="text-[12px] mb-5 flex items-center gap-1.5"
                           style={{ color: c.muted }}
                         >
-                          📍 {ev.location}
+                          <Icon name="location" size={13} color={c.orange} /> {ev.location}
                         </div>
                         {ev.registrationUrl && (
                           <a
@@ -3701,8 +3760,10 @@ function CompletedEventCard({ ev, c }: { ev: EventItem; c: Colors }) {
               </div>
             ))}
           </div>
-          <div className="text-[12px] mb-5" style={{ color: c.muted }}>
-            📍 {ev.location} &nbsp;·&nbsp; 📞 {ev.phone}
+          <div className="text-[12px] mb-5 flex items-center gap-3 flex-wrap" style={{ color: c.muted }}>
+            <span className="flex items-center gap-1.5"><Icon name="location" size={13} color={c.orange} /> {ev.location}</span>
+            <span style={{ color: c.border }}>·</span>
+            <span className="flex items-center gap-1.5"><Icon name="phone" size={13} color={c.cyan} /> {ev.phone}</span>
           </div>
 
           {/* Activities */}
