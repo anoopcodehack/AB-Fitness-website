@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, createContext, useContext } from "react"
+import { useNavigate } from "react-router-dom"
 import { Sun, Moon, X, ChevronLeft, ChevronRight, ZoomIn } from "lucide-react"
 import logoImg from "@/imports/image-10.png"
 import galleryImg1 from "@/imports/deralakatte-gallery-1.jpg"
@@ -201,19 +202,60 @@ function Icon({
 }) {
   const icons: Record<string, React.ReactElement> = {
     dumbbell: (
-      <svg
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke={color}
-        strokeWidth="1.8"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
+      <svg viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
         <path d="M6.5 6.5h11M6.5 17.5h11" />
         <rect x="2" y="5" width="3" height="14" rx="1.5" />
         <rect x="19" y="5" width="3" height="14" rx="1.5" />
         <rect x="5" y="9" width="2" height="6" rx="1" />
         <rect x="17" y="9" width="2" height="6" rx="1" />
+      </svg>
+    ),
+    calendar: (
+      <svg viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="3" y="4" width="18" height="18" rx="2" fill={color + "11"} />
+        <line x1="16" y1="2" x2="16" y2="6" />
+        <line x1="8" y1="2" x2="8" y2="6" />
+        <line x1="3" y1="10" x2="21" y2="10" />
+      </svg>
+    ),
+    time: (
+      <svg viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="12" r="10" />
+        <polyline points="12 6 12 12 16 14" />
+      </svg>
+    ),
+    user: (
+      <svg viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+        <circle cx="12" cy="7" r="4" fill={color + "22"} />
+      </svg>
+    ),
+    message: (
+      <svg viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" fill={color + "11"} />
+      </svg>
+    ),
+    sparkle: (
+      <svg viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z" fill={color + "22"} />
+      </svg>
+    ),
+    hands: (
+      <svg viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M4.5 12.5c0-1 .8-1.5 1.5-1.5s1.5.5 1.5 1.5v5" />
+        <path d="M7.5 12c0-1 .8-1.5 1.5-1.5s1.5.5 1.5 1.5v1" />
+        <path d="M10.5 11.5c0-1 .8-1.5 1.5-1.5s1.5.5 1.5 1.5v1" />
+        <path d="M13.5 12c0-1 .8-1.5 1.5-1.5s1.5.5 1.5 1.5v5c0 2-1.5 3-3 3h-4c-1.5 0-2.5-1-3-2.5L4 14" />
+        <path d="M4 14l-1-1a1.5 1.5 0 0 1 2-2l2 2" />
+      </svg>
+    ),
+    currency: (
+      <svg viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="12" r="10" fill={color + "11"} />
+        <path d="M15 9a3 3 0 0 0-3-3H9v6h3a3 3 0 0 0 0-6z" />
+        <path d="M9 12v6" />
+        <line x1="7" y1="9" x2="15" y2="9" />
+        <line x1="7" y1="15" x2="12" y2="15" />
       </svg>
     ),
     lightning: (
@@ -469,6 +511,42 @@ function Icon({
         <circle cx="12" cy="14" r="7" fill={color + "11"} />
         <rect x="10" y="4" width="4" height="4" rx="1" />
         <line x1="12" y1="8" x2="12" y2="7" />
+      </svg>
+    ),
+    cup: (
+      <svg viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M17 8h1a4 4 0 0 1 0 8h-1" />
+        <path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V8z" fill={color + "11"} />
+        <line x1="6" y1="2" x2="6" y2="4" />
+        <line x1="10" y1="2" x2="10" y2="4" />
+        <line x1="14" y1="2" x2="14" y2="4" />
+      </svg>
+    ),
+    leaf: (
+      <svg viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z" fill={color + "22"} />
+        <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12" />
+      </svg>
+    ),
+    bowl: (
+      <svg viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12 2a10 10 0 0 1 10 10H2A10 10 0 0 1 12 2z" fill={color + "22"} />
+        <path d="M2 12c0 5.5 4.5 10 10 10s10-4.5 10-10" />
+        <line x1="12" y1="12" x2="12" y2="22" />
+      </svg>
+    ),
+    salad: (
+      <svg viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M7 21h10M12 21V11" />
+        <path d="M12 11C10 9 7 9 5 11c2 0 4 1 5 2" fill={color + "11"} />
+        <path d="M12 11c2-2 5-2 7 0-2 0-4 1-5 2" fill={color + "11"} />
+        <path d="M12 7c0-2 2-4 4-4-1 2-1 4 0 5" />
+        <path d="M12 7c0-2-2-4-4-4 1 2 1 4 0 5" />
+      </svg>
+    ),
+    zap: (
+      <svg viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" fill={color + "22"} />
       </svg>
     ),
   }
@@ -750,6 +828,7 @@ function Logo({ size = 42 }: { size?: number }) {
 // ─── NAV ──────────────────────────────────────────────────────────────────────
 function Nav() {
   const c = useC()
+  const navigate = useNavigate()
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
   useEffect(() => {
@@ -819,6 +898,18 @@ function Nav() {
 
         <div className="hidden md:flex items-center gap-3">
           <ThemeToggle />
+          <button
+            onClick={() => navigate("/protein-hub")}
+            className="inline-flex items-center gap-2 font-semibold text-[13px] px-4 py-2.5 rounded-full transition-all duration-200 hover:scale-105"
+            style={{
+              background: c.isDark ? "#1a1a0a" : "#fffbe6",
+              color: "#f59e0b",
+              border: "1.5px solid #f59e0b66",
+              boxShadow: c.isDark ? "0 0 16px #f59e0b33" : "none",
+            }}
+          >
+            <Icon name="cup" size={15} color="#f59e0b" /> Protein Hub
+          </button>
           <a
             href="#contact"
             className="inline-flex items-center gap-2 font-semibold text-[13px] px-5 py-2.5 rounded-full transition-all duration-200 hover:scale-105"
@@ -881,6 +972,18 @@ function Nav() {
               {l.label}
             </a>
           ))}
+          <button
+            onClick={() => { setOpen(false); navigate("/protein-hub") }}
+            className="font-semibold text-sm text-left px-4 py-2.5 rounded-full"
+            style={{
+              background: c.isDark ? "#1a1a0a" : "#fffbe6",
+              color: "#f59e0b",
+              border: "1.5px solid #f59e0b55",
+              cursor: "pointer",
+            }}
+          >
+            <Icon name="cup" size={15} color="#f59e0b" /> Protein Hub
+          </button>
           <a
             href="#contact"
             className="text-white text-center font-semibold text-sm px-5 py-2.5 rounded-full"
@@ -1801,6 +1904,206 @@ function About() {
           )}
         </div>
       </Reveal>
+    </Section>
+  )
+}
+
+// ─── PROTEIN HUB PROMO ───────────────────────────────────────────────────────
+function ProteinHubPromo() {
+  const c = useC()
+  const navigate = useNavigate()
+
+  const highlights = [
+    { icon: "cup",      color: c.orange, label: "Protein Shakes",      sub: "7 flavours from ₹130" },
+    { icon: "leaf",     color: c.lime,   label: "Smoothies",            sub: "Natural energy boost" },
+    { icon: "bowl",     color: c.cyan,   label: "Oats & Bowls",         sub: "Pre/post workout fuel" },
+    { icon: "salad",    color: c.lime,   label: "Salads & Sandwiches",  sub: "Fresh & healthy" },
+    { icon: "zap",      color: c.cyan,   label: "Fresh Juices",         sub: "Cold-pressed from ₹50" },
+    { icon: "flame",    color: c.orange, label: "Power Combos",         sub: "Ultimate gym fuel" },
+  ]
+
+  return (
+    <Section bg={c.isDark ? "#05080a" : "#f0f8ff"} border>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        {/* Header */}
+        <Reveal className="text-center mb-12">
+          <SectionLabel text="Now Open" center />
+          <Heading center>
+            AB{" "}
+            <span style={{ color: "#f59e0b", textShadow: c.isDark ? "0 0 30px #f59e0b88" : "none" }}>
+              Protein Hub
+            </span>
+          </Heading>
+          <p className="mt-3 text-[14px] font-light max-w-md mx-auto" style={{ color: c.muted }}>
+            Fuel your workouts with premium shakes, smoothies, fresh juices, and healthy bites — right next to your gym.
+          </p>
+        </Reveal>
+
+        {/* Big CTA card */}
+        <Reveal dir="up" delay={80}>
+          <div
+            className="relative rounded-[28px] overflow-hidden mb-10"
+            style={{
+              background: c.isDark
+                ? "linear-gradient(135deg, #1a1200 0%, #0a0a00 50%, #050808 100%)"
+                : "linear-gradient(135deg, #fffbeb 0%, #fff8e1 100%)",
+              border: "1.5px solid #f59e0b44",
+              boxShadow: c.isDark ? "0 0 60px #f59e0b18" : "0 4px 32px rgba(245,158,11,0.12)",
+            }}
+          >
+            {/* Glow blob */}
+            <div
+              className="absolute top-0 right-0 w-[400px] h-[400px] pointer-events-none"
+              style={{
+                background: "radial-gradient(circle, #f59e0b18 0%, transparent 70%)",
+                filter: "blur(40px)",
+              }}
+            />
+
+            <div className="relative z-10 grid md:grid-cols-2 gap-0 items-stretch">
+              {/* Left — text */}
+              <div className="p-8 sm:p-10 flex flex-col justify-center">
+                {/* Badge */}
+                <div
+                  className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-widest mb-5 w-fit"
+                  style={{ background: "#f59e0b22", color: "#f59e0b", border: "1px solid #f59e0b44" }}
+                >
+                  <Icon name="delivery" size={13} color="#f59e0b" /> Available on Swiggy &amp; Zomato
+                </div>
+
+                <h3
+                  className="font-black uppercase leading-tight mb-3"
+                  style={{
+                    fontFamily: "Barlow Condensed, sans-serif",
+                    fontSize: "clamp(2rem, 4vw, 3rem)",
+                    color: c.text,
+                  }}
+                >
+                  Premium Nutrition,{" "}
+                  <span style={{ color: "#f59e0b" }}>Gym-Side</span>
+                </h3>
+
+                <p className="text-[14px] leading-relaxed mb-6" style={{ color: c.muted }}>
+                  Hotel Plaza Avenue, beside NITTE University, Deralakatte.<br />
+                  <span className="font-semibold flex items-center gap-1.5 mt-1" style={{ color: "#f59e0b" }}>
+                    <Icon name="phone" size={13} color="#f59e0b" /> 8075506251
+                  </span>
+                </p>
+
+                {/* Mini highlights */}
+                <div className="grid grid-cols-2 gap-3 mb-8">
+                  {highlights.map((h) => (
+                    <div
+                      key={h.label}
+                      className="flex items-center gap-3 px-3 py-2.5 rounded-[14px]"
+                      style={{ background: c.isDark ? "rgba(245,158,11,0.08)" : "rgba(245,158,11,0.06)", border: "1px solid #f59e0b22" }}
+                    >
+                      <div className="w-8 h-8 rounded-[10px] flex items-center justify-center shrink-0" style={{ background: "#f59e0b22" }}>
+                        <Icon name={h.icon} size={18} color="#f59e0b" />
+                      </div>
+                      <div>
+                        <div className="text-[12px] font-bold leading-tight" style={{ color: c.text }}>{h.label}</div>
+                        <div className="text-[10px]" style={{ color: c.muted }}>{h.sub}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* CTA buttons */}
+                <div className="flex flex-wrap gap-3">
+                  <button
+                    onClick={() => navigate("/protein-hub")}
+                    className="inline-flex items-center gap-2 font-black text-[14px] px-7 py-4 rounded-full transition-all hover:scale-105"
+                    style={{
+                      background: "linear-gradient(135deg, #f59e0b, #f97316)",
+                      color: "#fff",
+                      border: "none",
+                      cursor: "pointer",
+                      boxShadow: c.isDark ? "0 0 28px #f59e0b55" : "0 4px 20px #f59e0b44",
+                    }}
+                  >
+                    View Full Menu →
+                  </button>
+                  <a
+                    href="tel:8075506251"
+                    className="inline-flex items-center gap-2 font-semibold text-[14px] px-7 py-4 rounded-full transition-all hover:scale-105"
+                    style={{
+                      border: "1.5px solid #f59e0b66",
+                      color: "#f59e0b",
+                    }}
+                  >
+                    <Icon name="phone" size={16} color="#f59e0b" /> Call Now
+                  </a>
+                </div>
+              </div>
+
+              {/* Right — visual panel */}
+              <div
+                className="relative min-h-[260px] md:min-h-0 flex items-center justify-center overflow-hidden"
+                style={{
+                  background: c.isDark
+                    ? "linear-gradient(135deg, #1a1000 0%, #0a0800 100%)"
+                    : "linear-gradient(135deg, #fef3c7 0%, #fde68a 100%)",
+                  borderLeft: "1px solid #f59e0b22",
+                }}
+              >
+                <div className="text-center p-10 relative z-10">
+                  <div className="flex items-center justify-center w-24 h-24 rounded-[28px] mx-auto mb-4" style={{ background: `${c.orange}18`, border: `2px solid #f59e0b44` }}>
+                    <Icon name="cup" size={52} color="#f59e0b" />
+                  </div>
+                  <div
+                    className="font-black uppercase"
+                    style={{
+                      fontFamily: "Barlow Condensed, sans-serif",
+                      fontSize: "clamp(1.6rem, 3vw, 2.2rem)",
+                      color: "#f59e0b",
+                      letterSpacing: "0.1em",
+                      textShadow: c.isDark ? "0 0 30px #f59e0b88" : "none",
+                    }}
+                  >
+                    AB Protein Hub
+                  </div>
+                  <div className="text-[12px] mt-2 font-medium uppercase tracking-widest" style={{ color: c.muted }}>
+                    Deralakatte · Mangalore
+                  </div>
+
+                  {/* Floating price tags */}
+                  {[
+                    { label: "Protein Shake", price: "₹130", top: "10%", left: "5%" },
+                    { label: "Power Combo", price: "₹215", top: "10%", right: "5%" },
+                    { label: "Fresh Juice", price: "₹50", bottom: "12%", left: "8%" },
+                    { label: "Smoothie", price: "₹80", bottom: "12%", right: "8%" },
+                  ].map((tag) => (
+                    <div
+                      key={tag.label}
+                      className="absolute text-center px-2.5 py-1.5 rounded-[10px]"
+                      style={{
+                        top: tag.top,
+                        bottom: tag.bottom,
+                        left: tag.left,
+                        right: tag.right,
+                        background: c.isDark ? "rgba(15,15,5,0.85)" : "rgba(255,255,255,0.9)",
+                        border: "1px solid #f59e0b44",
+                        backdropFilter: "blur(8px)",
+                        boxShadow: c.isDark ? "0 0 12px #f59e0b22" : "0 2px 10px rgba(0,0,0,0.1)",
+                      }}
+                    >
+                      <div className="text-[9px] font-medium" style={{ color: c.muted }}>{tag.label}</div>
+                      <div className="text-[13px] font-black" style={{ color: "#f59e0b", fontFamily: "Barlow Condensed, sans-serif" }}>{tag.price}</div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Ambient glow */}
+                <div
+                  className="absolute inset-0 pointer-events-none"
+                  style={{ background: "radial-gradient(circle at 50% 50%, #f59e0b18 0%, transparent 65%)" }}
+                />
+              </div>
+            </div>
+          </div>
+        </Reveal>
+      </div>
     </Section>
   )
 }
@@ -3565,18 +3868,10 @@ function ReviewCard({
 
 function TrustSummary({ c }: { c: Colors }) {
   const points = [
-    {
-      emoji: "⭐",
-      label: "Great equipment",
-      sub: "Machines worth like heaven",
-    },
-    {
-      emoji: "🧹",
-      label: "Clean environment",
-      sub: "Especially clean and perfect",
-    },
-    { emoji: "💰", label: "Affordable fees", sub: "For students and elders" },
-    { emoji: "🤝", label: "Friendly atmosphere", sub: "Fun and organised" },
+    { icon: "sparkle", color: c.cyan,    label: "Great Equipment",     sub: "Machines worth like heaven" },
+    { icon: "shield",  color: c.lime,    label: "Clean Environment",   sub: "Especially clean and perfect" },
+    { icon: "currency",color: c.orange,  label: "Affordable Fees",     sub: "For students and elders" },
+    { icon: "hands",   color: c.cyan,    label: "Friendly Atmosphere", sub: "Fun and organised" },
   ]
   return (
     <div
@@ -3593,15 +3888,29 @@ function TrustSummary({ c }: { c: Colors }) {
         {points.map((p) => (
           <div
             key={p.label}
-            className="flex flex-col items-center text-center gap-2"
+            className="group flex flex-col items-center text-center gap-3 p-4 rounded-[16px] transition-all duration-300 cursor-default hover:-translate-y-1"
+            style={{ border: "1px solid transparent" }}
+            onMouseEnter={e => {
+              const el = e.currentTarget as HTMLElement
+              el.style.background = p.color + "10"
+              el.style.borderColor = p.color + "33"
+              el.style.boxShadow = c.isDark ? `0 0 20px ${p.color}18` : `0 4px 16px ${p.color}22`
+            }}
+            onMouseLeave={e => {
+              const el = e.currentTarget as HTMLElement
+              el.style.background = "transparent"
+              el.style.borderColor = "transparent"
+              el.style.boxShadow = "none"
+            }}
           >
-            <div className="text-[28px]">{p.emoji}</div>
-            <div className="font-bold text-[13px]" style={{ color: c.text }}>
-              {p.label}
+            <div
+              className="w-12 h-12 rounded-[14px] flex items-center justify-center transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3"
+              style={{ background: p.color + "18" }}
+            >
+              <Icon name={p.icon} size={24} color={p.color} />
             </div>
-            <div className="text-[11px] font-light" style={{ color: c.muted }}>
-              {p.sub}
-            </div>
+            <div className="font-bold text-[13px]" style={{ color: c.text }}>{p.label}</div>
+            <div className="text-[11px] font-light" style={{ color: c.muted }}>{p.sub}</div>
           </div>
         ))}
       </div>
@@ -4093,14 +4402,18 @@ function Events() {
                           className="flex gap-4 text-[12px] mb-4"
                           style={{ color: c.muted }}
                         >
-                          <span>📅 {ev.date}</span>
-                          <span>🕙 {ev.time}</span>
+                          <span className="flex items-center gap-1.5">
+                            <Icon name="calendar" size={13} color={c.orange} /> {ev.date}
+                          </span>
+                          <span className="flex items-center gap-1.5">
+                            <Icon name="time" size={13} color={c.cyan} /> {ev.time}
+                          </span>
                         </div>
                         <div
-                          className="text-[12px] mb-5"
+                          className="text-[12px] mb-5 flex items-center gap-1.5"
                           style={{ color: c.muted }}
                         >
-                          📍 {ev.location}
+                          <Icon name="location" size={13} color={c.orange} /> {ev.location}
                         </div>
                         {ev.registrationUrl && (
                           <a
@@ -4240,8 +4553,10 @@ function CompletedEventCard({ ev, c }: { ev: EventItem; c: Colors }) {
               </div>
             ))}
           </div>
-          <div className="text-[12px] mb-5" style={{ color: c.muted }}>
-            📍 {ev.location} &nbsp;·&nbsp; 📞 {ev.phone}
+          <div className="text-[12px] mb-5 flex items-center gap-3 flex-wrap" style={{ color: c.muted }}>
+            <span className="flex items-center gap-1.5"><Icon name="location" size={13} color={c.orange} /> {ev.location}</span>
+            <span style={{ color: c.border }}>·</span>
+            <span className="flex items-center gap-1.5"><Icon name="phone" size={13} color={c.cyan} /> {ev.phone}</span>
           </div>
 
           {/* Activities */}
@@ -4963,6 +5278,7 @@ function AppInner() {
       <Hero />
       <Ticker />
       <About />
+      <ProteinHubPromo />
       <Programs />
       <HowWeWork />
       <Trainers />
