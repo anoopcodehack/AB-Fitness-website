@@ -1,17 +1,18 @@
 import { useState, useEffect, useRef, createContext, useContext } from "react"
-import { Sun, Moon } from "lucide-react"
+import { Sun, Moon, X, ChevronLeft, ChevronRight, ZoomIn } from "lucide-react"
 import logoImg from "@/imports/image-10.png"
-import galleryImg1 from "@/imports/image.png"
-import galleryImg2 from "@/imports/image-17.png"
-import galleryImg3 from "@/imports/image-18.png"
-import galleryImg4 from "@/imports/image-16.png"
-import galleryImg5 from "@/imports/image-19.png"
-import galleryImg6 from "@/imports/image-20.png"
+import galleryImg1 from "@/imports/deralakatte-gallery-1.jpg"
+import galleryImg2 from "@/imports/deralakatte-gallery-2.jpg"
+import galleryImg3 from "@/imports/deralakatte-gallery-3.jpg"
+import galleryImg4 from "@/imports/deralakatte-gallery-4.jpg"
+import galleryImg5 from "@/imports/deralakatte-gallery-5.jpg"
+import galleryImg6 from "@/imports/deralakatte-gallery-6.jpg"
+import galleryImg7 from "@/imports/deralakatte-gallery-7.jpg"
 import afeelImg from "@/imports/Afeel.jpeg"
 import akshithaImg from "@/imports/Akshitha.jpeg"
 import prakashImg from "@/imports/Prakash P.jpeg"
 import vishnuImg from "@/imports/Vishnu.jpeg"
-import gymVideo from "@/imports/AB_fitness_v.mp4"
+import gymVideo from "@/imports/Derelekatte video.mp4"
 import abtImg from "@/imports/ABabt.jpeg"
 import eventFlyerImg from "@/imports/IMG-20260816-WA0003-1.jpg"
 
@@ -77,7 +78,7 @@ const LIGHT_C: Colors = {
 }
 
 type ThemeCtx = { isDark: boolean; toggle: () => void }
-const ThemeContext = createContext<ThemeCtx>({ isDark: true, toggle: () => {} })
+const ThemeContext = createContext<ThemeCtx>({ isDark: true, toggle: () => { } })
 const useTheme = () => useContext(ThemeContext)
 const useC = (): Colors => {
   const { isDark } = useTheme()
@@ -517,9 +518,8 @@ function CinematicIntro({ onDone }: { onDone: () => void }) {
   return (
     <div
       aria-hidden="true"
-      className={`fixed inset-0 z-[9999] flex flex-col items-center justify-center overflow-hidden${
-        exiting ? " intro-overlay-exit" : ""
-      }`}
+      className={`fixed inset-0 z-[9999] flex flex-col items-center justify-center overflow-hidden${exiting ? " intro-overlay-exit" : ""
+        }`}
       style={{ background: "#080808" }}
     >
       {/* Ambient radial — deliberately subtle */}
@@ -542,9 +542,8 @@ function CinematicIntro({ onDone }: { onDone: () => void }) {
 
       {/* Content block */}
       <div
-        className={`flex flex-col items-center gap-0 select-none${
-          exiting ? " intro-content-exit" : ""
-        }`}
+        className={`flex flex-col items-center gap-0 select-none${exiting ? " intro-content-exit" : ""
+          }`}
       >
         {/* Logo */}
         <div className={`opacity-0${logoIn ? " intro-logo-in" : ""}`}>
@@ -603,9 +602,8 @@ function CinematicIntro({ onDone }: { onDone: () => void }) {
 
         {/* Divider */}
         <div
-          className={`mt-7 mb-6 opacity-0${
-            wordmarkIn ? " intro-wordmark-in" : ""
-          }`}
+          className={`mt-7 mb-6 opacity-0${wordmarkIn ? " intro-wordmark-in" : ""
+            }`}
           style={{ width: 32, height: 1, background: "rgba(255,72,0,0.4)" }}
         />
 
@@ -669,9 +667,8 @@ function ThemeToggle() {
         height: 30,
         borderRadius: 15,
         background: isDark ? "#1c1c1c" : "#e0e0e0",
-        border: `1.5px solid ${
-          isDark ? "rgba(255,72,0,0.3)" : "rgba(0,0,0,0.15)"
-        }`,
+        border: `1.5px solid ${isDark ? "rgba(255,72,0,0.3)" : "rgba(0,0,0,0.15)"
+          }`,
         cursor: "pointer",
         flexShrink: 0,
         transition: "background 0.3s ease, border-color 0.3s ease",
@@ -846,21 +843,18 @@ function Nav() {
             aria-label="Menu"
           >
             <span
-              className={`block w-5 h-0.5 mb-1.5 transition-all duration-300 ${
-                open ? "rotate-45 translate-y-2" : ""
-              }`}
+              className={`block w-5 h-0.5 mb-1.5 transition-all duration-300 ${open ? "rotate-45 translate-y-2" : ""
+                }`}
               style={{ background: c.text }}
             />
             <span
-              className={`block w-5 h-0.5 mb-1.5 transition-all ${
-                open ? "opacity-0" : ""
-              }`}
+              className={`block w-5 h-0.5 mb-1.5 transition-all ${open ? "opacity-0" : ""
+                }`}
               style={{ background: c.text }}
             />
             <span
-              className={`block w-5 h-0.5 transition-all duration-300 ${
-                open ? "-rotate-45 -translate-y-2" : ""
-              }`}
+              className={`block w-5 h-0.5 transition-all duration-300 ${open ? "-rotate-45 -translate-y-2" : ""
+                }`}
               style={{ background: c.text }}
             />
           </button>
@@ -868,9 +862,8 @@ function Nav() {
       </div>
 
       <div
-        className={`md:hidden overflow-hidden transition-all duration-300 ${
-          open ? "max-h-80" : "max-h-0"
-        }`}
+        className={`md:hidden overflow-hidden transition-all duration-300 ${open ? "max-h-80" : "max-h-0"
+          }`}
         style={{
           background: c.mobileMenuBg,
           borderTop: `1px solid ${c.navBorder}`,
@@ -1519,9 +1512,8 @@ function SectionLabel({
   const c = useC()
   return (
     <div
-      className={`flex items-center gap-3 mb-4 ${
-        center ? "justify-center" : ""
-      }`}
+      className={`flex items-center gap-3 mb-4 ${center ? "justify-center" : ""
+        }`}
     >
       <div
         className="h-px w-8 rounded-full"
@@ -1561,9 +1553,8 @@ function Heading({
   const c = useC()
   return (
     <h2
-      className={`font-black uppercase leading-tight ${
-        center ? "text-center" : ""
-      }`}
+      className={`font-black uppercase leading-tight ${center ? "text-center" : ""
+        }`}
       style={{
         color: c.text,
         fontSize:
@@ -1682,9 +1673,8 @@ function About() {
                   className="rounded-[16px] overflow-hidden transition-all duration-200"
                   style={{
                     background: c.card,
-                    border: `1px solid ${
-                      open === i ? c.orange + "55" : c.border
-                    }`,
+                    border: `1px solid ${open === i ? c.orange + "55" : c.border
+                      }`,
                     boxShadow:
                       open === i
                         ? c.isDark
@@ -1721,9 +1711,8 @@ function About() {
                     </span>
                   </button>
                   <div
-                    className={`overflow-hidden transition-all duration-300 ${
-                      open === i ? "max-h-40" : "max-h-0"
-                    }`}
+                    className={`overflow-hidden transition-all duration-300 ${open === i ? "max-h-40" : "max-h-0"
+                      }`}
                   >
                     <p
                       className="px-5 pb-5 text-[13px] font-light leading-relaxed"
@@ -1776,9 +1765,8 @@ function About() {
           />
           {/* overlay + play/pause button */}
           <div
-            className={`absolute inset-0 flex items-center justify-center transition-opacity duration-300 ${
-              playing ? "opacity-0 group-hover:opacity-100" : "opacity-100"
-            }`}
+            className={`absolute inset-0 flex items-center justify-center transition-opacity duration-300 ${playing ? "opacity-0 group-hover:opacity-100" : "opacity-100"
+              }`}
             style={{ background: "rgba(0,0,0,0.38)" }}
           >
             <div
@@ -2496,23 +2484,23 @@ function Schedule() {
 
   const classPill: Record<string, { bg: string; color: string }> = c.isDark
     ? {
-        Strength: { bg: `${c.orange}20`, color: c.orange },
-        Yoga: { bg: "#00ff8820", color: "#00cc66" },
-        CrossFit: { bg: `${c.lime}20`, color: c.lime },
-        Cardio: { bg: `${c.cyan}20`, color: c.cyan },
-        Boxing: { bg: "#ff00aa20", color: "#ff66cc" },
-        Kickboxing: { bg: "#ff00aa20", color: "#ff66cc" },
-        Bootcamp: { bg: "#ffaa0020", color: "#ffaa00" },
-      }
+      Strength: { bg: `${c.orange}20`, color: c.orange },
+      Yoga: { bg: "#00ff8820", color: "#00cc66" },
+      CrossFit: { bg: `${c.lime}20`, color: c.lime },
+      Cardio: { bg: `${c.cyan}20`, color: c.cyan },
+      Boxing: { bg: "#ff00aa20", color: "#ff66cc" },
+      Kickboxing: { bg: "#ff00aa20", color: "#ff66cc" },
+      Bootcamp: { bg: "#ffaa0020", color: "#ffaa00" },
+    }
     : {
-        Strength: { bg: `${c.orange}18`, color: c.orange },
-        Yoga: { bg: "#00aa5518", color: "#007a3d" },
-        CrossFit: { bg: `${c.lime}25`, color: c.lime },
-        Cardio: { bg: `${c.cyan}18`, color: c.cyan },
-        Boxing: { bg: "#cc006618", color: "#aa0055" },
-        Kickboxing: { bg: "#cc006618", color: "#aa0055" },
-        Bootcamp: { bg: "#aa660018", color: "#7a4400" },
-      }
+      Strength: { bg: `${c.orange}18`, color: c.orange },
+      Yoga: { bg: "#00aa5518", color: "#007a3d" },
+      CrossFit: { bg: `${c.lime}25`, color: c.lime },
+      Cardio: { bg: `${c.cyan}18`, color: c.cyan },
+      Boxing: { bg: "#cc006618", color: "#aa0055" },
+      Kickboxing: { bg: "#cc006618", color: "#aa0055" },
+      Bootcamp: { bg: "#aa660018", color: "#7a4400" },
+    }
 
   return (
     <Section bg={c.surface} border>
@@ -2737,12 +2725,12 @@ function Memberships() {
                 style={
                   category === cat
                     ? {
-                        background: c.orange,
-                        color: "#fff",
-                        boxShadow: c.isDark
-                          ? `0 0 16px ${c.orange}66`
-                          : `0 2px 10px ${c.orange}44`,
-                      }
+                      background: c.orange,
+                      color: "#fff",
+                      boxShadow: c.isDark
+                        ? `0 0 16px ${c.orange}66`
+                        : `0 2px 10px ${c.orange}44`,
+                    }
                     : { color: c.muted }
                 }
               >
@@ -2761,19 +2749,19 @@ function Memberships() {
                 style={
                   plan.best
                     ? {
-                        background: c.orange,
-                        boxShadow: c.isDark
-                          ? `0 0 40px ${c.orange}55, 0 0 80px ${c.orange}22`
-                          : `0 6px 28px ${c.orange}55`,
-                        animation: "pulse-glow 2.5s ease-in-out infinite",
-                      }
+                      background: c.orange,
+                      boxShadow: c.isDark
+                        ? `0 0 40px ${c.orange}55, 0 0 80px ${c.orange}22`
+                        : `0 6px 28px ${c.orange}55`,
+                      animation: "pulse-glow 2.5s ease-in-out infinite",
+                    }
                     : {
-                        background: c.card,
-                        border: `1px solid ${c.border}`,
-                        boxShadow: c.isDark
-                          ? "none"
-                          : "0 2px 12px rgba(0,0,0,0.06)",
-                      }
+                      background: c.card,
+                      border: `1px solid ${c.border}`,
+                      boxShadow: c.isDark
+                        ? "none"
+                        : "0 2px 12px rgba(0,0,0,0.06)",
+                    }
                 }
                 onMouseEnter={(e) => {
                   if (!plan.best) {
@@ -2814,15 +2802,15 @@ function Memberships() {
                     style={
                       plan.best
                         ? {
-                            background: "rgba(255,255,255,0.25)",
-                            color: "#fff",
-                          }
+                          background: "rgba(255,255,255,0.25)",
+                          color: "#fff",
+                        }
                         : {
-                            background: c.isDark
-                              ? `${c.lime}22`
-                              : `${c.lime}28`,
-                            color: c.lime,
-                          }
+                          background: c.isDark
+                            ? `${c.lime}22`
+                            : `${c.lime}28`,
+                          color: c.lime,
+                        }
                     }
                   >
                     -{plan.savingPct}%
@@ -2955,15 +2943,15 @@ function Memberships() {
                   style={
                     plan.best
                       ? {
-                          background: "rgba(255,255,255,0.22)",
-                          color: "#fff",
-                          border: "1.5px solid rgba(255,255,255,0.35)",
-                        }
+                        background: "rgba(255,255,255,0.22)",
+                        color: "#fff",
+                        border: "1.5px solid rgba(255,255,255,0.35)",
+                      }
                       : {
-                          background: `${c.orange}18`,
-                          color: c.orange,
-                          border: `1.5px solid ${c.orange}44`,
-                        }
+                        background: `${c.orange}18`,
+                        color: c.orange,
+                        border: `1.5px solid ${c.orange}44`,
+                      }
                   }
                 >
                   Get Started
@@ -3624,48 +3612,90 @@ function TrustSummary({ c }: { c: Colors }) {
 // ─── GALLERY ──────────────────────────────────────────────────────────────────
 function Gallery() {
   const c = useC()
+  const [activeIdx, setActiveIdx] = useState<number | null>(null)
+
   const gallery = [
     {
       src: galleryImg1,
-      alt: "Dumbbell rack with LED mirror wall",
-      span: "row-span-2",
+      title: "Front Desk & Reception",
+      alt: "AB Fitness Hub Deralakatte front desk & reception with logo and nutrition station",
+      span: "col-span-2 md:col-span-1 md:row-span-2",
     },
     {
       src: galleryImg2,
-      alt: "Yellow gym machines and cable stations",
-      span: "",
+      title: "Grand Entrance Hallway",
+      alt: "Grand entrance hallway and welcome lounge at AB Fitness Hub Deralakatte",
+      span: "col-span-1 md:col-span-1 md:row-span-1",
     },
     {
       src: galleryImg3,
-      alt: "Cardio equipment — Energie Fitness treadmills",
-      span: "",
+      title: "Strength & Resistance Floor",
+      alt: "Strength training floor with premium resistance machines and LED mirrors",
+      span: "col-span-1 md:col-span-1 md:row-span-1",
     },
     {
       src: galleryImg4,
-      alt: "Supplement and protein powder display",
-      span: "",
+      title: "Free Weights & Cable Zone",
+      alt: "Comprehensive free-weight and plate-loaded equipment zone at Deralakatte",
+      span: "col-span-1 md:col-span-1 md:row-span-1",
     },
-    { src: galleryImg5, alt: "AB Fitness Hub reception and logo", span: "" },
+    {
+      src: galleryImg5,
+      title: "Functional Rig & Cardio Zone",
+      alt: "Functional training rig, cardio section and ski ergometer at AB Fitness Hub",
+      span: "col-span-1 md:col-span-1 md:row-span-1",
+    },
     {
       src: galleryImg6,
-      alt: "Treadmill row with AB Fitness branding",
-      span: "row-span-2",
+      title: "Workout Floor & Bench Arena",
+      alt: "Spacious gym floor with workout benches, conditioning equipment and dumbbell station",
+      span: "col-span-1 md:col-span-2 md:row-span-1",
+    },
+    {
+      src: galleryImg7,
+      title: "Plate-Loaded Strength Zone",
+      alt: "Member training on plate-loaded T-bar row machine with arched ambient mirrors",
+      span: "col-span-1 md:col-span-1 md:row-span-1",
     },
   ]
+
+  useEffect(() => {
+    if (activeIdx === null) return
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setActiveIdx(null)
+      else if (e.key === "ArrowRight")
+        setActiveIdx((prev) => (prev !== null ? (prev + 1) % gallery.length : null))
+      else if (e.key === "ArrowLeft")
+        setActiveIdx((prev) => (prev !== null ? (prev - 1 + gallery.length) % gallery.length : null))
+    }
+    window.addEventListener("keydown", handleKeyDown)
+    return () => window.removeEventListener("keydown", handleKeyDown)
+  }, [activeIdx, gallery.length])
+
   return (
     <Section id="gallery" bg={c.bg} border>
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <Reveal className="text-center mb-12">
           <SectionLabel text="Gallery" center />
           <Heading center>
-            Inside <span style={{ color: c.orange }}>AB Fitness</span> Hub
+            Inside <span style={{ color: c.orange }}>AB Fitness</span> Deralakatte
           </Heading>
         </Reveal>
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 auto-rows-[140px] sm:auto-rows-[180px]">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 auto-rows-[170px] sm:auto-rows-[210px] md:auto-rows-[240px]">
           {gallery.map((p, i) => (
             <Reveal key={i} delay={i * 60} dir="scale" className={p.span}>
               <div
-                className={`group relative overflow-hidden rounded-[18px] w-full h-full`}
+                role="button"
+                tabIndex={0}
+                aria-label={`View ${p.title}`}
+                onClick={() => setActiveIdx(i)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault()
+                    setActiveIdx(i)
+                  }
+                }}
+                className="group relative overflow-hidden rounded-[18px] w-full h-full cursor-pointer focus:outline-none focus:ring-2 focus:ring-orange-500"
                 style={{
                   background: c.card,
                   border: `1px solid ${c.borderFaint}`,
@@ -3674,21 +3704,33 @@ function Gallery() {
                 <img
                   src={p.src}
                   alt={p.alt}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 grayscale-[20%] group-hover:grayscale-0"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 grayscale-[15%] group-hover:grayscale-0"
                 />
                 <div
-                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                  style={{ background: "rgba(0,0,0,0.28)" }}
-                />
-                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-                  <div
-                    className="w-10 h-10 rounded-full flex items-center justify-center"
-                    style={{
-                      background: c.orange,
-                      boxShadow: `0 0 20px ${c.orange}88`,
-                    }}
-                  >
-                    <span className="text-white font-bold text-xl">+</span>
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-between p-4"
+                  style={{
+                    background:
+                      "linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.4) 100%)",
+                  }}
+                >
+                  <div className="flex justify-end">
+                    <div
+                      className="w-9 h-9 rounded-full flex items-center justify-center text-white"
+                      style={{
+                        background: c.orange,
+                        boxShadow: `0 0 16px ${c.orange}88`,
+                      }}
+                    >
+                      <ZoomIn size={18} />
+                    </div>
+                  </div>
+                  <div>
+                    <span className="text-[11px] uppercase tracking-wider font-semibold text-orange-400">
+                      AB Fitness Deralakatte
+                    </span>
+                    <h4 className="text-sm sm:text-base font-bold text-white drop-shadow-sm">
+                      {p.title}
+                    </h4>
                   </div>
                 </div>
               </div>
@@ -3696,6 +3738,75 @@ function Gallery() {
           ))}
         </div>
       </div>
+
+      {/* Lightbox Modal */}
+      {activeIdx !== null && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6"
+          style={{ background: "rgba(0,0,0,0.88)", backdropFilter: "blur(8px)" }}
+          onClick={() => setActiveIdx(null)}
+        >
+          <div
+            className="relative max-w-4xl w-full max-h-[90vh] flex flex-col items-center"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Close Button */}
+            <button
+              onClick={() => setActiveIdx(null)}
+              className="absolute -top-12 right-0 sm:right-2 p-2 rounded-full text-white/80 hover:text-white transition-colors cursor-pointer"
+              style={{ background: "rgba(255,255,255,0.12)" }}
+              aria-label="Close modal"
+            >
+              <X size={22} />
+            </button>
+
+            {/* Prev Button */}
+            <button
+              onClick={() =>
+                setActiveIdx((prev) =>
+                  prev !== null ? (prev - 1 + gallery.length) % gallery.length : null
+                )
+              }
+              className="absolute left-2 top-1/2 -translate-y-1/2 p-2.5 sm:p-3 rounded-full text-white/90 hover:text-white transition-all hover:scale-110 z-10 cursor-pointer"
+              style={{ background: "rgba(0,0,0,0.6)", border: "1px solid rgba(255,255,255,0.2)" }}
+              aria-label="Previous photo"
+            >
+              <ChevronLeft size={24} />
+            </button>
+
+            {/* Image Container */}
+            <div className="overflow-hidden rounded-2xl border border-white/10 shadow-2xl flex items-center justify-center bg-black/40">
+              <img
+                src={gallery[activeIdx].src}
+                alt={gallery[activeIdx].alt}
+                className="max-h-[75vh] w-auto object-contain rounded-2xl"
+              />
+            </div>
+
+            {/* Next Button */}
+            <button
+              onClick={() =>
+                setActiveIdx((prev) =>
+                  prev !== null ? (prev + 1) % gallery.length : null
+                )
+              }
+              className="absolute right-2 top-1/2 -translate-y-1/2 p-2.5 sm:p-3 rounded-full text-white/90 hover:text-white transition-all hover:scale-110 z-10 cursor-pointer"
+              style={{ background: "rgba(0,0,0,0.6)", border: "1px solid rgba(255,255,255,0.2)" }}
+              aria-label="Next photo"
+            >
+              <ChevronRight size={24} />
+            </button>
+
+            {/* Caption & Counter */}
+            <div className="mt-3 flex items-center justify-between w-full px-2 text-sm text-white/80">
+              <span className="font-semibold text-white">{gallery[activeIdx].title}</span>
+              <span className="text-xs text-white/60 font-mono">
+                {activeIdx + 1} / {gallery.length}
+              </span>
+            </div>
+          </div>
+        </div>
+      )}
     </Section>
   )
 }
@@ -3745,9 +3856,8 @@ function FAQ() {
                 className="rounded-[18px] overflow-hidden transition-all duration-200"
                 style={{
                   background: c.card,
-                  border: `1px solid ${
-                    open === i ? c.orange + "55" : c.border
-                  }`,
+                  border: `1px solid ${open === i ? c.orange + "55" : c.border
+                    }`,
                   boxShadow:
                     open === i
                       ? c.isDark
@@ -3777,9 +3887,8 @@ function FAQ() {
                   </span>
                 </button>
                 <div
-                  className={`overflow-hidden transition-all duration-300 ${
-                    open === i ? "max-h-40" : "max-h-0"
-                  }`}
+                  className={`overflow-hidden transition-all duration-300 ${open === i ? "max-h-40" : "max-h-0"
+                    }`}
                 >
                   <p
                     className="px-5 pb-5 text-[13px] font-light leading-relaxed"
@@ -3879,12 +3988,12 @@ function Events() {
                 style={
                   tab === t
                     ? {
-                        background: c.orange,
-                        color: "#fff",
-                        boxShadow: c.isDark
-                          ? `0 0 16px ${c.orange}55`
-                          : `0 2px 12px ${c.orange}44`,
-                      }
+                      background: c.orange,
+                      color: "#fff",
+                      boxShadow: c.isDark
+                        ? `0 0 16px ${c.orange}55`
+                        : `0 2px 12px ${c.orange}44`,
+                    }
                     : { color: c.muted }
                 }
               >
@@ -4458,74 +4567,43 @@ Thank you! 🙏`
               }}
               className="space-y-4"
             >
-                {[
-                  {
-                    id: "name",
-                    label: "Full Name",
-                    type: "text",
-                    placeholder: "Your Name",
-                  },
-                  {
-                    id: "email",
-                    label: "Email Address",
-                    type: "email",
-                    placeholder: "your@email.com",
-                  },
-                  {
-                    id: "phone",
-                    label: "Phone Number",
-                    type: "tel",
-                    placeholder: "+91 98765 43210",
-                  },
-                ].map((f) => (
-                  <div key={f.id}>
-                    <label
-                      htmlFor={f.id}
-                      className="block text-[11px] font-bold uppercase tracking-widest mb-2"
-                      style={{ color: c.muted }}
-                    >
-                      {f.label}
-                    </label>
-                    <input
-                      id={f.id}
-                      type={f.type}
-                      placeholder={f.placeholder}
-                      value={form[(f.id as keyof typeof form)]}
-                      onChange={(e) =>
-                        setForm({ ...form, [f.id]: e.target.value })
-                      }
-                      className="w-full px-4 py-3 text-[14px] rounded-[14px] outline-none transition-all"
-                      style={{
-                        background: c.inputBg,
-                        border: `1px solid ${c.inputBorder}`,
-                        color: c.text,
-                      }}
-                      onFocus={(e) =>
-                        (e.target.style.borderColor = c.orange + "88")
-                      }
-                      onBlur={(e) =>
-                        (e.target.style.borderColor = c.inputBorder)
-                      }
-                    />
-                  </div>
-                ))}
-                <div>
+              {[
+                {
+                  id: "name",
+                  label: "Full Name",
+                  type: "text",
+                  placeholder: "Your Name",
+                },
+                {
+                  id: "email",
+                  label: "Email Address",
+                  type: "email",
+                  placeholder: "your@email.com",
+                },
+                {
+                  id: "phone",
+                  label: "Phone Number",
+                  type: "tel",
+                  placeholder: "+91 98765 43210",
+                },
+              ].map((f) => (
+                <div key={f.id}>
                   <label
-                    htmlFor="message"
+                    htmlFor={f.id}
                     className="block text-[11px] font-bold uppercase tracking-widest mb-2"
                     style={{ color: c.muted }}
                   >
-                    Message (optional)
+                    {f.label}
                   </label>
-                  <textarea
-                    id="message"
-                    rows={4}
-                    placeholder="Tell us about your fitness goals..."
-                    value={form.message}
+                  <input
+                    id={f.id}
+                    type={f.type}
+                    placeholder={f.placeholder}
+                    value={form[(f.id as keyof typeof form)]}
                     onChange={(e) =>
-                      setForm({ ...form, message: e.target.value })
+                      setForm({ ...form, [f.id]: e.target.value })
                     }
-                    className="w-full px-4 py-3 text-[14px] rounded-[14px] outline-none transition-all resize-none"
+                    className="w-full px-4 py-3 text-[14px] rounded-[14px] outline-none transition-all"
                     style={{
                       background: c.inputBg,
                       border: `1px solid ${c.inputBorder}`,
@@ -4534,22 +4612,53 @@ Thank you! 🙏`
                     onFocus={(e) =>
                       (e.target.style.borderColor = c.orange + "88")
                     }
-                    onBlur={(e) => (e.target.style.borderColor = c.inputBorder)}
+                    onBlur={(e) =>
+                      (e.target.style.borderColor = c.inputBorder)
+                    }
                   />
                 </div>
-                <button
-                  type="submit"
-                  className="w-full text-white font-bold text-[14px] py-4 rounded-[14px] transition-all hover:scale-[1.01]"
-                  style={{
-                    background: c.orange,
-                    boxShadow: c.isDark
-                      ? `0 0 24px ${c.orange}44`
-                      : `0 2px 16px ${c.orange}44`,
-                  }}
+              ))}
+              <div>
+                <label
+                  htmlFor="message"
+                  className="block text-[11px] font-bold uppercase tracking-widest mb-2"
+                  style={{ color: c.muted }}
                 >
-                  Book My Free Trial →
-                </button>
-              </form>
+                  Message (optional)
+                </label>
+                <textarea
+                  id="message"
+                  rows={4}
+                  placeholder="Tell us about your fitness goals..."
+                  value={form.message}
+                  onChange={(e) =>
+                    setForm({ ...form, message: e.target.value })
+                  }
+                  className="w-full px-4 py-3 text-[14px] rounded-[14px] outline-none transition-all resize-none"
+                  style={{
+                    background: c.inputBg,
+                    border: `1px solid ${c.inputBorder}`,
+                    color: c.text,
+                  }}
+                  onFocus={(e) =>
+                    (e.target.style.borderColor = c.orange + "88")
+                  }
+                  onBlur={(e) => (e.target.style.borderColor = c.inputBorder)}
+                />
+              </div>
+              <button
+                type="submit"
+                className="w-full text-white font-bold text-[14px] py-4 rounded-[14px] transition-all hover:scale-[1.01]"
+                style={{
+                  background: c.orange,
+                  boxShadow: c.isDark
+                    ? `0 0 24px ${c.orange}44`
+                    : `0 2px 16px ${c.orange}44`,
+                }}
+              >
+                Book My Free Trial →
+              </button>
+            </form>
           </div>
         </Reveal>
       </div>
