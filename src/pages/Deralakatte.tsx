@@ -1677,17 +1677,44 @@ function About() {
   const c = useC()
   const [open, setOpen] = useState<number | null>(0)
   const [playing, setPlaying] = useState(false)
+  const [muted, setMuted] = useState(true)
+  const [progress, setProgress] = useState(0)
+  const [liked, setLiked] = useState(false)
+  const [likeCount, setLikeCount] = useState(482)
   const videoRef = useRef<HTMLVideoElement>(null)
+
   const togglePlay = () => {
     const v = videoRef.current
     if (!v) return
     if (v.paused) {
-      v.play()
-      setPlaying(true)
+      v.play().then(() => setPlaying(true)).catch(() => {})
     } else {
       v.pause()
       setPlaying(false)
     }
+  }
+
+  const toggleMute = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    const v = videoRef.current
+    if (!v) return
+    v.muted = !muted
+    setMuted(!muted)
+  }
+
+  const handleLike = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    setLiked((prev) => {
+      const next = !prev
+      setLikeCount((count) => (next ? count + 1 : count - 1))
+      return next
+    })
+  }
+
+  const handleTimeUpdate = () => {
+    const v = videoRef.current
+    if (!v || !v.duration) return
+    setProgress((v.currentTime / v.duration) * 100)
   }
   const items = [
     {
@@ -1845,65 +1872,165 @@ function About() {
         </div>
       </div>
 
-      {/* ── VIDEO PLAYER ── */}
-      <Reveal delay={100} className="max-w-5xl mx-auto px-4 sm:px-6 mt-16">
-        <div
-          className="relative rounded-[24px] overflow-hidden cursor-pointer group"
-          style={{
-            border: `1px solid ${c.orange}33`,
-            boxShadow: c.isDark
-              ? `0 0 60px ${c.orange}18`
-              : `0 8px 40px rgba(0,0,0,0.12)`,
-          }}
-          onClick={togglePlay}
-        >
-          <video
-            ref={videoRef}
-            src={gymVideo}
-            className="w-full block"
-            style={{ maxHeight: 520, objectFit: "cover" }}
-            playsInline
-            loop
-            onEnded={() => setPlaying(false)}
-          />
-          {/* overlay + play/pause button */}
+      {/* ── CINEMATIC 16:9 LANDSCAPE VIDEO PLAYER ── */}
+      <div className="mt-20 px-4 sm:px-6">
+        <Reveal delay={100} className="text-center mb-8">
           <div
-            className={`absolute inset-0 flex items-center justify-center transition-opacity duration-300 ${playing ? "opacity-0 group-hover:opacity-100" : "opacity-100"
-              }`}
-            style={{ background: "rgba(0,0,0,0.38)" }}
+            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider mb-3"
+            style={{
+              background: `${c.orange}15`,
+              color: c.orange,
+              border: `1px solid ${c.orange}33`,
+            }}
           >
-            <div
-              className="w-20 h-20 rounded-full flex items-center justify-center transition-transform duration-300 group-hover:scale-110"
-              style={{
-                background: c.orange,
-                boxShadow: `0 0 40px ${c.orange}88`,
-              }}
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="currentColor"
             >
-              {playing ? (
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
-                  <rect x="5" y="4" width="4" height="16" />
-                  <rect x="15" y="4" width="4" height="16" />
-                </svg>
-              ) : (
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
-                  <polygon points="6,3 21,12 6,21" />
-                </svg>
-              )}
+              <polygon points="5 3 19 12 5 21 5 3" />
+            </svg>
+            Gym Tour Video
+          </div>
+          <h3
+            className="text-2xl sm:text-3xl font-black uppercase tracking-tight"
+            style={{ fontFamily: "'Barlow Condensed', sans-serif", color: c.text }}
+          >
+            Experience <span style={{ color: c.orange }}>AB Fitness Hub</span> In Action
+          </h3>
+          <p className="text-sm mt-1" style={{ color: c.muted }}>
+            Take a look inside our modern Deralakatte facility &middot; Tap anywhere to play with sound
+          </p>
+        </Reveal>
+
+        <Reveal delay={200} className="max-w-5xl mx-auto">
+          <div className="relative group w-full">
+            {/* Ambient backdrop glow for full-bleed cinematic feel */}
+            <div
+              className="absolute -inset-4 rounded-[32px] opacity-30 blur-3xl pointer-events-none transition-opacity duration-500 group-hover:opacity-50"
+              style={{
+                background: `radial-gradient(ellipse 70% 60% at 50% 50%, ${c.orange}66 0%, transparent 75%)`,
+              }}
+            />
+
+            {/* 16:9 Landscape Card Frame */}
+            <div
+              className="relative aspect-video w-full rounded-[24px] sm:rounded-[28px] overflow-hidden cursor-pointer select-none bg-black shadow-2xl transition-all duration-300"
+              style={{
+                border: `2px solid ${c.isDark ? c.orange + "44" : "rgba(0,0,0,0.12)"}`,
+                boxShadow: c.isDark
+                  ? `0 0 50px ${c.orange}1f, 0 24px 48px rgba(0,0,0,0.85)`
+                  : `0 16px 40px rgba(0,0,0,0.15)`,
+              }}
+              onClick={togglePlay}
+            >
+              {/* Full-bleed 16:9 Landscape Video - Completely fills frame with zero empty side bars */}
+              <video
+                ref={videoRef}
+                src={gymVideo}
+                className="w-full h-full object-cover block"
+                playsInline
+                loop
+                muted={muted}
+                onTimeUpdate={handleTimeUpdate}
+                onEnded={() => setPlaying(false)}
+              />
+
+              {/* Top Controls: Sound Mute/Unmute Toggle */}
+              <div className="absolute top-4 sm:top-6 right-4 sm:right-6 z-20">
+                <button
+                  type="button"
+                  onClick={toggleMute}
+                  aria-label={muted ? "Unmute audio" : "Mute audio"}
+                  className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-black/60 hover:bg-black/85 backdrop-blur-md flex items-center justify-center text-white border border-white/15 shadow-xl transition-transform hover:scale-105 active:scale-95"
+                >
+                  {muted ? (
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                      <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                      <line x1="23" y1="9" x2="17" y2="15" />
+                      <line x1="17" y1="9" x2="23" y2="15" />
+                    </svg>
+                  ) : (
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                      <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                      <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
+                      <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
+                    </svg>
+                  )}
+                </button>
+              </div>
+
+              {/* Center Play/Pause Indicator Overlay */}
+              <div
+                className={`absolute inset-0 flex items-center justify-center transition-all duration-300 z-10 ${
+                  playing
+                    ? "opacity-0 group-hover:opacity-100 bg-black/25"
+                    : "opacity-100 bg-black/35"
+                }`}
+              >
+                <div
+                  className="w-18 h-18 sm:w-22 sm:h-22 rounded-full flex items-center justify-center text-white transition-all duration-300 group-hover:scale-110 shadow-2xl backdrop-blur-md"
+                  style={{
+                    background: c.orange,
+                    boxShadow: `0 0 45px ${c.orange}aa`,
+                  }}
+                >
+                  {playing ? (
+                    <svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor">
+                      <rect x="6" y="4" width="4" height="16" rx="1" />
+                      <rect x="14" y="4" width="4" height="16" rx="1" />
+                    </svg>
+                  ) : (
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor" className="ml-1">
+                      <polygon points="6,3 21,12 6,21" />
+                    </svg>
+                  )}
+                </div>
+              </div>
+
+              {/* Bottom Frosted Info Badge */}
+              <div
+                className="absolute inset-x-0 bottom-0 pt-16 pb-5 px-5 sm:px-7 z-15 pointer-events-none flex flex-col justify-end"
+                style={{
+                  background:
+                    "linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 65%, transparent 100%)",
+                }}
+              >
+                <div className="flex items-center justify-between">
+                  <div>
+                    <div className="text-white font-bold text-[15px] sm:text-[17px] drop-shadow-md flex items-center gap-2">
+                      <span className="w-2 h-2 rounded-full bg-[#ff4800] animate-pulse" />
+                      Watch AB Fitness Hub in Action
+                    </div>
+                    <div className="text-white/70 text-[12px] sm:text-[13px] font-light mt-0.5">
+                      Deralakatte, Mangalore &bull; Modern Facilities &bull; Strength &bull; Cardio
+                    </div>
+                  </div>
+                  <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-white/90 text-xs font-semibold">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                      <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm-1 14.5v-9l6 4.5z"/>
+                    </svg>
+                    HD Video
+                  </div>
+                </div>
+              </div>
+
+              {/* Bottom Progress Bar */}
+              <div className="absolute bottom-0 left-0 right-0 h-[3.5px] bg-white/20 z-30">
+                <div
+                  className="h-full transition-all duration-150"
+                  style={{
+                    width: `${progress}%`,
+                    background: "linear-gradient(90deg, #ff4800, #ff8c00)",
+                    boxShadow: "0 0 8px #ff4800",
+                  }}
+                />
+              </div>
             </div>
           </div>
-          {/* bottom label */}
-          {!playing && (
-            <div className="absolute bottom-5 left-5">
-              <div className="text-white font-bold text-[15px] drop-shadow-lg">
-                Watch AB Fitness Hub in Action
-              </div>
-              <div className="text-white/60 text-[12px] font-light">
-                Deralakatte, Mangalore
-              </div>
-            </div>
-          )}
-        </div>
-      </Reveal>
+        </Reveal>
+      </div>
     </Section>
   )
 }
@@ -1914,12 +2041,12 @@ function ProteinHubPromo() {
   const navigate = useNavigate()
 
   const highlights = [
-    { icon: "cup",      color: c.orange, label: "Protein Shakes",      sub: "7 flavours from ₹130" },
-    { icon: "leaf",     color: c.lime,   label: "Smoothies",            sub: "Natural energy boost" },
-    { icon: "bowl",     color: c.cyan,   label: "Oats & Bowls",         sub: "Pre/post workout fuel" },
-    { icon: "salad",    color: c.lime,   label: "Salads & Sandwiches",  sub: "Fresh & healthy" },
-    { icon: "zap",      color: c.cyan,   label: "Fresh Juices",         sub: "Cold-pressed from ₹50" },
-    { icon: "flame",    color: c.orange, label: "Power Combos",         sub: "Ultimate gym fuel" },
+    { icon: "cup", color: c.orange, label: "Protein Shakes", sub: "7 flavours from ₹130" },
+    { icon: "leaf", color: c.lime, label: "Smoothies", sub: "Natural energy boost" },
+    { icon: "bowl", color: c.cyan, label: "Oats & Bowls", sub: "Pre/post workout fuel" },
+    { icon: "salad", color: c.lime, label: "Salads & Sandwiches", sub: "Fresh & healthy" },
+    { icon: "zap", color: c.cyan, label: "Fresh Juices", sub: "Cold-pressed from ₹50" },
+    { icon: "flame", color: c.orange, label: "Power Combos", sub: "Ultimate gym fuel" },
   ]
 
   return (
@@ -2128,7 +2255,7 @@ function Programs() {
       tag: null,
       color: c.cyan,
       img: "https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?w=600&h=400&fit=crop&auto=format&q=80",
-      fees: ["Admission: ₹2,000", "Monthly: ₹1,800", "3 Months: ₹4,999", "6 Months: ₹8,999", "1 Year: ₹12,900"],
+      fees: ["Admission: ₹2,000", "Monthly: ₹2,000", "3 Months: ₹4,999", "6 Months: ₹8,999", "1 Year: ₹12,900"],
     },
     {
       icon: "lotus",
@@ -3499,7 +3626,7 @@ function Memberships() {
               <div className="p-5 space-y-2">
                 {[
                   { label: "Admission", price: "₹2,000/-" },
-                  { label: "Monthly", price: "₹1,800/-" },
+                  { label: "Monthly", price: "₹2000/-" },
                   { label: "3 Months", price: "₹5,400/-", offer: "₹4,999/-" },
                   { label: "6 Months", price: "₹10,800/-", offer: "₹8,999/-" },
                   { label: "1 Year", price: "₹21,600/-", offer: "₹12,900/-" },
@@ -3868,10 +3995,10 @@ function ReviewCard({
 
 function TrustSummary({ c }: { c: Colors }) {
   const points = [
-    { icon: "sparkle", color: c.cyan,    label: "Great Equipment",     sub: "Machines worth like heaven" },
-    { icon: "shield",  color: c.lime,    label: "Clean Environment",   sub: "Especially clean and perfect" },
-    { icon: "currency",color: c.orange,  label: "Affordable Fees",     sub: "For students and elders" },
-    { icon: "hands",   color: c.cyan,    label: "Friendly Atmosphere", sub: "Fun and organised" },
+    { icon: "sparkle", color: c.cyan, label: "Great Equipment", sub: "Machines worth like heaven" },
+    { icon: "shield", color: c.lime, label: "Clean Environment", sub: "Especially clean and perfect" },
+    { icon: "currency", color: c.orange, label: "Affordable Fees", sub: "For students and elders" },
+    { icon: "hands", color: c.cyan, label: "Friendly Atmosphere", sub: "Fun and organised" },
   ]
   return (
     <div
