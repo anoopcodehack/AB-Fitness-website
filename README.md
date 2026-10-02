@@ -5,6 +5,7 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.7-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Vite](https://img.shields.io/badge/Vite-8.0-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
 [![Tailwind CSS v4](https://img.shields.io/badge/Tailwind_CSS-v4.0-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](./LICENSE)
 
 > **A modern, high-performance, multi-tenant digital fitness platform engineered for AB Fitness Hub’s commercial gym branches and nutrition bar in Mangalore, India.**
 
@@ -186,6 +187,12 @@ d:/AB Fitness website/
 - **Engineering & Architecture**: Developed with pride for **AB Fitness Hub**
 - **Locations**: Kavoor & Deralakatte, Mangalore, Karnataka, India
 - **Contact & Inquiries**: [AB Fitness Website](https://ab-fitness-website.vercel.app/)
+
+---
+
+## 📄 License
+
+This project is licensed under the **MIT License** — see the [LICENSE](./LICENSE) file for full details.
 
 ---
 
