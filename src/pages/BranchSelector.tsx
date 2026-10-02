@@ -240,6 +240,11 @@ function BranchSelectorContent() {
     try { return !sessionStorage.getItem(IK) } catch { return false }
   })
   const done = () => { try { sessionStorage.setItem(IK, "1") } catch {}; setShowIntro(false) }
+
+  useEffect(() => {
+    document.title = "AB Fitness Hub | Gym in Kavoor & Deralakatte, Mangalore"
+  }, [])
+
   return (
     <div style={{ minHeight: "100vh", width: "100%", position: "relative" }}>
       {/* Full-screen background image */}

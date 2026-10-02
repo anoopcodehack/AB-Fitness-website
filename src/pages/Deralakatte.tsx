@@ -5389,6 +5389,10 @@ function AppInner() {
     setShowIntro(false)
   }
 
+  useEffect(() => {
+    document.title = "AB Fitness Hub - Deralakatte | Gym in Deralakatte, Mangalore"
+  }, [])
+
   return (
     <div
       style={{

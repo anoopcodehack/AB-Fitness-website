@@ -4463,6 +4463,10 @@ function AppInner() {
     setShowIntro(false)
   }
 
+  useEffect(() => {
+    document.title = "AB Fitness Hub - Kavoor | Gym in Kavoor, Mangalore"
+  }, [])
+
   return (
     <div
       style={{

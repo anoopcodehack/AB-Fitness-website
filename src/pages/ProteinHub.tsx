@@ -701,6 +701,7 @@ function ProteinHubContent() {
   const c = useC()
   useEffect(() => {
     window.scrollTo(0, 0)
+    document.title = "AB Protein Hub | Deralakatte, Mangalore"
   }, [])
   return (
     <div style={{ background: c.bg, minHeight: "100vh" }}>
