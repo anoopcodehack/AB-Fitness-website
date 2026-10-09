@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, createContext, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { Sun, Moon, X, ChevronLeft, ChevronRight, ZoomIn } from "lucide-react";
+import { Sun, Moon, X, ChevronLeft, ChevronRight, ZoomIn, MapPin } from "lucide-react";
 import logoImg from "@/imports/image-10.png";
 import galleryImg1 from "@/imports/deralakatte-gallery-1.jpg";
 import galleryImg2 from "@/imports/deralakatte-gallery-2.jpg";
@@ -958,6 +958,20 @@ function Nav() {
         </div>
 
         <div className="hidden md:flex items-center gap-3">
+          <button
+            onClick={() => navigate("/")}
+            className="inline-flex items-center gap-1.5 text-[11px] font-bold px-3 py-1.5 rounded-full transition-all duration-200 hover:scale-105"
+            style={{
+              background: `${c.cyan}18`,
+              color: c.cyan,
+              border: `1px solid ${c.cyan}44`,
+              cursor: "pointer",
+            }}
+            title="Switch Branch (Kavoor / Deralakatte)"
+          >
+            <MapPin size={12} />
+            Switch Branch
+          </button>
           <ThemeToggle />
           <button
             onClick={() => navigate("/protein-hub")}
@@ -1014,7 +1028,7 @@ function Nav() {
 
       <div
         className={`md:hidden overflow-hidden transition-all duration-300 ${
-          open ? "max-h-80" : "max-h-0"
+          open ? "max-h-96" : "max-h-0"
         }`}
         style={{
           background: c.mobileMenuBg,
@@ -1022,6 +1036,16 @@ function Nav() {
         }}
       >
         <div className="px-6 py-4 flex flex-col gap-4">
+          <button
+            onClick={() => {
+              setOpen(false);
+              navigate("/");
+            }}
+            className="inline-flex items-center gap-2 text-xs font-bold text-left py-1"
+            style={{ color: c.cyan, background: "none", border: "none", cursor: "pointer" }}
+          >
+            <MapPin size={13} /> Switch Branch (Kavoor / Deralakatte)
+          </button>
           {links.map((l) => (
             <a
               key={l.label}
@@ -5174,6 +5198,7 @@ function Newsletter() {
 // ─── FOOTER ───────────────────────────────────────────────────────────────────
 function Footer() {
   const c = useC();
+  const navigate = useNavigate();
   return (
     <footer style={{ background: c.card, borderTop: `1px solid ${c.orange}22` }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-14 pb-8">
@@ -5236,20 +5261,30 @@ function Footer() {
             {
               title: "Our Services",
               links: [
-                "Personal Training",
-                "Group Fitness Classes",
-                "Nutritional Counseling",
-                "Cardiovascular Workouts",
-                "Functional Training",
+                { label: "Personal Training", href: "#programs" },
+                { label: "Strength & Cardio", href: "#programs" },
+                { label: "Functional Training", href: "#programs" },
+                { label: "Weight Loss / Gain", href: "#programs" },
+                { label: "Diet & Nutrition", href: "#programs" },
               ],
             },
             {
-              title: "Useful Links",
-              links: ["Home", "About Us", "Services", "Pricing", "Features"],
+              title: "Our Branches",
+              links: [
+                { label: "Deralakatte Branch (Here)", href: "#hero" },
+                { label: "Kavoor Branch", href: "/kavoor", isRoute: true },
+                { label: "AB Protein Hub Menu", href: "/protein-hub", isRoute: true },
+                { label: "Choose Branch", href: "/", isRoute: true },
+              ],
             },
             {
-              title: "Support",
-              links: ["Contact Us", "Help Center", "Privacy Policy", "Terms & Conditions"],
+              title: "Quick Links",
+              links: [
+                { label: "About Us", href: "#about" },
+                { label: "Membership Plans", href: "#memberships" },
+                { label: "Gym Gallery", href: "#gallery" },
+                { label: "Contact Us", href: "#contact" },
+              ],
             },
           ].map((col) => (
             <div key={col.title}>
@@ -5261,16 +5296,34 @@ function Footer() {
               </h4>
               <ul className="space-y-2.5">
                 {col.links.map((l) => (
-                  <li key={l}>
-                    <a
-                      href="#"
-                      className="text-[12px] font-light transition-colors"
-                      style={{ color: c.muted }}
-                      onMouseEnter={(e) => (e.currentTarget.style.color = c.orange)}
-                      onMouseLeave={(e) => (e.currentTarget.style.color = c.muted)}
-                    >
-                      {l}
-                    </a>
+                  <li key={l.label}>
+                    {l.isRoute ? (
+                      <button
+                        onClick={() => navigate(l.href)}
+                        className="text-[12px] font-light transition-colors text-left"
+                        style={{
+                          color: c.muted,
+                          background: "none",
+                          border: "none",
+                          cursor: "pointer",
+                          padding: 0,
+                        }}
+                        onMouseEnter={(e) => (e.currentTarget.style.color = c.orange)}
+                        onMouseLeave={(e) => (e.currentTarget.style.color = c.muted)}
+                      >
+                        {l.label}
+                      </button>
+                    ) : (
+                      <a
+                        href={l.href}
+                        className="text-[12px] font-light transition-colors"
+                        style={{ color: c.muted }}
+                        onMouseEnter={(e) => (e.currentTarget.style.color = c.orange)}
+                        onMouseLeave={(e) => (e.currentTarget.style.color = c.muted)}
+                      >
+                        {l.label}
+                      </a>
+                    )}
                   </li>
                 ))}
               </ul>

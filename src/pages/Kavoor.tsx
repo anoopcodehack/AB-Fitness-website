@@ -4103,6 +4103,7 @@ function Newsletter() {
 // ─── FOOTER ───────────────────────────────────────────────────────────────────
 function Footer() {
   const c = useC();
+  const navigate = useNavigate();
   return (
     <footer style={{ background: c.card, borderTop: `1px solid ${c.orange}22` }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-14 pb-8">
@@ -4165,20 +4166,30 @@ function Footer() {
             {
               title: "Our Services",
               links: [
-                "Personal Training",
-                "Group Fitness Classes",
-                "Nutritional Counseling",
-                "Cardiovascular Workouts",
-                "Functional Training",
+                { label: "Personal Training", href: "#programs" },
+                { label: "Strength & Cardio", href: "#programs" },
+                { label: "Functional Training", href: "#programs" },
+                { label: "Weight Loss / Gain", href: "#programs" },
+                { label: "Diet & Nutrition", href: "#programs" },
               ],
             },
             {
-              title: "Useful Links",
-              links: ["Home", "About Us", "Services", "Pricing", "Features"],
+              title: "Our Branches",
+              links: [
+                { label: "Kavoor Branch (Here)", href: "#hero" },
+                { label: "Deralakatte Branch", href: "/deralakatte", isRoute: true },
+                { label: "AB Protein Hub Menu", href: "/protein-hub", isRoute: true },
+                { label: "Choose Branch", href: "/", isRoute: true },
+              ],
             },
             {
-              title: "Support",
-              links: ["Contact Us", "Help Center", "Privacy Policy", "Terms & Conditions"],
+              title: "Quick Links",
+              links: [
+                { label: "About Us", href: "#about" },
+                { label: "Membership Plans", href: "#memberships" },
+                { label: "Gym Gallery", href: "#gallery" },
+                { label: "Contact Us", href: "#contact" },
+              ],
             },
           ].map((col) => (
             <div key={col.title}>
@@ -4190,16 +4201,34 @@ function Footer() {
               </h4>
               <ul className="space-y-2.5">
                 {col.links.map((l) => (
-                  <li key={l}>
-                    <a
-                      href="#"
-                      className="text-[12px] font-light transition-colors"
-                      style={{ color: c.muted }}
-                      onMouseEnter={(e) => (e.currentTarget.style.color = c.orange)}
-                      onMouseLeave={(e) => (e.currentTarget.style.color = c.muted)}
-                    >
-                      {l}
-                    </a>
+                  <li key={l.label}>
+                    {l.isRoute ? (
+                      <button
+                        onClick={() => navigate(l.href)}
+                        className="text-[12px] font-light transition-colors text-left"
+                        style={{
+                          color: c.muted,
+                          background: "none",
+                          border: "none",
+                          cursor: "pointer",
+                          padding: 0,
+                        }}
+                        onMouseEnter={(e) => (e.currentTarget.style.color = c.orange)}
+                        onMouseLeave={(e) => (e.currentTarget.style.color = c.muted)}
+                      >
+                        {l.label}
+                      </button>
+                    ) : (
+                      <a
+                        href={l.href}
+                        className="text-[12px] font-light transition-colors"
+                        style={{ color: c.muted }}
+                        onMouseEnter={(e) => (e.currentTarget.style.color = c.orange)}
+                        onMouseLeave={(e) => (e.currentTarget.style.color = c.muted)}
+                      >
+                        {l.label}
+                      </a>
+                    )}
                   </li>
                 ))}
               </ul>
