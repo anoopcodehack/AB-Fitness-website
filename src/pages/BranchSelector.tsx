@@ -1,80 +1,123 @@
 // Branch Selector - AB Fitness multi-branch landing
-import { useState, useEffect, createContext, useContext } from "react"
-import { useNavigate } from "react-router-dom"
-import { Sun, Moon, MapPin } from "lucide-react"
-import logoImg from "@/imports/image-10.png"
+import { useState, useEffect, createContext, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { Sun, Moon, MapPin } from "lucide-react";
+import logoImg from "@/imports/image-10.png";
 
-type Colors = { bg: string; card: string; surface: string; orange: string; cyan: string; lime: string; text: string; muted: string; border: string; isDark: boolean }
-const DARK: Colors = { bg: "#080808", card: "#0f0f0f", surface: "#161616", orange: "#ff4800", cyan: "#00d4ff", lime: "#b3ff00", text: "#f0f0f0", muted: "#888888", border: "#ffffff10", isDark: true }
-const LIGHT: Colors = { bg: "#f4f4f4", card: "#ffffff", surface: "#ebebeb", orange: "#d93c08", cyan: "#007aaa", lime: "#3d7000", text: "#0d0d0d", muted: "#666666", border: "rgba(0,0,0,0.09)", isDark: false }
-type TC = { isDark: boolean; toggle: () => void }
-const TCtx = createContext<TC>({ isDark: true, toggle: () => {} })
-const useTheme = () => useContext(TCtx)
-const useC = (): Colors => useTheme().isDark ? DARK : LIGHT
+type Colors = {
+  bg: string;
+  card: string;
+  surface: string;
+  orange: string;
+  cyan: string;
+  lime: string;
+  text: string;
+  muted: string;
+  border: string;
+  isDark: boolean;
+};
+const DARK: Colors = {
+  bg: "#080808",
+  card: "#0f0f0f",
+  surface: "#161616",
+  orange: "#ff4800",
+  cyan: "#00d4ff",
+  lime: "#b3ff00",
+  text: "#f0f0f0",
+  muted: "#888888",
+  border: "#ffffff10",
+  isDark: true,
+};
+const LIGHT: Colors = {
+  bg: "#f4f4f4",
+  card: "#ffffff",
+  surface: "#ebebeb",
+  orange: "#d93c08",
+  cyan: "#007aaa",
+  lime: "#3d7000",
+  text: "#0d0d0d",
+  muted: "#666666",
+  border: "rgba(0,0,0,0.09)",
+  isDark: false,
+};
+type TC = { isDark: boolean; toggle: () => void };
+const TCtx = createContext<TC>({ isDark: true, toggle: () => {} });
+const useTheme = () => useContext(TCtx);
+const useC = (): Colors => (useTheme().isDark ? DARK : LIGHT);
 
 function TP({ children }: { children: React.ReactNode }) {
   const [isDark, setIsDark] = useState<boolean>(() => {
     try {
-      const s = localStorage.getItem("ab-theme")
-      if (s === "dark") return true
-      if (s === "light") return false
+      const s = localStorage.getItem("ab-theme");
+      if (s === "dark") return true;
+      if (s === "light") return false;
     } catch {}
-    return window.matchMedia("(prefers-color-scheme: dark)").matches
-  })
+    return window.matchMedia("(prefers-color-scheme: dark)").matches;
+  });
   const toggle = () => {
-    document.documentElement.classList.add("theme-switching")
-    setIsDark(p => {
-      const n = !p
-      try { localStorage.setItem("ab-theme", n ? "dark" : "light") } catch {}
-      return n
-    })
-    setTimeout(() => document.documentElement.classList.remove("theme-switching"), 450)
-  }
-  return <TCtx.Provider value={{ isDark, toggle }}>{children}</TCtx.Provider>
+    document.documentElement.classList.add("theme-switching");
+    setIsDark((p) => {
+      const n = !p;
+      try {
+        localStorage.setItem("ab-theme", n ? "dark" : "light");
+      } catch {}
+      return n;
+    });
+    setTimeout(() => document.documentElement.classList.remove("theme-switching"), 450);
+  };
+  return <TCtx.Provider value={{ isDark, toggle }}>{children}</TCtx.Provider>;
 }
 
 function Logo({ size = 40 }: { size?: number }) {
-  return <img src={logoImg} alt="AB Fitness" style={{ width: size, height: size, objectFit: "cover", borderRadius: "50%" }} />
+  return (
+    <img
+      src={logoImg}
+      alt="AB Fitness"
+      style={{ width: size, height: size, objectFit: "cover", borderRadius: "50%" }}
+    />
+  );
 }
 
-const IK = "ab-intro-played"
+const IK = "ab-intro-played";
 
 // ─── CINEMATIC INTRO ──────────────────────────────────────────────────────────
 // Timing constants (ms) — easy to tune
 const INTRO_TIMING = {
-  logoDelay: 100,       // logo starts falling
-  nameDelay: 900,       // name rises after logo lands
-  subDelay: 1100,       // "MANGALORE" sub label
-  quoteDelay: 1300,     // tagline
-  progressDelay: 1550,  // progress bar
-  exitStart: 3000,      // overlay starts leaving
-  unmount: 3700,        // fully gone
-} as const
+  logoDelay: 100, // logo starts falling
+  nameDelay: 900, // name rises after logo lands
+  subDelay: 1100, // "MANGALORE" sub label
+  quoteDelay: 1300, // tagline
+  progressDelay: 1550, // progress bar
+  exitStart: 3000, // overlay starts leaving
+  unmount: 3700, // fully gone
+} as const;
 
 function CinematicIntro({ onDone }: { onDone: () => void }) {
-  const c = useC()
-  const [logoIn, setLogoIn]       = useState(false)
-  const [glowActive, setGlowActive] = useState(false)
-  const [nameIn, setNameIn]       = useState(false)
-  const [subIn, setSubIn]         = useState(false)
-  const [quoteIn, setQuoteIn]     = useState(false)
-  const [progressIn, setProgressIn] = useState(false)
-  const [exiting, setExiting]     = useState(false)
+  const c = useC();
+  const [logoIn, setLogoIn] = useState(false);
+  const [glowActive, setGlowActive] = useState(false);
+  const [nameIn, setNameIn] = useState(false);
+  const [subIn, setSubIn] = useState(false);
+  const [quoteIn, setQuoteIn] = useState(false);
+  const [progressIn, setProgressIn] = useState(false);
+  const [exiting, setExiting] = useState(false);
 
   useEffect(() => {
-    const t0 = setTimeout(() => setLogoIn(true),      INTRO_TIMING.logoDelay)
-    const t1 = setTimeout(() => setGlowActive(true),  INTRO_TIMING.logoDelay + 950)
-    const t2 = setTimeout(() => setNameIn(true),      INTRO_TIMING.nameDelay)
-    const t3 = setTimeout(() => setSubIn(true),       INTRO_TIMING.subDelay)
-    const t4 = setTimeout(() => setQuoteIn(true),     INTRO_TIMING.quoteDelay)
-    const t5 = setTimeout(() => setProgressIn(true),  INTRO_TIMING.progressDelay)
-    const t6 = setTimeout(() => setExiting(true),     INTRO_TIMING.exitStart)
+    const t0 = setTimeout(() => setLogoIn(true), INTRO_TIMING.logoDelay);
+    const t1 = setTimeout(() => setGlowActive(true), INTRO_TIMING.logoDelay + 950);
+    const t2 = setTimeout(() => setNameIn(true), INTRO_TIMING.nameDelay);
+    const t3 = setTimeout(() => setSubIn(true), INTRO_TIMING.subDelay);
+    const t4 = setTimeout(() => setQuoteIn(true), INTRO_TIMING.quoteDelay);
+    const t5 = setTimeout(() => setProgressIn(true), INTRO_TIMING.progressDelay);
+    const t6 = setTimeout(() => setExiting(true), INTRO_TIMING.exitStart);
     const t7 = setTimeout(() => {
-      try { sessionStorage.setItem(IK, "1") } catch {}
-      onDone()
-    }, INTRO_TIMING.unmount)
-    return () => [t0,t1,t2,t3,t4,t5,t6,t7].forEach(clearTimeout)
-  }, [onDone])
+      try {
+        sessionStorage.setItem(IK, "1");
+      } catch {}
+      onDone();
+    }, INTRO_TIMING.unmount);
+    return () => [t0, t1, t2, t3, t4, t5, t6, t7].forEach(clearTimeout);
+  }, [onDone]);
 
   return (
     <div
@@ -83,15 +126,34 @@ function CinematicIntro({ onDone }: { onDone: () => void }) {
       style={{ background: "#080808" }}
     >
       {/* Ambient radial */}
-      <div className="absolute inset-0 pointer-events-none" style={{ background: `radial-gradient(ellipse 60% 50% at 50% 50%, ${c.orange}12 0%, transparent 70%)` }} />
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background: `radial-gradient(ellipse 60% 50% at 50% 50%, ${c.orange}12 0%, transparent 70%)`,
+        }}
+      />
       {/* Scanline texture */}
-      <div className="absolute inset-0 pointer-events-none opacity-[0.025]" style={{ backgroundImage: "repeating-linear-gradient(0deg, #fff 0px, #fff 1px, transparent 1px, transparent 3px)" }} />
+      <div
+        className="absolute inset-0 pointer-events-none opacity-[0.025]"
+        style={{
+          backgroundImage:
+            "repeating-linear-gradient(0deg, #fff 0px, #fff 1px, transparent 1px, transparent 3px)",
+        }}
+      />
 
       {/* Content */}
-      <div className={`flex flex-col items-center select-none${exiting ? " intro-content-exit" : ""}`}>
-
+      <div
+        className={`flex flex-col items-center select-none${exiting ? " intro-content-exit" : ""}`}
+      >
         {/* ── LOGO DROP ── */}
-        <div style={{ position: "relative", display: "flex", flexDirection: "column", alignItems: "center" }}>
+        <div
+          style={{
+            position: "relative",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
           <div
             className={`opacity-0${logoIn ? " intro-logo-in" : ""}`}
             style={{ position: "relative", zIndex: 1 }}
@@ -131,15 +193,17 @@ function CinematicIntro({ onDone }: { onDone: () => void }) {
           className={`opacity-0${nameIn ? " intro-name-in" : ""}`}
           style={{ marginTop: 18, textAlign: "center" }}
         >
-          <div style={{
-            fontFamily: "'Barlow Condensed', sans-serif",
-            fontSize: "clamp(1.4rem, 4vw, 1.9rem)",
-            fontWeight: 900,
-            letterSpacing: "0.3em",
-            color: "#ffffff",
-            textTransform: "uppercase",
-            lineHeight: 1,
-          }}>
+          <div
+            style={{
+              fontFamily: "'Barlow Condensed', sans-serif",
+              fontSize: "clamp(1.4rem, 4vw, 1.9rem)",
+              fontWeight: 900,
+              letterSpacing: "0.3em",
+              color: "#ffffff",
+              textTransform: "uppercase",
+              lineHeight: 1,
+            }}
+          >
             AB FITNESS HUB
           </div>
         </div>
@@ -149,14 +213,16 @@ function CinematicIntro({ onDone }: { onDone: () => void }) {
           className={`opacity-0${subIn ? " intro-sub-in" : ""}`}
           style={{ marginTop: 6, textAlign: "center" }}
         >
-          <div style={{
-            fontFamily: "'Barlow Condensed', sans-serif",
-            fontSize: "0.62rem",
-            fontWeight: 700,
-            letterSpacing: "0.5em",
-            color: c.orange,
-            textTransform: "uppercase",
-          }}>
+          <div
+            style={{
+              fontFamily: "'Barlow Condensed', sans-serif",
+              fontSize: "0.62rem",
+              fontWeight: 700,
+              letterSpacing: "0.5em",
+              color: c.orange,
+              textTransform: "uppercase",
+            }}
+          >
             MANGALORE
           </div>
         </div>
@@ -168,17 +234,22 @@ function CinematicIntro({ onDone }: { onDone: () => void }) {
         />
 
         {/* ── TAGLINE ── */}
-        <div className={`opacity-0 px-6${quoteIn ? " intro-quote-in" : ""}`} style={{ animationDelay: "0.08s" }}>
-          <p style={{
-            fontFamily: "'Barlow Condensed', sans-serif",
-            fontSize: "clamp(0.78rem, 2.2vw, 1rem)",
-            fontWeight: 700,
-            letterSpacing: "0.28em",
-            color: "rgba(255,255,255,0.38)",
-            textTransform: "uppercase",
-            textAlign: "center",
-            lineHeight: 1.6,
-          }}>
+        <div
+          className={`opacity-0 px-6${quoteIn ? " intro-quote-in" : ""}`}
+          style={{ animationDelay: "0.08s" }}
+        >
+          <p
+            style={{
+              fontFamily: "'Barlow Condensed', sans-serif",
+              fontSize: "clamp(0.78rem, 2.2vw, 1rem)",
+              fontWeight: 700,
+              letterSpacing: "0.28em",
+              color: "rgba(255,255,255,0.38)",
+              textTransform: "uppercase",
+              textAlign: "center",
+              lineHeight: 1.6,
+            }}
+          >
             DISCIPLINE&nbsp;&nbsp;&middot;&nbsp;&nbsp;STRENGTH&nbsp;&nbsp;&middot;&nbsp;&nbsp;CONSISTENCY
           </p>
         </div>
@@ -186,64 +257,141 @@ function CinematicIntro({ onDone }: { onDone: () => void }) {
         {/* ── PROGRESS BAR ── */}
         <div
           className={`mt-8 opacity-0${progressIn ? " intro-quote-in" : ""}`}
-          style={{ width: "clamp(100px, 20vw, 140px)", height: 1.5, background: "rgba(255,255,255,0.08)", borderRadius: 2, overflow: "hidden" }}
+          style={{
+            width: "clamp(100px, 20vw, 140px)",
+            height: 1.5,
+            background: "rgba(255,255,255,0.08)",
+            borderRadius: 2,
+            overflow: "hidden",
+          }}
         >
           <div
             className={progressIn ? "intro-progress-fill" : ""}
-            style={{ width: "100%", height: "100%", background: `linear-gradient(90deg, ${c.orange}, #ff8c00)`, borderRadius: 2, transform: "scaleX(0)" }}
+            style={{
+              width: "100%",
+              height: "100%",
+              background: `linear-gradient(90deg, ${c.orange}, #ff8c00)`,
+              borderRadius: 2,
+              transform: "scaleX(0)",
+            }}
           />
         </div>
       </div>
     </div>
-  )
+  );
 }
 // ────────────────────────────────────────────────────────────────────────────
 
-function BranchCard({ name, location, desc, href, accent, badge }: { name: string; location: string; desc: string; href: string; accent: string; badge?: string }) {
-  const c = useC()
-  const navigate = useNavigate()
+function BranchCard({
+  name,
+  location,
+  desc,
+  href,
+  accent,
+  badge,
+}: {
+  name: string;
+  location: string;
+  desc: string;
+  href: string;
+  accent: string;
+  badge?: string;
+}) {
+  const c = useC();
+  const navigate = useNavigate();
   return (
-    <div onClick={() => navigate(href)} className="group relative rounded-[28px] overflow-hidden cursor-pointer transition-all duration-500 hover:scale-[1.02]" style={{ background: c.isDark ? "rgba(15,15,15,0.75)" : "rgba(255,255,255,0.82)", backdropFilter: "blur(16px)", border: `1px solid ${c.isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.1)"}`, boxShadow: c.isDark ? "0 0 40px rgba(0,0,0,0.5)" : "0 8px 32px rgba(0,0,0,0.15)" }}>
+    <div
+      onClick={() => navigate(href)}
+      className="group relative rounded-[28px] overflow-hidden cursor-pointer transition-all duration-500 hover:scale-[1.02]"
+      style={{
+        background: c.isDark ? "rgba(15,15,15,0.75)" : "rgba(255,255,255,0.82)",
+        backdropFilter: "blur(16px)",
+        border: `1px solid ${c.isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.1)"}`,
+        boxShadow: c.isDark ? "0 0 40px rgba(0,0,0,0.5)" : "0 8px 32px rgba(0,0,0,0.15)",
+      }}
+    >
       <div className="h-1.5 w-full" style={{ background: accent }} />
-      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" style={{ background: `radial-gradient(ellipse at 50% 0%, ${accent}18 0%, transparent 60%)` }} />
+      <div
+        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"
+        style={{
+          background: `radial-gradient(ellipse at 50% 0%, ${accent}18 0%, transparent 60%)`,
+        }}
+      />
       {badge && (
-        <div className="absolute top-5 right-5 px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest" style={{ background: `${accent}22`, color: accent, border: `1px solid ${accent}55` }}>{badge}</div>
+        <div
+          className="absolute top-5 right-5 px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest"
+          style={{ background: `${accent}22`, color: accent, border: `1px solid ${accent}55` }}
+        >
+          {badge}
+        </div>
       )}
       <div className="p-8 sm:p-10 relative z-10">
         <div className="flex items-center gap-4 mb-6">
-          <div className="w-16 h-16 rounded-[20px] flex items-center justify-center transition-transform group-hover:scale-110" style={{ background: `${accent}18` }}>
+          <div
+            className="w-16 h-16 rounded-[20px] flex items-center justify-center transition-transform group-hover:scale-110"
+            style={{ background: `${accent}18` }}
+          >
             <Logo size={36} />
           </div>
           <div>
-            <h2 className="font-black text-[28px] sm:text-[36px] uppercase leading-none" style={{ fontFamily: "Barlow Condensed, sans-serif", color: c.text }}>{name}</h2>
-            <div className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-widest mt-1.5" style={{ color: accent }}>
+            <h2
+              className="font-black text-[28px] sm:text-[36px] uppercase leading-none"
+              style={{ fontFamily: "Barlow Condensed, sans-serif", color: c.text }}
+            >
+              {name}
+            </h2>
+            <div
+              className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-widest mt-1.5"
+              style={{ color: accent }}
+            >
               <MapPin size={11} /> {location}
             </div>
           </div>
         </div>
-        <p className="text-[14px] leading-relaxed mb-8 max-w-sm" style={{ color: c.muted }}>{desc}</p>
+        <p className="text-[14px] leading-relaxed mb-8 max-w-sm" style={{ color: c.muted }}>
+          {desc}
+        </p>
         <div className="flex items-center gap-3" style={{ color: accent }}>
           <span className="text-[13px] font-bold uppercase tracking-wider">Explore {name}</span>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={accent} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="transition-transform group-hover:translate-x-1.5">
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke={accent}
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="transition-transform group-hover:translate-x-1.5"
+          >
             <path d="M5 12h14M12 5l7 7-7 7" />
           </svg>
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 function BranchSelectorContent() {
-  const c = useC()
-  const { isDark, toggle } = useTheme()
+  const c = useC();
+  const { isDark, toggle } = useTheme();
   const [showIntro, setShowIntro] = useState<boolean>(() => {
-    try { return !sessionStorage.getItem(IK) } catch { return false }
-  })
-  const done = () => { try { sessionStorage.setItem(IK, "1") } catch {}; setShowIntro(false) }
+    try {
+      return !sessionStorage.getItem(IK);
+    } catch {
+      return false;
+    }
+  });
+  const done = () => {
+    try {
+      sessionStorage.setItem(IK, "1");
+    } catch {}
+    setShowIntro(false);
+  };
 
   useEffect(() => {
-    document.title = "AB Fitness Hub | Gym in Kavoor & Deralakatte, Mangalore"
-  }, [])
+    document.title = "AB Fitness Hub | Gym in Kavoor & Deralakatte, Mangalore";
+  }, []);
 
   return (
     <div style={{ minHeight: "100vh", width: "100%", position: "relative" }}>
@@ -267,15 +415,20 @@ function BranchSelectorContent() {
           position: "fixed",
           inset: 0,
           zIndex: 1,
-          background: c.isDark
-            ? "rgba(8,8,8,0.82)"
-            : "rgba(244,244,244,0.88)",
+          background: c.isDark ? "rgba(8,8,8,0.82)" : "rgba(244,244,244,0.88)",
         }}
       />
       {showIntro && <CinematicIntro onDone={done} />}
       {!showIntro && (
         <>
-          <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 sm:px-10 h-20" style={{ background: c.isDark ? "rgba(8,8,8,0.85)" : "rgba(244,244,244,0.92)", borderBottom: `1px solid ${c.isDark ? "#ff480022" : "rgba(217,60,8,0.2)"}`, backdropFilter: "blur(20px)" }}>
+          <header
+            className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 sm:px-10 h-20"
+            style={{
+              background: c.isDark ? "rgba(8,8,8,0.85)" : "rgba(244,244,244,0.92)",
+              borderBottom: `1px solid ${c.isDark ? "#ff480022" : "rgba(217,60,8,0.2)"}`,
+              backdropFilter: "blur(20px)",
+            }}
+          >
             <div className="flex items-center gap-3">
               <div
                 className="logo-hover-wrap"
@@ -288,33 +441,61 @@ function BranchSelectorContent() {
                 }}
               >
                 {/* spinning ring on hover */}
-                <div className="logo-spin-ring" style={{
-                  position: "absolute",
-                  inset: -3,
-                  borderRadius: "50%",
-                  border: `2px solid transparent`,
-                  borderTopColor: c.orange,
-                  borderRightColor: c.orange + "55",
-                  pointerEvents: "none",
-                }} />
+                <div
+                  className="logo-spin-ring"
+                  style={{
+                    position: "absolute",
+                    inset: -3,
+                    borderRadius: "50%",
+                    border: `2px solid transparent`,
+                    borderTopColor: c.orange,
+                    borderRightColor: c.orange + "55",
+                    pointerEvents: "none",
+                  }}
+                />
                 {/* glow pulse on hover */}
-                <div className="logo-glow-pulse" style={{
-                  position: "absolute",
-                  inset: -6,
-                  borderRadius: "50%",
-                  background: `radial-gradient(circle, ${c.orange}44 0%, transparent 70%)`,
-                  pointerEvents: "none",
-                  opacity: 0,
-                }} />
+                <div
+                  className="logo-glow-pulse"
+                  style={{
+                    position: "absolute",
+                    inset: -6,
+                    borderRadius: "50%",
+                    background: `radial-gradient(circle, ${c.orange}44 0%, transparent 70%)`,
+                    pointerEvents: "none",
+                    opacity: 0,
+                  }}
+                />
                 <Logo size={46} />
               </div>
               <div>
-                <div className="font-black text-[16px] leading-none uppercase tracking-wider" style={{ fontFamily: "Barlow Condensed, sans-serif", color: c.text }}>AB Fitness Hub</div>
-                <div className="text-[9px] font-medium uppercase tracking-[0.25em] mt-0.5" style={{ color: c.orange }}>Mangalore</div>
+                <div
+                  className="font-black text-[16px] leading-none uppercase tracking-wider"
+                  style={{ fontFamily: "Barlow Condensed, sans-serif", color: c.text }}
+                >
+                  AB Fitness Hub
+                </div>
+                <div
+                  className="text-[9px] font-medium uppercase tracking-[0.25em] mt-0.5"
+                  style={{ color: c.orange }}
+                >
+                  Mangalore
+                </div>
               </div>
             </div>
-            <button onClick={toggle} className="relative w-12 h-6 rounded-full" style={{ background: c.card, border: `1px solid ${c.border}` }} aria-label="Toggle theme">
-              <div className="absolute top-0.5 w-5 h-5 rounded-full flex items-center justify-center transition-all duration-300" style={{ background: c.orange, left: isDark ? "4px" : "24px", boxShadow: `0 0 8px ${c.orange}` }}>
+            <button
+              onClick={toggle}
+              className="relative w-12 h-6 rounded-full"
+              style={{ background: c.card, border: `1px solid ${c.border}` }}
+              aria-label="Toggle theme"
+            >
+              <div
+                className="absolute top-0.5 w-5 h-5 rounded-full flex items-center justify-center transition-all duration-300"
+                style={{
+                  background: c.orange,
+                  left: isDark ? "4px" : "24px",
+                  boxShadow: `0 0 8px ${c.orange}`,
+                }}
+              >
                 {isDark ? <Moon size={10} color="white" /> : <Sun size={10} color="white" />}
               </div>
             </button>
@@ -324,15 +505,40 @@ function BranchSelectorContent() {
             <div className="max-w-5xl mx-auto">
               <div className="text-center mb-14">
                 <div className="inline-flex items-center gap-3 mb-4">
-                  <div className="h-px w-10 rounded-full" style={{ background: c.orange, boxShadow: c.isDark ? `0 0 8px ${c.orange}` : "none" }} />
-                  <span className="text-[11px] font-bold uppercase tracking-[0.35em]" style={{ color: c.orange }}>Select Your Location</span>
-                  <div className="h-px w-10 rounded-full" style={{ background: c.orange, boxShadow: c.isDark ? `0 0 8px ${c.orange}` : "none" }} />
+                  <div
+                    className="h-px w-10 rounded-full"
+                    style={{
+                      background: c.orange,
+                      boxShadow: c.isDark ? `0 0 8px ${c.orange}` : "none",
+                    }}
+                  />
+                  <span
+                    className="text-[11px] font-bold uppercase tracking-[0.35em]"
+                    style={{ color: c.orange }}
+                  >
+                    Select Your Location
+                  </span>
+                  <div
+                    className="h-px w-10 rounded-full"
+                    style={{
+                      background: c.orange,
+                      boxShadow: c.isDark ? `0 0 8px ${c.orange}` : "none",
+                    }}
+                  />
                 </div>
-                <h1 className="font-black uppercase leading-tight mb-4" style={{ fontSize: "clamp(2.5rem, 5vw, 4rem)", fontFamily: "Barlow Condensed, sans-serif", color: c.text }}>
+                <h1
+                  className="font-black uppercase leading-tight mb-4"
+                  style={{
+                    fontSize: "clamp(2.5rem, 5vw, 4rem)",
+                    fontFamily: "Barlow Condensed, sans-serif",
+                    color: c.text,
+                  }}
+                >
                   Choose Your <span style={{ color: c.orange }}>Branch</span>
                 </h1>
                 <p className="text-[15px] max-w-lg mx-auto" style={{ color: c.muted }}>
-                  Select the AB Fitness Hub location closest to you to explore our facilities, trainers, and programs.
+                  Select the AB Fitness Hub location closest to you to explore our facilities,
+                  trainers, and programs.
                 </p>
               </div>
 
@@ -348,30 +554,42 @@ function BranchSelectorContent() {
                 <BranchCard
                   name="Deralakatte"
                   location="Mangalore"
-                  desc="Our flagship branch in Kavoor featuring state-of-the-art equipment, expert trainers, and a motivating atmosphere for your fitness journey."
+                  desc="Our modern branch in Deralakatte near NITTE University, featuring advanced equipment, expert trainers, and the AB Protein Hub nutrition bar."
                   href="/deralakatte"
                   accent={c.cyan}
-                  badge="Flagship"
+                  badge="New Branch"
                 />
               </div>
 
               <div className="text-center mt-14">
-                <p className="text-[12px]" style={{ color: c.muted }}>More locations coming soon. Stay tuned!</p>
+                <p className="text-[12px]" style={{ color: c.muted }}>
+                  More locations coming soon. Stay tuned!
+                </p>
               </div>
             </div>
           </main>
 
-          <footer className="py-8 px-6 text-center relative z-10" style={{ borderTop: `1px solid ${c.border}` }}>
+          <footer
+            className="py-8 px-6 text-center relative z-10"
+            style={{ borderTop: `1px solid ${c.border}` }}
+          >
             <div className="flex items-center justify-center gap-2 mb-3">
               <Logo size={24} />
-              <span className="font-bold text-[13px] uppercase tracking-wider" style={{ fontFamily: "Barlow Condensed, sans-serif", color: c.text }}>AB Fitness Hub</span>
+              <span
+                className="font-bold text-[13px] uppercase tracking-wider"
+                style={{ fontFamily: "Barlow Condensed, sans-serif", color: c.text }}
+              >
+                AB Fitness Hub
+              </span>
             </div>
-            <p className="text-[11px]" style={{ color: c.muted }}>© 2026 AB Fitness Hub, Mangalore. All rights reserved.</p>
+            <p className="text-[11px]" style={{ color: c.muted }}>
+              © 2026 AB Fitness Hub, Mangalore. All rights reserved.
+            </p>
           </footer>
         </>
       )}
     </div>
-  )
+  );
 }
 
 export default function BranchSelector() {
@@ -379,5 +597,5 @@ export default function BranchSelector() {
     <TP>
       <BranchSelectorContent />
     </TP>
-  )
+  );
 }

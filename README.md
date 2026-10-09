@@ -84,22 +84,26 @@ d:/AB Fitness website/
 ## ⚡ Core Technical Features
 
 ### 1. Multi-Tenant Branch Routing Engine
+
 - Instant client-side switching between distinct gym branches with zero bundle reloads.
 - Dedicated brand experiences, schedules, trainer rosters, and membership pricing customized per location.
 
 ### 2. Custom Theming & Design System
+
 - Built-in **Dual-Theme Engine (Dark / Light)** with hardware-accelerated transitions.
 - Synchronizes with system preferences via `prefers-color-scheme` with `localStorage` state persistence.
 - Industrial athletic visual palette (`#080808` Dark, `#ff4800` Blaze Orange, `#00d4ff` Electric Cyan).
 
 ### 3. SEO & Multi-Location Structured Data (JSON-LD)
+
 - Fully compliant with **Google Search Console** and Schema.org specifications.
 - Embedded `@graph` microdata identifying both physical gym properties (`ExerciseGym`) with geographic coordinates, addresses, and direct inquiry lines:
-  - Kavoor: *2nd Floor, Durga Prasad Complex, Kavoor, Mangalore - 575015*
-  - Deralakatte: *Hotel Plaza Avenue, beside NITTE University, Deralakatte - 575018*
+  - Kavoor: _2nd Floor, Durga Prasad Complex, Kavoor, Mangalore - 575015_
+  - Deralakatte: _Hotel Plaza Avenue, beside NITTE University, Deralakatte - 575018_
 - Open Graph (`og:*`) and Twitter Card tags configured for dynamic social previews on WhatsApp, Facebook, and X.
 
 ### 4. High-Conversion Membership & Utility Modules
+
 - **Interactive Fee Calculators**: Visual pricing breakdowns across 1-Month, 3-Month, 6-Month, and Annual memberships.
 - **Cinematic Video Integration**: Background gym floor video reels loaded asynchronously with fallbacks.
 - **Direct-to-WhatsApp Booking**: Automated message pre-filling for instant walk-in scheduling.
@@ -109,14 +113,14 @@ d:/AB Fitness website/
 
 ## 🛠️ Technology Stack & Decisions
 
-| Layer | Technology | Decision Rationale |
-|---|---|---|
-| **Runtime & UI** | `React 19` | Leveraging the latest concurrent features, improved memoization, and hydration performance. |
-| **Type Safety** | `TypeScript 5.7` | Strict typing guarantees across props, state variables, color schemes, and router navigation. |
-| **Bundler & Tooling** | `Vite 8` | Sub-second Hot Module Replacement (HMR) and optimized Rollup tree-shaking for lean production assets. |
-| **Styling** | `Tailwind CSS v4` | Modern CSS-first engine using `@tailwindcss/vite` without legacy PostCSS overhead. |
-| **Iconography** | `Lucide React` | Clean, accessible vector icons tree-shaken down to minimal byte size. |
-| **Deployment** | `Vercel Edge` | Global CDN edge caching, automatic HTTPS, and zero-config deployment hooks. |
+| Layer                 | Technology        | Decision Rationale                                                                                    |
+| --------------------- | ----------------- | ----------------------------------------------------------------------------------------------------- |
+| **Runtime & UI**      | `React 19`        | Leveraging the latest concurrent features, improved memoization, and hydration performance.           |
+| **Type Safety**       | `TypeScript 5.7`  | Strict typing guarantees across props, state variables, color schemes, and router navigation.         |
+| **Bundler & Tooling** | `Vite 8`          | Sub-second Hot Module Replacement (HMR) and optimized Rollup tree-shaking for lean production assets. |
+| **Styling**           | `Tailwind CSS v4` | Modern CSS-first engine using `@tailwindcss/vite` without legacy PostCSS overhead.                    |
+| **Iconography**       | `Lucide React`    | Clean, accessible vector icons tree-shaken down to minimal byte size.                                 |
+| **Deployment**        | `Vercel Edge`     | Global CDN edge caching, automatic HTTPS, and zero-config deployment hooks.                           |
 
 ---
 
@@ -130,12 +134,14 @@ d:/AB Fitness website/
 ### Local Development Setup
 
 1. **Clone the repository**:
+
    ```bash
    git clone https://github.com/anoopcodehack/AB-Fitness-website.git
    cd AB-Fitness-website
    ```
 
 2. **Install dependencies**:
+
    ```bash
    npm install
    # or
@@ -143,15 +149,19 @@ d:/AB Fitness website/
    ```
 
 3. **Start the local development server**:
+
    ```bash
    npm run dev
    ```
+
    Open [http://localhost:5173](http://localhost:5173) in your browser to view the application.
 
 4. **Compile production build**:
+
    ```bash
    npm run build
    ```
+
    The compiled bundle will be output to the `/dist` directory.
 
 5. **Preview production build locally**:

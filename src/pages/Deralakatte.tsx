@@ -1,42 +1,42 @@
-import { useState, useEffect, useRef, createContext, useContext } from "react"
-import { useNavigate } from "react-router-dom"
-import { Sun, Moon, X, ChevronLeft, ChevronRight, ZoomIn } from "lucide-react"
-import logoImg from "@/imports/image-10.png"
-import galleryImg1 from "@/imports/deralakatte-gallery-1.jpg"
-import galleryImg2 from "@/imports/deralakatte-gallery-2.jpg"
-import galleryImg3 from "@/imports/deralakatte-gallery-3.jpg"
-import galleryImg4 from "@/imports/deralakatte-gallery-4.jpg"
-import galleryImg5 from "@/imports/deralakatte-gallery-5.jpg"
-import galleryImg6 from "@/imports/deralakatte-gallery-6.jpg"
-import galleryImg7 from "@/imports/deralakatte-gallery-7.jpg"
-import afeelImg from "@/imports/Afeel.jpeg"
-import akshithaImg from "@/imports/Akshitha.jpeg"
-import prakashImg from "@/imports/Prakash P.jpeg"
-import vishnuImg from "@/imports/Vishnu.jpeg"
-import gymVideo from "@/imports/Derelekatte video.mp4"
-import abtImg from "@/imports/ABabt.jpeg"
-import eventFlyerImg from "@/imports/IMG-20260816-WA0003-1.jpg"
+import { useState, useEffect, useRef, createContext, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { Sun, Moon, X, ChevronLeft, ChevronRight, ZoomIn } from "lucide-react";
+import logoImg from "@/imports/image-10.png";
+import galleryImg1 from "@/imports/deralakatte-gallery-1.jpg";
+import galleryImg2 from "@/imports/deralakatte-gallery-2.jpg";
+import galleryImg3 from "@/imports/deralakatte-gallery-3.jpg";
+import galleryImg4 from "@/imports/deralakatte-gallery-4.jpg";
+import galleryImg5 from "@/imports/deralakatte-gallery-5.jpg";
+import galleryImg6 from "@/imports/deralakatte-gallery-6.jpg";
+import galleryImg7 from "@/imports/deralakatte-gallery-7.jpg";
+import afeelImg from "@/imports/Afeel.jpeg";
+import akshithaImg from "@/imports/Akshitha.jpeg";
+import prakashImg from "@/imports/Prakash P.jpeg";
+import vishnuImg from "@/imports/Vishnu.jpeg";
+import gymVideo from "@/imports/Derelekatte video.mp4";
+import abtImg from "@/imports/ABabt.jpeg";
+import eventFlyerImg from "@/imports/IMG-20260816-WA0003-1.jpg";
 
 // ─── THEME SYSTEM ─────────────────────────────────────────────────────────────
 type Colors = {
-  bg: string
-  card: string
-  surface: string
-  orange: string
-  cyan: string
-  lime: string
-  text: string
-  muted: string
-  faint: string
-  border: string
-  borderFaint: string
-  navBg: string
-  navBorder: string
-  mobileMenuBg: string
-  inputBg: string
-  inputBorder: string
-  isDark: boolean
-}
+  bg: string;
+  card: string;
+  surface: string;
+  orange: string;
+  cyan: string;
+  lime: string;
+  text: string;
+  muted: string;
+  faint: string;
+  border: string;
+  borderFaint: string;
+  navBg: string;
+  navBorder: string;
+  mobileMenuBg: string;
+  inputBg: string;
+  inputBorder: string;
+  isDark: boolean;
+};
 
 const DARK_C: Colors = {
   bg: "#080808",
@@ -56,7 +56,7 @@ const DARK_C: Colors = {
   inputBg: "#161616",
   inputBorder: "#ffffff10",
   isDark: true,
-}
+};
 
 const LIGHT_C: Colors = {
   bg: "#f4f4f4",
@@ -76,90 +76,82 @@ const LIGHT_C: Colors = {
   inputBg: "#f9f9f9",
   inputBorder: "rgba(0,0,0,0.12)",
   isDark: false,
-}
+};
 
-type ThemeCtx = { isDark: boolean; toggle: () => void }
-const ThemeContext = createContext<ThemeCtx>({ isDark: true, toggle: () => { } })
-const useTheme = () => useContext(ThemeContext)
+type ThemeCtx = { isDark: boolean; toggle: () => void };
+const ThemeContext = createContext<ThemeCtx>({ isDark: true, toggle: () => {} });
+const useTheme = () => useContext(ThemeContext);
 const useC = (): Colors => {
-  const { isDark } = useTheme()
-  return isDark ? DARK_C : LIGHT_C
-}
+  const { isDark } = useTheme();
+  return isDark ? DARK_C : LIGHT_C;
+};
 
 function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [isDark, setIsDark] = useState<boolean>(() => {
-    const saved = localStorage.getItem("ab-theme")
-    if (saved === "dark") return true
-    if (saved === "light") return false
-    return window.matchMedia("(prefers-color-scheme: dark)").matches
-  })
+    const saved = localStorage.getItem("ab-theme");
+    if (saved === "dark") return true;
+    if (saved === "light") return false;
+    return window.matchMedia("(prefers-color-scheme: dark)").matches;
+  });
 
   const toggle = () => {
-    document.documentElement.classList.add("theme-switching")
+    document.documentElement.classList.add("theme-switching");
     setIsDark((prev) => {
-      const next = !prev
-      localStorage.setItem("ab-theme", next ? "dark" : "light")
-      return next
-    })
-    setTimeout(
-      () => document.documentElement.classList.remove("theme-switching"),
-      450,
-    )
-  }
+      const next = !prev;
+      localStorage.setItem("ab-theme", next ? "dark" : "light");
+      return next;
+    });
+    setTimeout(() => document.documentElement.classList.remove("theme-switching"), 450);
+  };
 
-  return (
-    <ThemeContext.Provider value={{ isDark, toggle }}>
-      {children}
-    </ThemeContext.Provider>
-  )
+  return <ThemeContext.Provider value={{ isDark, toggle }}>{children}</ThemeContext.Provider>;
 }
 
 // ─── SCROLL REVEAL ────────────────────────────────────────────────────────────
 const reducedMotion = () =>
-  typeof window !== "undefined" &&
-  window.matchMedia("(prefers-reduced-motion: reduce)").matches
+  typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 function useTilt<T extends HTMLElement = HTMLDivElement>(strength = 12) {
-  const ref = useRef<T>(null)
+  const ref = useRef<T>(null);
   const onMove = (e: React.MouseEvent<T>) => {
-    if (reducedMotion()) return
-    const el = ref.current
-    if (!el) return
-    const { left, top, width, height } = el.getBoundingClientRect()
-    const x = ((e.clientX - left) / width - 0.5) * strength
-    const y = ((e.clientY - top) / height - 0.5) * -strength
-    el.style.transform = `perspective(600px) rotateY(${x}deg) rotateX(${y}deg) translateZ(8px)`
-  }
+    if (reducedMotion()) return;
+    const el = ref.current;
+    if (!el) return;
+    const { left, top, width, height } = el.getBoundingClientRect();
+    const x = ((e.clientX - left) / width - 0.5) * strength;
+    const y = ((e.clientY - top) / height - 0.5) * -strength;
+    el.style.transform = `perspective(600px) rotateY(${x}deg) rotateX(${y}deg) translateZ(8px)`;
+  };
   const onLeave = () => {
-    const el = ref.current
-    if (el) el.style.transform = ""
-  }
-  return { ref, onMove, onLeave }
+    const el = ref.current;
+    if (el) el.style.transform = "";
+  };
+  return { ref, onMove, onLeave };
 }
 
 function useInView(threshold = 0.12, rootMargin = "0px 0px -48px 0px") {
-  const ref = useRef<HTMLDivElement>(null)
-  const [visible, setVisible] = useState(false)
+  const ref = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
   useEffect(() => {
-    const el = ref.current
-    if (!el) return
+    const el = ref.current;
+    if (!el) return;
     if (reducedMotion()) {
-      setVisible(true)
-      return
+      setVisible(true);
+      return;
     }
     const obs = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setVisible(true)
-          obs.disconnect()
+          setVisible(true);
+          obs.disconnect();
         }
       },
       { threshold, rootMargin },
-    )
-    obs.observe(el)
-    return () => obs.disconnect()
-  }, [threshold, rootMargin])
-  return { ref, visible }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [threshold, rootMargin]);
+  return { ref, visible };
 }
 
 // dir: 'up' | 'left' | 'right' | 'scale'
@@ -170,13 +162,13 @@ function Reveal({
   threshold = 0.12,
   className = "",
 }: {
-  children: React.ReactNode
-  delay?: number
-  dir?: "up" | "left" | "right" | "scale"
-  threshold?: number
-  className?: string
+  children: React.ReactNode;
+  delay?: number;
+  dir?: "up" | "left" | "right" | "scale";
+  threshold?: number;
+  className?: string;
 }) {
-  const { ref, visible } = useInView(threshold)
+  const { ref, visible } = useInView(threshold);
   return (
     <div
       ref={ref}
@@ -185,7 +177,7 @@ function Reveal({
     >
       {children}
     </div>
-  )
+  );
 }
 
 // ─── SVG ICON LIBRARY ─────────────────────────────────────────────────────────
@@ -195,14 +187,21 @@ function Icon({
   color,
   className = "",
 }: {
-  name: string
-  size?: number
-  color: string
-  className?: string
+  name: string;
+  size?: number;
+  color: string;
+  className?: string;
 }) {
   const icons: Record<string, React.ReactElement> = {
     dumbbell: (
-      <svg viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke={color}
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
         <path d="M6.5 6.5h11M6.5 17.5h11" />
         <rect x="2" y="5" width="3" height="14" rx="1.5" />
         <rect x="19" y="5" width="3" height="14" rx="1.5" />
@@ -211,7 +210,14 @@ function Icon({
       </svg>
     ),
     calendar: (
-      <svg viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke={color}
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
         <rect x="3" y="4" width="18" height="18" rx="2" fill={color + "11"} />
         <line x1="16" y1="2" x2="16" y2="6" />
         <line x1="8" y1="2" x2="8" y2="6" />
@@ -219,29 +225,70 @@ function Icon({
       </svg>
     ),
     time: (
-      <svg viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke={color}
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
         <circle cx="12" cy="12" r="10" />
         <polyline points="12 6 12 12 16 14" />
       </svg>
     ),
     user: (
-      <svg viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke={color}
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
         <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
         <circle cx="12" cy="7" r="4" fill={color + "22"} />
       </svg>
     ),
     message: (
-      <svg viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" fill={color + "11"} />
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke={color}
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path
+          d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"
+          fill={color + "11"}
+        />
       </svg>
     ),
     sparkle: (
-      <svg viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z" fill={color + "22"} />
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke={color}
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path
+          d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"
+          fill={color + "22"}
+        />
       </svg>
     ),
     hands: (
-      <svg viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke={color}
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
         <path d="M4.5 12.5c0-1 .8-1.5 1.5-1.5s1.5.5 1.5 1.5v5" />
         <path d="M7.5 12c0-1 .8-1.5 1.5-1.5s1.5.5 1.5 1.5v1" />
         <path d="M10.5 11.5c0-1 .8-1.5 1.5-1.5s1.5.5 1.5 1.5v1" />
@@ -250,7 +297,14 @@ function Icon({
       </svg>
     ),
     currency: (
-      <svg viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke={color}
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
         <circle cx="12" cy="12" r="10" fill={color + "11"} />
         <path d="M15 9a3 3 0 0 0-3-3H9v6h3a3 3 0 0 0 0-6z" />
         <path d="M9 12v6" />
@@ -267,10 +321,7 @@ function Icon({
         strokeLinecap="round"
         strokeLinejoin="round"
       >
-        <polygon
-          points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"
-          fill={color + "33"}
-        />
+        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" fill={color + "33"} />
       </svg>
     ),
     fist: (
@@ -394,10 +445,7 @@ function Icon({
         strokeLinecap="round"
         strokeLinejoin="round"
       >
-        <path
-          d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"
-          fill={color + "22"}
-        />
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" fill={color + "22"} />
       </svg>
     ),
     clock: (
@@ -422,10 +470,7 @@ function Icon({
         strokeLinecap="round"
         strokeLinejoin="round"
       >
-        <path
-          d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"
-          fill={color + "22"}
-        />
+        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" fill={color + "22"} />
         <circle cx="12" cy="10" r="3" />
       </svg>
     ),
@@ -460,13 +505,7 @@ function Icon({
       </svg>
     ),
     check: (
-      <svg
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke={color}
-        strokeWidth="2.5"
-        strokeLinecap="round"
-      >
+      <svg viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2.5" strokeLinecap="round">
         <polyline points="20 6 9 17 4 12" />
       </svg>
     ),
@@ -514,7 +553,14 @@ function Icon({
       </svg>
     ),
     cup: (
-      <svg viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke={color}
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
         <path d="M17 8h1a4 4 0 0 1 0 8h-1" />
         <path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V8z" fill={color + "11"} />
         <line x1="6" y1="2" x2="6" y2="4" />
@@ -523,20 +569,44 @@ function Icon({
       </svg>
     ),
     leaf: (
-      <svg viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z" fill={color + "22"} />
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke={color}
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path
+          d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"
+          fill={color + "22"}
+        />
         <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12" />
       </svg>
     ),
     bowl: (
-      <svg viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke={color}
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
         <path d="M12 2a10 10 0 0 1 10 10H2A10 10 0 0 1 12 2z" fill={color + "22"} />
         <path d="M2 12c0 5.5 4.5 10 10 10s10-4.5 10-10" />
         <line x1="12" y1="12" x2="12" y2="22" />
       </svg>
     ),
     salad: (
-      <svg viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke={color}
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
         <path d="M7 21h10M12 21V11" />
         <path d="M12 11C10 9 7 9 5 11c2 0 4 1 5 2" fill={color + "11"} />
         <path d="M12 11c2-2 5-2 7 0-2 0-4 1-5 2" fill={color + "11"} />
@@ -545,23 +615,27 @@ function Icon({
       </svg>
     ),
     zap: (
-      <svg viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke={color}
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
         <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" fill={color + "22"} />
       </svg>
     ),
-  }
+  };
   return (
-    <span
-      className={className}
-      style={{ display: "inline-flex", width: size, height: size }}
-    >
+    <span className={className} style={{ display: "inline-flex", width: size, height: size }}>
       {icons[name] ?? icons["diamond"]}
     </span>
-  )
+  );
 }
 
 // ─── CINEMATIC INTRO ──────────────────────────────────────────────────────────
-const INTRO_SESSION_KEY = "ab-intro-played"
+const INTRO_SESSION_KEY = "ab-intro-played";
 
 // Timing constants (ms) — easy to tune
 const INTRO_TIMING = {
@@ -571,33 +645,34 @@ const INTRO_TIMING = {
   progressDelay: 1350,
   exitStart: 2700, // when content starts fading
   unmount: 3380, // when overlay is fully gone
-} as const
+} as const;
 
 function CinematicIntro({ onDone }: { onDone: () => void }) {
-  const [logoIn, setLogoIn] = useState(false)
-  const [glowActive, setGlowActive] = useState(false)
-  const [wordmarkIn, setWordmarkIn] = useState(false)
-  const [quoteIn, setQuoteIn] = useState(false)
-  const [progressIn, setProgressIn] = useState(false)
-  const [exiting, setExiting] = useState(false)
+  const [logoIn, setLogoIn] = useState(false);
+  const [glowActive, setGlowActive] = useState(false);
+  const [wordmarkIn, setWordmarkIn] = useState(false);
+  const [quoteIn, setQuoteIn] = useState(false);
+  const [progressIn, setProgressIn] = useState(false);
+  const [exiting, setExiting] = useState(false);
 
   useEffect(() => {
     // play logo rise immediately
-    const t0 = setTimeout(() => setLogoIn(true), INTRO_TIMING.logoDelay)
-    const t1 = setTimeout(() => setGlowActive(true), 650)
-    const t2 = setTimeout(() => setWordmarkIn(true), INTRO_TIMING.wordmarkDelay)
-    const t3 = setTimeout(() => setQuoteIn(true), INTRO_TIMING.quoteDelay)
-    const t4 = setTimeout(() => setProgressIn(true), INTRO_TIMING.progressDelay)
-    const t5 = setTimeout(() => setExiting(true), INTRO_TIMING.exitStart)
-    const t6 = setTimeout(() => onDone(), INTRO_TIMING.unmount)
-    return () => [t0, t1, t2, t3, t4, t5, t6].forEach(clearTimeout)
-  }, [onDone])
+    const t0 = setTimeout(() => setLogoIn(true), INTRO_TIMING.logoDelay);
+    const t1 = setTimeout(() => setGlowActive(true), 650);
+    const t2 = setTimeout(() => setWordmarkIn(true), INTRO_TIMING.wordmarkDelay);
+    const t3 = setTimeout(() => setQuoteIn(true), INTRO_TIMING.quoteDelay);
+    const t4 = setTimeout(() => setProgressIn(true), INTRO_TIMING.progressDelay);
+    const t5 = setTimeout(() => setExiting(true), INTRO_TIMING.exitStart);
+    const t6 = setTimeout(() => onDone(), INTRO_TIMING.unmount);
+    return () => [t0, t1, t2, t3, t4, t5, t6].forEach(clearTimeout);
+  }, [onDone]);
 
   return (
     <div
       aria-hidden="true"
-      className={`fixed inset-0 z-[9999] flex flex-col items-center justify-center overflow-hidden${exiting ? " intro-overlay-exit" : ""
-        }`}
+      className={`fixed inset-0 z-[9999] flex flex-col items-center justify-center overflow-hidden${
+        exiting ? " intro-overlay-exit" : ""
+      }`}
       style={{ background: "#080808" }}
     >
       {/* Ambient radial — deliberately subtle */}
@@ -620,15 +695,13 @@ function CinematicIntro({ onDone }: { onDone: () => void }) {
 
       {/* Content block */}
       <div
-        className={`flex flex-col items-center gap-0 select-none${exiting ? " intro-content-exit" : ""
-          }`}
+        className={`flex flex-col items-center gap-0 select-none${
+          exiting ? " intro-content-exit" : ""
+        }`}
       >
         {/* Logo */}
         <div className={`opacity-0${logoIn ? " intro-logo-in" : ""}`}>
-          <div
-            className={glowActive ? "intro-logo-glow" : ""}
-            style={{ borderRadius: "50%" }}
-          >
+          <div className={glowActive ? "intro-logo-glow" : ""} style={{ borderRadius: "50%" }}>
             <img
               src={logoImg}
               alt="AB Fitness Hub"
@@ -638,17 +711,14 @@ function CinematicIntro({ onDone }: { onDone: () => void }) {
                 borderRadius: "50%",
                 objectFit: "cover",
                 display: "block",
-                boxShadow:
-                  "0 0 0 1.5px rgba(255,72,0,0.5), 0 0 32px rgba(255,72,0,0.2)",
+                boxShadow: "0 0 0 1.5px rgba(255,72,0,0.5), 0 0 32px rgba(255,72,0,0.2)",
               }}
             />
           </div>
         </div>
 
         {/* Wordmark */}
-        <div
-          className={`mt-5 opacity-0${wordmarkIn ? " intro-wordmark-in" : ""}`}
-        >
+        <div className={`mt-5 opacity-0${wordmarkIn ? " intro-wordmark-in" : ""}`}>
           <div
             style={{
               fontFamily: "'Barlow Condensed', sans-serif",
@@ -680,8 +750,7 @@ function CinematicIntro({ onDone }: { onDone: () => void }) {
 
         {/* Divider */}
         <div
-          className={`mt-7 mb-6 opacity-0${wordmarkIn ? " intro-wordmark-in" : ""
-            }`}
+          className={`mt-7 mb-6 opacity-0${wordmarkIn ? " intro-wordmark-in" : ""}`}
           style={{ width: 32, height: 1, background: "rgba(255,72,0,0.4)" }}
         />
 
@@ -727,12 +796,12 @@ function CinematicIntro({ onDone }: { onDone: () => void }) {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 // ─── THEME TOGGLE ─────────────────────────────────────────────────────────────
 function ThemeToggle() {
-  const { isDark, toggle } = useTheme()
+  const { isDark, toggle } = useTheme();
   return (
     <button
       onClick={toggle}
@@ -745,8 +814,7 @@ function ThemeToggle() {
         height: 30,
         borderRadius: 15,
         background: isDark ? "#1c1c1c" : "#e0e0e0",
-        border: `1.5px solid ${isDark ? "rgba(255,72,0,0.3)" : "rgba(0,0,0,0.15)"
-          }`,
+        border: `1.5px solid ${isDark ? "rgba(255,72,0,0.3)" : "rgba(0,0,0,0.15)"}`,
         cursor: "pointer",
         flexShrink: 0,
         transition: "background 0.3s ease, border-color 0.3s ease",
@@ -786,29 +854,22 @@ function ThemeToggle() {
           borderRadius: "50%",
           background: isDark ? "#ff4800" : "#d93c08",
           left: isDark ? 34 : 4,
-          transition:
-            "left 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.3s ease",
+          transition: "left 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.3s ease",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          boxShadow: isDark
-            ? "0 0 8px rgba(255,72,0,0.5)"
-            : "0 1px 4px rgba(0,0,0,0.25)",
+          boxShadow: isDark ? "0 0 8px rgba(255,72,0,0.5)" : "0 1px 4px rgba(0,0,0,0.25)",
         }}
       >
-        {isDark ? (
-          <Moon size={11} color="#fff" />
-        ) : (
-          <Sun size={11} color="#fff" />
-        )}
+        {isDark ? <Moon size={11} color="#fff" /> : <Sun size={11} color="#fff" />}
       </span>
     </button>
-  )
+  );
 }
 
 // ─── LOGO ─────────────────────────────────────────────────────────────────────
 function Logo({ size = 42 }: { size?: number }) {
-  const c = useC()
+  const c = useC();
   return (
     <img
       src={logoImg}
@@ -822,20 +883,20 @@ function Logo({ size = 42 }: { size?: number }) {
           : `0 0 0 1.5px ${c.orange}55, 0 2px 8px rgba(0,0,0,0.12)`,
       }}
     />
-  )
+  );
 }
 
 // ─── NAV ──────────────────────────────────────────────────────────────────────
 function Nav() {
-  const c = useC()
-  const navigate = useNavigate()
-  const [scrolled, setScrolled] = useState(false)
-  const [open, setOpen] = useState(false)
+  const c = useC();
+  const navigate = useNavigate();
+  const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
   useEffect(() => {
-    const h = () => setScrolled(window.scrollY > 30)
-    window.addEventListener("scroll", h)
-    return () => window.removeEventListener("scroll", h)
-  }, [])
+    const h = () => setScrolled(window.scrollY > 30);
+    window.addEventListener("scroll", h);
+    return () => window.removeEventListener("scroll", h);
+  }, []);
 
   const links = [
     { label: "Home", href: "#hero" },
@@ -843,7 +904,7 @@ function Nav() {
     { label: "Services", href: "#programs" },
     { label: "Pricing", href: "#memberships" },
     { label: "Gallery", href: "#gallery" },
-  ]
+  ];
 
   return (
     <nav
@@ -916,9 +977,7 @@ function Nav() {
             style={{
               background: c.orange,
               color: "#fff",
-              boxShadow: c.isDark
-                ? `0 0 20px ${c.orange}55`
-                : `0 2px 12px ${c.orange}55`,
+              boxShadow: c.isDark ? `0 0 20px ${c.orange}55` : `0 2px 12px ${c.orange}55`,
             }}
           >
             Contact Us
@@ -934,18 +993,19 @@ function Nav() {
             aria-label="Menu"
           >
             <span
-              className={`block w-5 h-0.5 mb-1.5 transition-all duration-300 ${open ? "rotate-45 translate-y-2" : ""
-                }`}
+              className={`block w-5 h-0.5 mb-1.5 transition-all duration-300 ${
+                open ? "rotate-45 translate-y-2" : ""
+              }`}
               style={{ background: c.text }}
             />
             <span
-              className={`block w-5 h-0.5 mb-1.5 transition-all ${open ? "opacity-0" : ""
-                }`}
+              className={`block w-5 h-0.5 mb-1.5 transition-all ${open ? "opacity-0" : ""}`}
               style={{ background: c.text }}
             />
             <span
-              className={`block w-5 h-0.5 transition-all duration-300 ${open ? "-rotate-45 -translate-y-2" : ""
-                }`}
+              className={`block w-5 h-0.5 transition-all duration-300 ${
+                open ? "-rotate-45 -translate-y-2" : ""
+              }`}
               style={{ background: c.text }}
             />
           </button>
@@ -953,8 +1013,9 @@ function Nav() {
       </div>
 
       <div
-        className={`md:hidden overflow-hidden transition-all duration-300 ${open ? "max-h-80" : "max-h-0"
-          }`}
+        className={`md:hidden overflow-hidden transition-all duration-300 ${
+          open ? "max-h-80" : "max-h-0"
+        }`}
         style={{
           background: c.mobileMenuBg,
           borderTop: `1px solid ${c.navBorder}`,
@@ -973,7 +1034,10 @@ function Nav() {
             </a>
           ))}
           <button
-            onClick={() => { setOpen(false); navigate("/protein-hub") }}
+            onClick={() => {
+              setOpen(false);
+              navigate("/protein-hub");
+            }}
             className="font-semibold text-sm text-left px-4 py-2.5 rounded-full"
             style={{
               background: c.isDark ? "#1a1a0a" : "#fffbe6",
@@ -994,60 +1058,56 @@ function Nav() {
         </div>
       </div>
     </nav>
-  )
+  );
 }
 
 // ─── HERO ─────────────────────────────────────────────────────────────────────
 function Hero() {
-  const c = useC()
-  const contentRef = useRef<HTMLDivElement>(null)
-  const [count, setCount] = useState({ members: 0, trainers: 0, years: 0 })
+  const c = useC();
+  const contentRef = useRef<HTMLDivElement>(null);
+  const [count, setCount] = useState({ members: 0, trainers: 0, years: 0 });
 
   // Count-up animation
   useEffect(() => {
-    const targets = { members: 300, trainers: 4, years: 2 }
-    let frame = 0
+    const targets = { members: 300, trainers: 4, years: 2 };
+    let frame = 0;
     const t = setInterval(() => {
-      frame++
-      const p = Math.min(frame / 80, 1)
-      const e = 1 - Math.pow(1 - p, 3)
+      frame++;
+      const p = Math.min(frame / 80, 1);
+      const e = 1 - Math.pow(1 - p, 3);
       setCount({
         members: Math.round(targets.members * e),
         trainers: Math.round(targets.trainers * e),
         years: Math.round(targets.years * e),
-      })
-      if (p >= 1) clearInterval(t)
-    }, 20)
-    return () => clearInterval(t)
-  }, [])
+      });
+      if (p >= 1) clearInterval(t);
+    }, 20);
+    return () => clearInterval(t);
+  }, []);
 
   // Subtle hero parallax — content drifts up + fades as user scrolls away
   useEffect(() => {
-    if (reducedMotion()) return
-    let raf = 0
+    if (reducedMotion()) return;
+    let raf = 0;
     const onScroll = () => {
-      cancelAnimationFrame(raf)
+      cancelAnimationFrame(raf);
       raf = requestAnimationFrame(() => {
-        const el = contentRef.current
-        if (!el) return
-        const section = el.closest("section") as HTMLElement
-        const progress = Math.max(
-          0,
-          Math.min(window.scrollY / (section?.offsetHeight || 800), 1),
-        )
-        el.style.opacity = String(1 - progress * 0.65)
-        el.style.transform = `translateY(${progress * -36}px)`
-      })
-    }
-    window.addEventListener("scroll", onScroll, { passive: true })
+        const el = contentRef.current;
+        if (!el) return;
+        const section = el.closest("section") as HTMLElement;
+        const progress = Math.max(0, Math.min(window.scrollY / (section?.offsetHeight || 800), 1));
+        el.style.opacity = String(1 - progress * 0.65);
+        el.style.transform = `translateY(${progress * -36}px)`;
+      });
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
     return () => {
-      window.removeEventListener("scroll", onScroll)
-      cancelAnimationFrame(raf)
-    }
-  }, [])
+      window.removeEventListener("scroll", onScroll);
+      cancelAnimationFrame(raf);
+    };
+  }, []);
 
-  const glowStat = (color: string) =>
-    c.isDark ? `0 0 16px ${color}88` : `0 2px 6px ${color}44`
+  const glowStat = (color: string) => (c.isDark ? `0 0 16px ${color}88` : `0 2px 6px ${color}44`);
 
   return (
     <section
@@ -1129,9 +1189,7 @@ function Hero() {
               height: [4, 6, 3, 5, 4, 6][i],
               left: `${[15, 70, 40, 85, 25, 60][i]}%`,
               top: `${[20, 35, 65, 55, 80, 15][i]}%`,
-              background: [c.orange, c.cyan, c.lime, c.orange, c.cyan, c.lime][
-                i
-              ],
+              background: [c.orange, c.cyan, c.lime, c.orange, c.cyan, c.lime][i],
               animationDelay: `${i * 0.8}s`,
               animationDuration: `${3.5 + i * 0.6}s`,
             }}
@@ -1139,10 +1197,7 @@ function Hero() {
         ))}
       </div>
 
-      <div
-        ref={contentRef}
-        className="max-w-7xl mx-auto px-4 sm:px-6 w-full py-10"
-      >
+      <div ref={contentRef} className="max-w-7xl mx-auto px-4 sm:px-6 w-full py-10">
         {/* ─ MOBILE ─ */}
         <div
           className="lg:hidden rounded-2xl overflow-hidden"
@@ -1161,8 +1216,7 @@ function Hero() {
                 border: `1px solid ${c.orange}33`,
               }}
             >
-              <Icon name="flame" size={14} color={c.orange} /> #1 Gym in Deralakatte,
-              Mangalore
+              <Icon name="flame" size={14} color={c.orange} /> #1 Gym in Deralakatte, Mangalore
             </div>
             <h1
               className="font-black leading-[1.05] mb-4"
@@ -1186,13 +1240,9 @@ function Hero() {
                 Your Destiny.
               </span>
             </h1>
-            <p
-              className="text-[14px] leading-relaxed mb-7"
-              style={{ color: c.muted }}
-            >
-              Our mission is to transform your health and fitness through
-              incremental achievements, proving that even the smallest steps can
-              lead to significant results.
+            <p className="text-[14px] leading-relaxed mb-7" style={{ color: c.muted }}>
+              Our mission is to transform your health and fitness through incremental achievements,
+              proving that even the smallest steps can lead to significant results.
             </p>
             <div className="flex flex-wrap gap-3 mb-8">
               <a
@@ -1200,9 +1250,7 @@ function Hero() {
                 className="inline-flex items-center gap-2 text-white font-bold text-[13px] px-5 py-3 rounded-full transition-all hover:scale-105"
                 style={{
                   background: c.orange,
-                  boxShadow: c.isDark
-                    ? `0 0 20px ${c.orange}55`
-                    : `0 2px 12px ${c.orange}44`,
+                  boxShadow: c.isDark ? `0 0 20px ${c.orange}55` : `0 2px 12px ${c.orange}44`,
                 }}
               >
                 Explore Courses <Icon name="arrow" size={16} color="#fff" />
@@ -1215,10 +1263,7 @@ function Hero() {
                 Book Free Trial
               </a>
             </div>
-            <div
-              className="flex gap-6 pt-5"
-              style={{ borderTop: `1px solid ${c.border}` }}
-            >
+            <div className="flex gap-6 pt-5" style={{ borderTop: `1px solid ${c.border}` }}>
               {[
                 { val: `${count.members}+`, label: "Members", col: c.orange },
                 { val: `${count.trainers}+`, label: "Trainers", col: c.cyan },
@@ -1265,10 +1310,8 @@ function Hero() {
               className="absolute inset-0 w-full h-full object-cover object-top"
               style={{
                 opacity: c.isDark ? 0.8 : 0.75,
-                maskImage:
-                  "linear-gradient(to bottom, transparent 0%, black 20%)",
-                WebkitMaskImage:
-                  "linear-gradient(to bottom, transparent 0%, black 20%)",
+                maskImage: "linear-gradient(to bottom, transparent 0%, black 20%)",
+                WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 20%)",
               }}
             />
             <div className="absolute right-4 bottom-4 w-[64px] h-[64px]">
@@ -1278,17 +1321,10 @@ function Hero() {
                 style={{ animation: "spin 14s linear infinite" }}
               >
                 <defs>
-                  <path
-                    id="cpM"
-                    d="M 45,45 m -30,0 a 30,30 0 1,1 60,0 a 30,30 0 1,1 -60,0"
-                  />
+                  <path id="cpM" d="M 45,45 m -30,0 a 30,30 0 1,1 60,0 a 30,30 0 1,1 -60,0" />
                 </defs>
-                <text
-                  style={{ fontSize: "7.5px", fill: c.orange, fontWeight: 700 }}
-                >
-                  <textPath href="#cpM">
-                    Focus on Form • Stay Consistent • Progress •
-                  </textPath>
+                <text style={{ fontSize: "7.5px", fill: c.orange, fontWeight: 700 }}>
+                  <textPath href="#cpM">Focus on Form • Stay Consistent • Progress •</textPath>
                 </text>
               </svg>
               <div className="absolute inset-0 flex items-center justify-center">
@@ -1345,13 +1381,9 @@ function Hero() {
                 Your Destiny.
               </span>
             </h1>
-            <p
-              className="leading-relaxed mb-8 max-w-md text-[15px]"
-              style={{ color: c.muted }}
-            >
-              Our mission is to transform your health and fitness through
-              incremental achievements, proving that even the smallest steps can
-              lead to significant results.
+            <p className="leading-relaxed mb-8 max-w-md text-[15px]" style={{ color: c.muted }}>
+              Our mission is to transform your health and fitness through incremental achievements,
+              proving that even the smallest steps can lead to significant results.
             </p>
             <div className="flex gap-4 mb-12">
               <a
@@ -1359,9 +1391,7 @@ function Hero() {
                 className="inline-flex items-center gap-2 text-white font-bold text-[14px] px-7 py-4 rounded-full transition-all hover:scale-105"
                 style={{
                   background: c.orange,
-                  boxShadow: c.isDark
-                    ? `0 0 24px ${c.orange}55`
-                    : `0 2px 16px ${c.orange}50`,
+                  boxShadow: c.isDark ? `0 0 24px ${c.orange}55` : `0 2px 16px ${c.orange}50`,
                 }}
               >
                 Explore Courses <Icon name="arrow" size={18} color="#fff" />
@@ -1374,10 +1404,7 @@ function Hero() {
                 Book Free Trial
               </a>
             </div>
-            <div
-              className="flex gap-10 pt-8"
-              style={{ borderTop: `1px solid ${c.border}` }}
-            >
+            <div className="flex gap-10 pt-8" style={{ borderTop: `1px solid ${c.border}` }}>
               {[
                 {
                   val: `${count.members}+`,
@@ -1439,10 +1466,8 @@ function Hero() {
                 className="w-full h-full object-cover object-top"
                 style={{
                   opacity: c.isDark ? 0.9 : 0.8,
-                  maskImage:
-                    "linear-gradient(to bottom, black 60%, transparent 100%)",
-                  WebkitMaskImage:
-                    "linear-gradient(to bottom, black 60%, transparent 100%)",
+                  maskImage: "linear-gradient(to bottom, black 60%, transparent 100%)",
+                  WebkitMaskImage: "linear-gradient(to bottom, black 60%, transparent 100%)",
                 }}
               />
             </div>
@@ -1453,17 +1478,10 @@ function Hero() {
                 style={{ animation: "spin 14s linear infinite" }}
               >
                 <defs>
-                  <path
-                    id="cp"
-                    d="M 45,45 m -30,0 a 30,30 0 1,1 60,0 a 30,30 0 1,1 -60,0"
-                  />
+                  <path id="cp" d="M 45,45 m -30,0 a 30,30 0 1,1 60,0 a 30,30 0 1,1 -60,0" />
                 </defs>
-                <text
-                  style={{ fontSize: "7.5px", fill: c.orange, fontWeight: 700 }}
-                >
-                  <textPath href="#cp">
-                    Focus on Form • Stay Consistent • Progress •
-                  </textPath>
+                <text style={{ fontSize: "7.5px", fill: c.orange, fontWeight: 700 }}>
+                  <textPath href="#cp">Focus on Form • Stay Consistent • Progress •</textPath>
                 </text>
               </svg>
               <div className="absolute inset-0 flex items-center justify-center">
@@ -1483,9 +1501,7 @@ function Hero() {
               style={{
                 background: c.card,
                 border: `1px solid ${c.cyan}44`,
-                boxShadow: c.isDark
-                  ? `0 0 20px ${c.cyan}22`
-                  : `0 4px 16px rgba(0,0,0,0.12)`,
+                boxShadow: c.isDark ? `0 0 20px ${c.cyan}22` : `0 4px 16px rgba(0,0,0,0.12)`,
               }}
             >
               <div className="flex items-center gap-3">
@@ -1505,10 +1521,7 @@ function Hero() {
                   >
                     300+
                   </div>
-                  <div
-                    className="text-[10px] uppercase tracking-wider"
-                    style={{ color: c.cyan }}
-                  >
+                  <div className="text-[10px] uppercase tracking-wider" style={{ color: c.cyan }}>
                     Members
                   </div>
                 </div>
@@ -1518,12 +1531,12 @@ function Hero() {
         </div>
       </div>
     </section>
-  )
+  );
 }
 
 // ─── TICKER ───────────────────────────────────────────────────────────────────
 function Ticker() {
-  const c = useC()
+  const c = useC();
   const items = [
     "Strength Training",
     "CrossFit & HIIT",
@@ -1533,16 +1546,14 @@ function Ticker() {
     "Personal Training",
     "Bootcamp",
     "Results Guaranteed",
-  ]
-  const rep = [...items, ...items, ...items]
+  ];
+  const rep = [...items, ...items, ...items];
   return (
     <div
       className="overflow-hidden py-4 relative"
       style={{
         background: c.orange,
-        boxShadow: c.isDark
-          ? `0 0 40px ${c.orange}66`
-          : `0 2px 16px ${c.orange}44`,
+        boxShadow: c.isDark ? `0 0 40px ${c.orange}66` : `0 2px 16px ${c.orange}44`,
       }}
     >
       <div
@@ -1575,7 +1586,7 @@ function Ticker() {
         ))}
       </div>
     </div>
-  )
+  );
 }
 
 // ─── SECTION WRAPPERS ─────────────────────────────────────────────────────────
@@ -1585,12 +1596,12 @@ function Section({
   bg,
   border = false,
 }: {
-  children: React.ReactNode
-  id?: string
-  bg: string
-  border?: boolean
+  children: React.ReactNode;
+  id?: string;
+  bg: string;
+  border?: boolean;
 }) {
-  const c = useC()
+  const c = useC();
   return (
     <section
       id={id || undefined}
@@ -1602,22 +1613,13 @@ function Section({
     >
       {children}
     </section>
-  )
+  );
 }
 
-function SectionLabel({
-  text,
-  center = false,
-}: {
-  text: string
-  center?: boolean
-}) {
-  const c = useC()
+function SectionLabel({ text, center = false }: { text: string; center?: boolean }) {
+  const c = useC();
   return (
-    <div
-      className={`flex items-center gap-3 mb-4 ${center ? "justify-center" : ""
-        }`}
-    >
+    <div className={`flex items-center gap-3 mb-4 ${center ? "justify-center" : ""}`}>
       <div
         className="h-px w-8 rounded-full"
         style={{
@@ -1641,7 +1643,7 @@ function SectionLabel({
         />
       )}
     </div>
-  )
+  );
 }
 
 function Heading({
@@ -1649,73 +1651,71 @@ function Heading({
   center = false,
   size = "lg",
 }: {
-  children: React.ReactNode
-  center?: boolean
-  size?: "lg" | "md"
+  children: React.ReactNode;
+  center?: boolean;
+  size?: "lg" | "md";
 }) {
-  const c = useC()
+  const c = useC();
   return (
     <h2
-      className={`font-black uppercase leading-tight ${center ? "text-center" : ""
-        }`}
+      className={`font-black uppercase leading-tight ${center ? "text-center" : ""}`}
       style={{
         color: c.text,
-        fontSize:
-          size === "lg"
-            ? "clamp(1.8rem, 4vw, 3.2rem)"
-            : "clamp(1.5rem, 3.5vw, 2.6rem)",
+        fontSize: size === "lg" ? "clamp(1.8rem, 4vw, 3.2rem)" : "clamp(1.5rem, 3.5vw, 2.6rem)",
         fontFamily: "Barlow Condensed, sans-serif",
       }}
     >
       {children}
     </h2>
-  )
+  );
 }
 
 // ─── ABOUT ────────────────────────────────────────────────────────────────────
 function About() {
-  const c = useC()
-  const [open, setOpen] = useState<number | null>(0)
-  const [playing, setPlaying] = useState(false)
-  const [muted, setMuted] = useState(true)
-  const [progress, setProgress] = useState(0)
-  const [liked, setLiked] = useState(false)
-  const [likeCount, setLikeCount] = useState(482)
-  const videoRef = useRef<HTMLVideoElement>(null)
+  const c = useC();
+  const [open, setOpen] = useState<number | null>(0);
+  const [playing, setPlaying] = useState(false);
+  const [muted, setMuted] = useState(true);
+  const [progress, setProgress] = useState(0);
+  const [liked, setLiked] = useState(false);
+  const [likeCount, setLikeCount] = useState(482);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   const togglePlay = () => {
-    const v = videoRef.current
-    if (!v) return
+    const v = videoRef.current;
+    if (!v) return;
     if (v.paused) {
-      v.play().then(() => setPlaying(true)).catch(() => {})
+      v.play()
+        .then(() => setPlaying(true))
+        .catch(() => {});
     } else {
-      v.pause()
-      setPlaying(false)
+      v.pause();
+      setPlaying(false);
     }
-  }
+  };
 
   const toggleMute = (e: React.MouseEvent) => {
-    e.stopPropagation()
-    const v = videoRef.current
-    if (!v) return
-    v.muted = !muted
-    setMuted(!muted)
-  }
+    e.stopPropagation();
+    const v = videoRef.current;
+    if (!v) return;
+    v.muted = !muted;
+    setMuted(!muted);
+  };
 
   const handleLike = (e: React.MouseEvent) => {
-    e.stopPropagation()
+    e.stopPropagation();
     setLiked((prev) => {
-      const next = !prev
-      setLikeCount((count) => (next ? count + 1 : count - 1))
-      return next
-    })
-  }
+      const next = !prev;
+      setLikeCount((count) => (next ? count + 1 : count - 1));
+      return next;
+    });
+  };
 
   const handleTimeUpdate = () => {
-    const v = videoRef.current
-    if (!v || !v.duration) return
-    setProgress((v.currentTime / v.duration) * 100)
-  }
+    const v = videoRef.current;
+    if (!v || !v.duration) return;
+    setProgress((v.currentTime / v.duration) * 100);
+  };
   const items = [
     {
       icon: "shield",
@@ -1732,7 +1732,7 @@ function About() {
       title: "Flexible Membership Options",
       body: "Monthly, quarterly, and annual plans designed to fit your schedule and budget. First trial session is always free.",
     },
-  ]
+  ];
   return (
     <Section id="about" bg={c.surface} border>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 grid lg:grid-cols-2 gap-10 md:gap-16 items-center">
@@ -1757,9 +1757,7 @@ function About() {
             className="absolute -bottom-5 -right-5 w-[108px] h-[108px] rounded-[20px] flex flex-col items-center justify-center text-white shadow-2xl"
             style={{
               background: c.orange,
-              boxShadow: c.isDark
-                ? `0 0 40px ${c.orange}88`
-                : `0 4px 24px ${c.orange}66`,
+              boxShadow: c.isDark ? `0 0 40px ${c.orange}88` : `0 4px 24px ${c.orange}66`,
             }}
           >
             <div
@@ -1790,10 +1788,9 @@ function About() {
               className="leading-relaxed my-6 text-[14px] sm:text-[15px]"
               style={{ color: c.muted }}
             >
-              Connect with fellow members, participate in group classes, and
-              share your achievements as we celebrate success together. AB
-              Fitness Hub in Deralakatte has been Mangalore&apos;s most trusted fitness
-              community since 2016.
+              Connect with fellow members, participate in group classes, and share your achievements
+              as we celebrate success together. AB Fitness Hub in Deralakatte has been
+              Mangalore&apos;s most trusted fitness community since 2016.
             </p>
           </Reveal>
           <div className="space-y-3 mb-8">
@@ -1803,8 +1800,7 @@ function About() {
                   className="rounded-[16px] overflow-hidden transition-all duration-200"
                   style={{
                     background: c.card,
-                    border: `1px solid ${open === i ? c.orange + "55" : c.border
-                      }`,
+                    border: `1px solid ${open === i ? c.orange + "55" : c.border}`,
                     boxShadow:
                       open === i
                         ? c.isDark
@@ -1818,11 +1814,7 @@ function About() {
                     className="w-full flex items-center justify-between px-5 py-4 text-left gap-3"
                   >
                     <div className="flex items-center gap-3">
-                      <Icon
-                        name={item.icon}
-                        size={22}
-                        color={open === i ? c.orange : c.muted}
-                      />
+                      <Icon name={item.icon} size={22} color={open === i ? c.orange : c.muted} />
                       <span
                         className="font-semibold text-[14px]"
                         style={{ color: open === i ? c.orange : c.text }}
@@ -1841,8 +1833,9 @@ function About() {
                     </span>
                   </button>
                   <div
-                    className={`overflow-hidden transition-all duration-300 ${open === i ? "max-h-40" : "max-h-0"
-                      }`}
+                    className={`overflow-hidden transition-all duration-300 ${
+                      open === i ? "max-h-40" : "max-h-0"
+                    }`}
                   >
                     <p
                       className="px-5 pb-5 text-[13px] font-light leading-relaxed"
@@ -1861,9 +1854,7 @@ function About() {
               className="inline-flex items-center gap-2 text-white font-bold text-[14px] px-7 py-4 rounded-full transition-all hover:scale-105"
               style={{
                 background: c.orange,
-                boxShadow: c.isDark
-                  ? `0 0 24px ${c.orange}55`
-                  : `0 2px 16px ${c.orange}44`,
+                boxShadow: c.isDark ? `0 0 24px ${c.orange}55` : `0 2px 16px ${c.orange}44`,
               }}
             >
               Explore Programs <Icon name="arrow" size={18} color="#fff" />
@@ -1883,12 +1874,7 @@ function About() {
               border: `1px solid ${c.orange}33`,
             }}
           >
-            <svg
-              width="14"
-              height="14"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-            >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
               <polygon points="5 3 19 12 5 21 5 3" />
             </svg>
             Gym Tour Video
@@ -1900,7 +1886,8 @@ function About() {
             Experience <span style={{ color: c.orange }}>AB Fitness Hub</span> In Action
           </h3>
           <p className="text-sm mt-1" style={{ color: c.muted }}>
-            Take a look inside our modern Deralakatte facility &middot; Tap anywhere to play with sound
+            Take a look inside our modern Deralakatte facility &middot; Tap anywhere to play with
+            sound
           </p>
         </Reveal>
 
@@ -1946,13 +1933,31 @@ function About() {
                   className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-black/60 hover:bg-black/85 backdrop-blur-md flex items-center justify-center text-white border border-white/15 shadow-xl transition-transform hover:scale-105 active:scale-95"
                 >
                   {muted ? (
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                    <svg
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
                       <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
                       <line x1="23" y1="9" x2="17" y2="15" />
                       <line x1="17" y1="9" x2="23" y2="15" />
                     </svg>
                   ) : (
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                    <svg
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
                       <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
                       <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
                       <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
@@ -1982,7 +1987,13 @@ function About() {
                       <rect x="14" y="4" width="4" height="16" rx="1" />
                     </svg>
                   ) : (
-                    <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor" className="ml-1">
+                    <svg
+                      width="32"
+                      height="32"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      className="ml-1"
+                    >
                       <polygon points="6,3 21,12 6,21" />
                     </svg>
                   )}
@@ -2008,8 +2019,15 @@ function About() {
                     </div>
                   </div>
                   <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-white/90 text-xs font-semibold">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                      <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm-1 14.5v-9l6 4.5z"/>
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.5"
+                    >
+                      <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm-1 14.5v-9l6 4.5z" />
                     </svg>
                     HD Video
                   </div>
@@ -2032,13 +2050,13 @@ function About() {
         </Reveal>
       </div>
     </Section>
-  )
+  );
 }
 
 // ─── PROTEIN HUB PROMO ───────────────────────────────────────────────────────
 function ProteinHubPromo() {
-  const c = useC()
-  const navigate = useNavigate()
+  const c = useC();
+  const navigate = useNavigate();
 
   const highlights = [
     { icon: "cup", color: c.orange, label: "Protein Shakes", sub: "7 flavours from ₹130" },
@@ -2047,7 +2065,7 @@ function ProteinHubPromo() {
     { icon: "salad", color: c.lime, label: "Salads & Sandwiches", sub: "Fresh & healthy" },
     { icon: "zap", color: c.cyan, label: "Fresh Juices", sub: "Cold-pressed from ₹50" },
     { icon: "flame", color: c.orange, label: "Power Combos", sub: "Ultimate gym fuel" },
-  ]
+  ];
 
   return (
     <Section bg={c.isDark ? "#05080a" : "#f0f8ff"} border>
@@ -2057,12 +2075,15 @@ function ProteinHubPromo() {
           <SectionLabel text="Now Open" center />
           <Heading center>
             AB{" "}
-            <span style={{ color: "#f59e0b", textShadow: c.isDark ? "0 0 30px #f59e0b88" : "none" }}>
+            <span
+              style={{ color: "#f59e0b", textShadow: c.isDark ? "0 0 30px #f59e0b88" : "none" }}
+            >
               Protein Hub
             </span>
           </Heading>
           <p className="mt-3 text-[14px] font-light max-w-md mx-auto" style={{ color: c.muted }}>
-            Fuel your workouts with premium shakes, smoothies, fresh juices, and healthy bites — right next to your gym.
+            Fuel your workouts with premium shakes, smoothies, fresh juices, and healthy bites —
+            right next to your gym.
           </p>
         </Reveal>
 
@@ -2093,9 +2114,14 @@ function ProteinHubPromo() {
                 {/* Badge */}
                 <div
                   className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-widest mb-5 w-fit"
-                  style={{ background: "#f59e0b22", color: "#f59e0b", border: "1px solid #f59e0b44" }}
+                  style={{
+                    background: "#f59e0b22",
+                    color: "#f59e0b",
+                    border: "1px solid #f59e0b44",
+                  }}
                 >
-                  <Icon name="delivery" size={13} color="#f59e0b" /> Available on Swiggy &amp; Zomato
+                  <Icon name="delivery" size={13} color="#f59e0b" /> Available on Swiggy &amp;
+                  Zomato
                 </div>
 
                 <h3
@@ -2106,13 +2132,16 @@ function ProteinHubPromo() {
                     color: c.text,
                   }}
                 >
-                  Premium Nutrition,{" "}
-                  <span style={{ color: "#f59e0b" }}>Gym-Side</span>
+                  Premium Nutrition, <span style={{ color: "#f59e0b" }}>Gym-Side</span>
                 </h3>
 
                 <p className="text-[14px] leading-relaxed mb-6" style={{ color: c.muted }}>
-                  Hotel Plaza Avenue, beside NITTE University, Deralakatte.<br />
-                  <span className="font-semibold flex items-center gap-1.5 mt-1" style={{ color: "#f59e0b" }}>
+                  Hotel Plaza Avenue, beside NITTE University, Deralakatte.
+                  <br />
+                  <span
+                    className="font-semibold flex items-center gap-1.5 mt-1"
+                    style={{ color: "#f59e0b" }}
+                  >
                     <Icon name="phone" size={13} color="#f59e0b" /> 8075506251
                   </span>
                 </p>
@@ -2123,14 +2152,27 @@ function ProteinHubPromo() {
                     <div
                       key={h.label}
                       className="flex items-center gap-3 px-3 py-2.5 rounded-[14px]"
-                      style={{ background: c.isDark ? "rgba(245,158,11,0.08)" : "rgba(245,158,11,0.06)", border: "1px solid #f59e0b22" }}
+                      style={{
+                        background: c.isDark ? "rgba(245,158,11,0.08)" : "rgba(245,158,11,0.06)",
+                        border: "1px solid #f59e0b22",
+                      }}
                     >
-                      <div className="w-8 h-8 rounded-[10px] flex items-center justify-center shrink-0" style={{ background: "#f59e0b22" }}>
+                      <div
+                        className="w-8 h-8 rounded-[10px] flex items-center justify-center shrink-0"
+                        style={{ background: "#f59e0b22" }}
+                      >
                         <Icon name={h.icon} size={18} color="#f59e0b" />
                       </div>
                       <div>
-                        <div className="text-[12px] font-bold leading-tight" style={{ color: c.text }}>{h.label}</div>
-                        <div className="text-[10px]" style={{ color: c.muted }}>{h.sub}</div>
+                        <div
+                          className="text-[12px] font-bold leading-tight"
+                          style={{ color: c.text }}
+                        >
+                          {h.label}
+                        </div>
+                        <div className="text-[10px]" style={{ color: c.muted }}>
+                          {h.sub}
+                        </div>
                       </div>
                     </div>
                   ))}
@@ -2175,7 +2217,10 @@ function ProteinHubPromo() {
                 }}
               >
                 <div className="text-center p-10 relative z-10">
-                  <div className="flex items-center justify-center w-24 h-24 rounded-[28px] mx-auto mb-4" style={{ background: `${c.orange}18`, border: `2px solid #f59e0b44` }}>
+                  <div
+                    className="flex items-center justify-center w-24 h-24 rounded-[28px] mx-auto mb-4"
+                    style={{ background: `${c.orange}18`, border: `2px solid #f59e0b44` }}
+                  >
                     <Icon name="cup" size={52} color="#f59e0b" />
                   </div>
                   <div
@@ -2190,7 +2235,10 @@ function ProteinHubPromo() {
                   >
                     AB Protein Hub
                   </div>
-                  <div className="text-[12px] mt-2 font-medium uppercase tracking-widest" style={{ color: c.muted }}>
+                  <div
+                    className="text-[12px] mt-2 font-medium uppercase tracking-widest"
+                    style={{ color: c.muted }}
+                  >
                     Deralakatte · Mangalore
                   </div>
 
@@ -2215,8 +2263,15 @@ function ProteinHubPromo() {
                         boxShadow: c.isDark ? "0 0 12px #f59e0b22" : "0 2px 10px rgba(0,0,0,0.1)",
                       }}
                     >
-                      <div className="text-[9px] font-medium" style={{ color: c.muted }}>{tag.label}</div>
-                      <div className="text-[13px] font-black" style={{ color: "#f59e0b", fontFamily: "Barlow Condensed, sans-serif" }}>{tag.price}</div>
+                      <div className="text-[9px] font-medium" style={{ color: c.muted }}>
+                        {tag.label}
+                      </div>
+                      <div
+                        className="text-[13px] font-black"
+                        style={{ color: "#f59e0b", fontFamily: "Barlow Condensed, sans-serif" }}
+                      >
+                        {tag.price}
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -2224,7 +2279,9 @@ function ProteinHubPromo() {
                 {/* Ambient glow */}
                 <div
                   className="absolute inset-0 pointer-events-none"
-                  style={{ background: "radial-gradient(circle at 50% 50%, #f59e0b18 0%, transparent 65%)" }}
+                  style={{
+                    background: "radial-gradient(circle at 50% 50%, #f59e0b18 0%, transparent 65%)",
+                  }}
                 />
               </div>
             </div>
@@ -2232,12 +2289,12 @@ function ProteinHubPromo() {
         </Reveal>
       </div>
     </Section>
-  )
+  );
 }
 
 // ─── PROGRAMS ─────────────────────────────────────────────────────────────────
 function Programs() {
-  const c = useC()
+  const c = useC();
   const programs = [
     {
       icon: "dumbbell",
@@ -2246,7 +2303,13 @@ function Programs() {
       tag: "Popular",
       color: c.orange,
       img: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&h=400&fit=crop&auto=format&q=80",
-      fees: ["Admission: ₹2,000 (General) / ₹1,500 (Student)", "Monthly: ₹1,500 / ₹1,200", "3 Months: ₹3,999 / ₹2,999", "6 Months: ₹7,499 / ₹5,499", "1 Year: ₹11,999 / ₹9,999"],
+      fees: [
+        "Admission: ₹2,000 (General) / ₹1,500 (Student)",
+        "Monthly: ₹1,500 / ₹1,200",
+        "3 Months: ₹3,999 / ₹2,999",
+        "6 Months: ₹7,499 / ₹5,499",
+        "1 Year: ₹11,999 / ₹9,999",
+      ],
     },
     {
       icon: "fist",
@@ -2255,7 +2318,13 @@ function Programs() {
       tag: null,
       color: c.cyan,
       img: "https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?w=600&h=400&fit=crop&auto=format&q=80",
-      fees: ["Admission: ₹2,000", "Monthly: ₹2,000", "3 Months: ₹4,999", "6 Months: ₹8,999", "1 Year: ₹12,900"],
+      fees: [
+        "Admission: ₹2,000",
+        "Monthly: ₹2,000",
+        "3 Months: ₹4,999",
+        "6 Months: ₹8,999",
+        "1 Year: ₹12,900",
+      ],
     },
     {
       icon: "lotus",
@@ -2273,7 +2342,10 @@ function Programs() {
       tag: "Premium",
       color: c.orange,
       img: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=600&h=400&fit=crop&auto=format&q=80",
-      fees: ["PT General — 12 Days: ₹6,000 | 24 Days: ₹9,000", "PT Student — 12 Days: ₹5,000 | 24 Days: ₹7,500"],
+      fees: [
+        "PT General — 12 Days: ₹6,000 | 24 Days: ₹9,000",
+        "PT Student — 12 Days: ₹5,000 | 24 Days: ₹7,500",
+      ],
     },
     {
       icon: "group",
@@ -2282,7 +2354,11 @@ function Programs() {
       tag: null,
       color: c.cyan,
       img: "https://images.unsplash.com/photo-1599058917212-d750089bc07e?w=600&h=400&fit=crop&auto=format&q=80",
-      fees: ["General — 12 Days: ₹10,000 | 24 Days: ₹15,000", "Student — 12 Days: ₹8,000 | 24 Days: ₹12,500", "Gym + Couples (Student) 3M: ₹5,500 | 6M: ₹9,500 | 1Y: ₹20,000"],
+      fees: [
+        "General — 12 Days: ₹10,000 | 24 Days: ₹15,000",
+        "Student — 12 Days: ₹8,000 | 24 Days: ₹12,500",
+        "Gym + Couples (Student) 3M: ₹5,500 | 6M: ₹9,500 | 1Y: ₹20,000",
+      ],
     },
     {
       icon: "heart",
@@ -2291,9 +2367,15 @@ function Programs() {
       tag: null,
       color: c.lime,
       img: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=600&h=400&fit=crop&auto=format&q=80",
-      fees: ["Steam Bath: ₹300", "Swedish Therapy: ₹1,000", "Deep Tissue: ₹2,000", "Thai Massage: ₹1,250", "Aromatherapy: ₹1,450"],
+      fees: [
+        "Steam Bath: ₹300",
+        "Swedish Therapy: ₹1,000",
+        "Deep Tissue: ₹2,000",
+        "Thai Massage: ₹1,250",
+        "Aromatherapy: ₹1,450",
+      ],
     },
-  ]
+  ];
   return (
     <Section id="programs" bg={c.bg} border>
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
@@ -2301,8 +2383,7 @@ function Programs() {
           <div>
             <SectionLabel text="Our Services" />
             <Heading>
-              Fitness Classes{" "}
-              <span style={{ color: c.orange }}>Built for Results</span>
+              Fitness Classes <span style={{ color: c.orange }}>Built for Results</span>
             </Heading>
           </div>
           <a
@@ -2323,16 +2404,16 @@ function Programs() {
                   border: `1px solid ${c.borderFaint}`,
                 }}
                 onMouseEnter={(e) => {
-                  const el = e.currentTarget as HTMLElement
-                  el.style.borderColor = p.color + "55"
+                  const el = e.currentTarget as HTMLElement;
+                  el.style.borderColor = p.color + "55";
                   el.style.boxShadow = c.isDark
                     ? `0 0 24px ${p.color}18`
-                    : `0 4px 20px ${p.color}20`
+                    : `0 4px 20px ${p.color}20`;
                 }}
                 onMouseLeave={(e) => {
-                  const el = e.currentTarget as HTMLElement
-                  el.style.borderColor = c.borderFaint
-                  el.style.boxShadow = "none"
+                  const el = e.currentTarget as HTMLElement;
+                  el.style.borderColor = c.borderFaint;
+                  el.style.boxShadow = "none";
                 }}
               >
                 {/* Background image hero */}
@@ -2368,22 +2449,21 @@ function Programs() {
                 </div>
                 {/* Text content */}
                 <div className="p-5 flex flex-col flex-1">
-                  <h3
-                    className="font-bold text-[16px] mb-2"
-                    style={{ color: c.text }}
-                  >
+                  <h3 className="font-bold text-[16px] mb-2" style={{ color: c.text }}>
                     {p.title}
                   </h3>
-                  <p
-                    className="text-[13px] leading-relaxed font-light"
-                    style={{ color: c.muted }}
-                  >
+                  <p className="text-[13px] leading-relaxed font-light" style={{ color: c.muted }}>
                     {p.desc}
                   </p>
                   <div className="mt-4 space-y-1 flex-1">
                     {p.fees.map((f) => (
-                      <div key={f} className="flex items-start gap-1.5 text-[11px]" style={{ color: c.muted }}>
-                        <span style={{ color: p.color, fontSize: 7, marginTop: 3 }}>●</span>{f}
+                      <div
+                        key={f}
+                        className="flex items-start gap-1.5 text-[11px]"
+                        style={{ color: c.muted }}
+                      >
+                        <span style={{ color: p.color, fontSize: 7, marginTop: 3 }}>●</span>
+                        {f}
                       </div>
                     ))}
                   </div>
@@ -2401,12 +2481,12 @@ function Programs() {
         </div>
       </div>
     </Section>
-  )
+  );
 }
 
 // ─── HOW WE WORK
 function HowWeWork() {
-  const c = useC()
+  const c = useC();
   return (
     <Section bg={c.surface} border>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 grid lg:grid-cols-2 gap-10 md:gap-16 items-center">
@@ -2414,17 +2494,15 @@ function HowWeWork() {
           <div>
             <SectionLabel text="How We Work" />
             <Heading size="md">
-              Join the Movement,{" "}
-              <span style={{ color: c.orange }}>Embrace the Difference</span>
+              Join the Movement, <span style={{ color: c.orange }}>Embrace the Difference</span>
             </Heading>
             <p
               className="leading-relaxed my-6 text-[14px] sm:text-[15px]"
               style={{ color: c.muted }}
             >
-              Our team of experienced trainers is here to guide you every step
-              of the way. With a wealth of knowledge and passion for helping
-              members succeed, our trainers ensure you get the most out of every
-              workout.
+              Our team of experienced trainers is here to guide you every step of the way. With a
+              wealth of knowledge and passion for helping members succeed, our trainers ensure you
+              get the most out of every workout.
             </p>
             <div className="grid sm:grid-cols-2 gap-4 mb-8">
               {[
@@ -2450,22 +2528,11 @@ function HowWeWork() {
                     transitionDelay: `${i * 80}ms`,
                   }}
                 >
-                  <Icon
-                    name={f.icon}
-                    size={28}
-                    color={f.color}
-                    className="mb-3"
-                  />
-                  <h4
-                    className="font-bold text-[14px] mb-2"
-                    style={{ color: c.text }}
-                  >
+                  <Icon name={f.icon} size={28} color={f.color} className="mb-3" />
+                  <h4 className="font-bold text-[14px] mb-2" style={{ color: c.text }}>
                     {f.title}
                   </h4>
-                  <p
-                    className="text-[12px] leading-relaxed font-light"
-                    style={{ color: c.muted }}
-                  >
+                  <p className="text-[12px] leading-relaxed font-light" style={{ color: c.muted }}>
                     {f.desc}
                   </p>
                 </div>
@@ -2476,9 +2543,7 @@ function HowWeWork() {
               className="inline-flex items-center gap-2 text-white font-bold text-[14px] px-7 py-4 rounded-full transition-all hover:scale-105"
               style={{
                 background: c.orange,
-                boxShadow: c.isDark
-                  ? `0 0 24px ${c.orange}55`
-                  : `0 2px 16px ${c.orange}44`,
+                boxShadow: c.isDark ? `0 0 24px ${c.orange}55` : `0 2px 16px ${c.orange}44`,
               }}
             >
               Explore Programs <Icon name="arrow" size={18} color="#fff" />
@@ -2506,9 +2571,7 @@ function HowWeWork() {
                 style={{
                   background: c.card,
                   border: `1px solid ${c.cyan}44`,
-                  boxShadow: c.isDark
-                    ? `0 0 20px ${c.cyan}22`
-                    : `0 4px 16px rgba(0,0,0,0.12)`,
+                  boxShadow: c.isDark ? `0 0 20px ${c.cyan}22` : `0 4px 16px rgba(0,0,0,0.12)`,
                 }}
               >
                 <div
@@ -2527,10 +2590,7 @@ function HowWeWork() {
                   >
                     300+ Members
                   </div>
-                  <div
-                    className="text-[10px] uppercase tracking-wider"
-                    style={{ color: c.cyan }}
-                  >
+                  <div className="text-[10px] uppercase tracking-wider" style={{ color: c.cyan }}>
                     Transformed lives
                   </div>
                 </div>
@@ -2540,7 +2600,7 @@ function HowWeWork() {
         </Reveal>
       </div>
     </Section>
-  )
+  );
 }
 
 // ─── TRAINER CARD (3D tilt) ────────────────────────────────────────────────────
@@ -2551,20 +2611,20 @@ function TrainerCard({
   active,
 }: {
   t: {
-    name: string
-    role: string
-    exp: string
-    cert: string
-    icon: string
-    color: string
-    img: string
-    bio: string
-  }
-  c: Colors
-  onClick: () => void
-  active: boolean
+    name: string;
+    role: string;
+    exp: string;
+    cert: string;
+    icon: string;
+    color: string;
+    img: string;
+    bio: string;
+  };
+  c: Colors;
+  onClick: () => void;
+  active: boolean;
 }) {
-  const { ref, onMove, onLeave } = useTilt<HTMLButtonElement>(10)
+  const { ref, onMove, onLeave } = useTilt<HTMLButtonElement>(10);
   return (
     <button
       type="button"
@@ -2575,23 +2635,22 @@ function TrainerCard({
         background: c.card,
         border: active ? `1px solid ${t.color}55` : `1px solid ${c.borderFaint}`,
         boxShadow: active ? `0 16px 48px ${t.color}22` : "none",
-        transition:
-          "transform 0.18s ease, box-shadow 0.3s ease, border-color 0.3s ease",
+        transition: "transform 0.18s ease, box-shadow 0.3s ease, border-color 0.3s ease",
       }}
       onMouseMove={onMove}
       onMouseLeave={(e) => {
-        onLeave()
-        const el = e.currentTarget as HTMLElement
+        onLeave();
+        const el = e.currentTarget as HTMLElement;
         if (!active) {
-          el.style.borderColor = c.borderFaint
-          el.style.boxShadow = "none"
+          el.style.borderColor = c.borderFaint;
+          el.style.boxShadow = "none";
         }
       }}
       onMouseEnter={(e) => {
-        const el = e.currentTarget as HTMLElement
+        const el = e.currentTarget as HTMLElement;
         if (!active) {
-          el.style.borderColor = t.color + "55"
-          el.style.boxShadow = `0 16px 48px ${t.color}22`
+          el.style.borderColor = t.color + "55";
+          el.style.boxShadow = `0 16px 48px ${t.color}22`;
         }
       }}
     >
@@ -2602,9 +2661,7 @@ function TrainerCard({
           className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
           style={{ filter: "grayscale(20%)" }}
           onMouseEnter={(e) => (e.currentTarget.style.filter = "grayscale(0)")}
-          onMouseLeave={(e) =>
-            (e.currentTarget.style.filter = "grayscale(20%)")
-          }
+          onMouseLeave={(e) => (e.currentTarget.style.filter = "grayscale(20%)")}
         />
         <div
           className="absolute inset-0"
@@ -2628,10 +2685,7 @@ function TrainerCard({
         <h3 className="font-bold text-[15px]" style={{ color: c.text }}>
           {t.name}
         </h3>
-        <div
-          className="text-[12px] font-semibold mt-0.5"
-          style={{ color: t.color }}
-        >
+        <div className="text-[12px] font-semibold mt-0.5" style={{ color: t.color }}>
           {t.role}
         </div>
         <div className="flex items-center gap-2 mt-3">
@@ -2647,13 +2701,13 @@ function TrainerCard({
         </div>
       </div>
     </button>
-  )
+  );
 }
 
 // ─── TRAINERS ─────────────────────────────────────────────────────────────────
 function Trainers() {
-  const c = useC()
-  const [selected, setSelected] = useState<number | null>(null)
+  const c = useC();
+  const [selected, setSelected] = useState<number | null>(null);
   const trainers = [
     {
       name: "Afeel",
@@ -2699,8 +2753,8 @@ function Trainers() {
       imgPos: "center 15%",
       bio: "Blending raw strength with elite nutritional science. Akshitha helps clients unlock peak physical power through technical lifting, functional conditioning, and advanced dietitian-backed meal strategies.",
     },
-  ]
-  const activeTrainer = selected !== null ? trainers[selected] : null
+  ];
+  const activeTrainer = selected !== null ? trainers[selected] : null;
 
   return (
     <Section id="trainers" bg={c.bg} border>
@@ -2756,7 +2810,10 @@ function Trainers() {
                   />
                 </div>
                 <div className="p-5">
-                  <h3 className="font-black text-[22px] leading-none mb-2" style={{ color: c.text }}>
+                  <h3
+                    className="font-black text-[22px] leading-none mb-2"
+                    style={{ color: c.text }}
+                  >
                     {t.name}
                   </h3>
                   <div className="text-[13px] font-semibold mb-3" style={{ color: t.color }}>
@@ -2820,7 +2877,10 @@ function Trainers() {
                   className="h-20 w-20 rounded-[18px] object-cover"
                 />
                 <div>
-                  <div className="text-[11px] font-bold uppercase tracking-widest mb-1" style={{ color: activeTrainer.color }}>
+                  <div
+                    className="text-[11px] font-bold uppercase tracking-widest mb-1"
+                    style={{ color: activeTrainer.color }}
+                  >
                     {activeTrainer.role}
                   </div>
                   <h3 className="font-black text-[30px] leading-none" style={{ color: c.text }}>
@@ -2849,12 +2909,12 @@ function Trainers() {
         )}
       </div>
     </Section>
-  )
+  );
 }
 
 // ─── SCHEDULE ─────────────────────────────────────────────────────────────────
 function Schedule() {
-  const c = useC()
+  const c = useC();
   const scheduleData = [
     {
       time: "06:00–07:00",
@@ -2910,27 +2970,27 @@ function Schedule() {
       fri: "Strength",
       sat: "Yoga",
     },
-  ]
+  ];
 
   const classPill: Record<string, { bg: string; color: string }> = c.isDark
     ? {
-      Strength: { bg: `${c.orange}20`, color: c.orange },
-      Yoga: { bg: "#00ff8820", color: "#00cc66" },
-      CrossFit: { bg: `${c.lime}20`, color: c.lime },
-      Cardio: { bg: `${c.cyan}20`, color: c.cyan },
-      Boxing: { bg: "#ff00aa20", color: "#ff66cc" },
-      Kickboxing: { bg: "#ff00aa20", color: "#ff66cc" },
-      Bootcamp: { bg: "#ffaa0020", color: "#ffaa00" },
-    }
+        Strength: { bg: `${c.orange}20`, color: c.orange },
+        Yoga: { bg: "#00ff8820", color: "#00cc66" },
+        CrossFit: { bg: `${c.lime}20`, color: c.lime },
+        Cardio: { bg: `${c.cyan}20`, color: c.cyan },
+        Boxing: { bg: "#ff00aa20", color: "#ff66cc" },
+        Kickboxing: { bg: "#ff00aa20", color: "#ff66cc" },
+        Bootcamp: { bg: "#ffaa0020", color: "#ffaa00" },
+      }
     : {
-      Strength: { bg: `${c.orange}18`, color: c.orange },
-      Yoga: { bg: "#00aa5518", color: "#007a3d" },
-      CrossFit: { bg: `${c.lime}25`, color: c.lime },
-      Cardio: { bg: `${c.cyan}18`, color: c.cyan },
-      Boxing: { bg: "#cc006618", color: "#aa0055" },
-      Kickboxing: { bg: "#cc006618", color: "#aa0055" },
-      Bootcamp: { bg: "#aa660018", color: "#7a4400" },
-    }
+        Strength: { bg: `${c.orange}18`, color: c.orange },
+        Yoga: { bg: "#00aa5518", color: "#007a3d" },
+        CrossFit: { bg: `${c.lime}25`, color: c.lime },
+        Cardio: { bg: `${c.cyan}18`, color: c.cyan },
+        Boxing: { bg: "#cc006618", color: "#aa0055" },
+        Kickboxing: { bg: "#cc006618", color: "#aa0055" },
+        Bootcamp: { bg: "#aa660018", color: "#7a4400" },
+      };
 
   return (
     <Section bg={c.surface} border>
@@ -2952,14 +3012,7 @@ function Schedule() {
                   <th className="p-4 text-white font-bold text-left text-[11px] uppercase tracking-wider">
                     Time
                   </th>
-                  {[
-                    "Monday",
-                    "Tuesday",
-                    "Wednesday",
-                    "Thursday",
-                    "Friday",
-                    "Saturday",
-                  ].map((d) => (
+                  {["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"].map((d) => (
                     <th
                       key={d}
                       className="p-4 text-white font-bold text-center text-[11px] uppercase tracking-wider"
@@ -2984,24 +3037,22 @@ function Schedule() {
                     >
                       {row.time}
                     </td>
-                    {(["mon", "tue", "wed", "thu", "fri", "sat"] as const).map(
-                      (d) => {
-                        const s = classPill[row[d]] || {
-                          bg: c.border,
-                          color: c.muted,
-                        }
-                        return (
-                          <td key={d} className="p-2 text-center">
-                            <span
-                              className="inline-block px-2.5 py-1 text-[11px] font-bold rounded-full"
-                              style={{ background: s.bg, color: s.color }}
-                            >
-                              {row[d]}
-                            </span>
-                          </td>
-                        )
-                      },
-                    )}
+                    {(["mon", "tue", "wed", "thu", "fri", "sat"] as const).map((d) => {
+                      const s = classPill[row[d]] || {
+                        bg: c.border,
+                        color: c.muted,
+                      };
+                      return (
+                        <td key={d} className="p-2 text-center">
+                          <span
+                            className="inline-block px-2.5 py-1 text-[11px] font-bold rounded-full"
+                            style={{ background: s.bg, color: s.color }}
+                          >
+                            {row[d]}
+                          </span>
+                        </td>
+                      );
+                    })}
                   </tr>
                 ))}
               </tbody>
@@ -3010,25 +3061,28 @@ function Schedule() {
         </Reveal>
       </div>
     </Section>
-  )
+  );
 }
 
 // ─── MEMBERSHIPS ──────────────────────────────────────────────────────────────
 function Memberships() {
-  const c = useC()
-  const [category, setCategory] = useState<"general" | "student">("general")
+  const c = useC();
+  const [category, setCategory] = useState<"general" | "student">("general");
 
-  const plans: Record<"general" | "student", {
-    duration: string
-    months: number
-    price: number
-    offerPrice: number | null
-    perMonth: number
-    saving: number
-    savingPct: number
-    best: boolean
-    admission?: number
-  }[]> = {
+  const plans: Record<
+    "general" | "student",
+    {
+      duration: string;
+      months: number;
+      price: number;
+      offerPrice: number | null;
+      perMonth: number;
+      saving: number;
+      savingPct: number;
+      best: boolean;
+      admission?: number;
+    }[]
+  > = {
     general: [
       {
         duration: "1 Month",
@@ -3115,14 +3169,14 @@ function Memberships() {
         best: true,
       },
     ],
-  }
+  };
 
   const features = [
     { icon: "dumbbell", label: "Full gym floor access" },
     { icon: "group", label: "Group classes included" },
     { icon: "shield", label: "Locker room access" },
     { icon: "target", label: "Fitness assessment" },
-  ]
+  ];
 
   return (
     <Section id="memberships" bg={c.bg} border>
@@ -3133,10 +3187,7 @@ function Memberships() {
           <Heading center>
             Simple, <span style={{ color: c.orange }}>Transparent</span> Pricing
           </Heading>
-          <p
-            className="mt-3 text-[14px] font-light max-w-md mx-auto"
-            style={{ color: c.muted }}
-          >
+          <p className="mt-3 text-[14px] font-light max-w-md mx-auto" style={{ color: c.muted }}>
             No hidden fees. Choose your membership type and duration.
           </p>
         </Reveal>
@@ -3155,12 +3206,10 @@ function Memberships() {
                 style={
                   category === cat
                     ? {
-                      background: c.orange,
-                      color: "#fff",
-                      boxShadow: c.isDark
-                        ? `0 0 16px ${c.orange}66`
-                        : `0 2px 10px ${c.orange}44`,
-                    }
+                        background: c.orange,
+                        color: "#fff",
+                        boxShadow: c.isDark ? `0 0 16px ${c.orange}66` : `0 2px 10px ${c.orange}44`,
+                      }
                     : { color: c.muted }
                 }
               >
@@ -3179,36 +3228,32 @@ function Memberships() {
                 style={
                   plan.best
                     ? {
-                      background: c.orange,
-                      boxShadow: c.isDark
-                        ? `0 0 40px ${c.orange}55, 0 0 80px ${c.orange}22`
-                        : `0 6px 28px ${c.orange}55`,
-                      animation: "pulse-glow 2.5s ease-in-out infinite",
-                    }
+                        background: c.orange,
+                        boxShadow: c.isDark
+                          ? `0 0 40px ${c.orange}55, 0 0 80px ${c.orange}22`
+                          : `0 6px 28px ${c.orange}55`,
+                        animation: "pulse-glow 2.5s ease-in-out infinite",
+                      }
                     : {
-                      background: c.card,
-                      border: `1px solid ${c.border}`,
-                      boxShadow: c.isDark
-                        ? "none"
-                        : "0 2px 12px rgba(0,0,0,0.06)",
-                    }
+                        background: c.card,
+                        border: `1px solid ${c.border}`,
+                        boxShadow: c.isDark ? "none" : "0 2px 12px rgba(0,0,0,0.06)",
+                      }
                 }
                 onMouseEnter={(e) => {
                   if (!plan.best) {
-                    const el = e.currentTarget as HTMLElement
-                    el.style.borderColor = c.orange + "55"
+                    const el = e.currentTarget as HTMLElement;
+                    el.style.borderColor = c.orange + "55";
                     el.style.boxShadow = c.isDark
                       ? `0 0 20px ${c.orange}18`
-                      : `0 4px 20px ${c.orange}22`
+                      : `0 4px 20px ${c.orange}22`;
                   }
                 }}
                 onMouseLeave={(e) => {
                   if (!plan.best) {
-                    const el = e.currentTarget as HTMLElement
-                    el.style.borderColor = c.border
-                    el.style.boxShadow = c.isDark
-                      ? "none"
-                      : "0 2px 12px rgba(0,0,0,0.06)"
+                    const el = e.currentTarget as HTMLElement;
+                    el.style.borderColor = c.border;
+                    el.style.boxShadow = c.isDark ? "none" : "0 2px 12px rgba(0,0,0,0.06)";
                   }
                 }}
               >
@@ -3232,15 +3277,13 @@ function Memberships() {
                     style={
                       plan.best
                         ? {
-                          background: "rgba(255,255,255,0.25)",
-                          color: "#fff",
-                        }
+                            background: "rgba(255,255,255,0.25)",
+                            color: "#fff",
+                          }
                         : {
-                          background: c.isDark
-                            ? `${c.lime}22`
-                            : `${c.lime}28`,
-                          color: c.lime,
-                        }
+                            background: c.isDark ? `${c.lime}22` : `${c.lime}28`,
+                            color: c.lime,
+                          }
                     }
                   >
                     -{plan.savingPct}%
@@ -3332,11 +3375,7 @@ function Memberships() {
                 <ul className="space-y-2.5 flex-1 mb-6">
                   {features.map((f) => (
                     <li key={f.label} className="flex items-center gap-2.5">
-                      <Icon
-                        name="check"
-                        size={15}
-                        color={plan.best ? "#fff" : c.orange}
-                      />
+                      <Icon name="check" size={15} color={plan.best ? "#fff" : c.orange} />
                       <span
                         className="text-[12px]"
                         style={{
@@ -3349,11 +3388,7 @@ function Memberships() {
                   ))}
                   {plan.saving > 0 && (
                     <li className="flex items-center gap-2.5">
-                      <Icon
-                        name="check"
-                        size={15}
-                        color={plan.best ? "#fff" : c.orange}
-                      />
+                      <Icon name="check" size={15} color={plan.best ? "#fff" : c.orange} />
                       <span
                         className="text-[12px]"
                         style={{
@@ -3373,15 +3408,15 @@ function Memberships() {
                   style={
                     plan.best
                       ? {
-                        background: "rgba(255,255,255,0.22)",
-                        color: "#fff",
-                        border: "1.5px solid rgba(255,255,255,0.35)",
-                      }
+                          background: "rgba(255,255,255,0.22)",
+                          color: "#fff",
+                          border: "1.5px solid rgba(255,255,255,0.35)",
+                        }
                       : {
-                        background: `${c.orange}18`,
-                        color: c.orange,
-                        border: `1.5px solid ${c.orange}44`,
-                      }
+                          background: `${c.orange}18`,
+                          color: c.orange,
+                          border: `1.5px solid ${c.orange}44`,
+                        }
                   }
                 >
                   Get Started
@@ -3394,13 +3429,9 @@ function Memberships() {
         {/* Bottom note */}
         <Reveal delay={300} className="text-center mb-12">
           <p className="text-[12px] font-light" style={{ color: c.muted }}>
-            Student discount available with valid ID &nbsp;·&nbsp; Free trial
-            session for new members &nbsp;·&nbsp;
-            <a
-              href="tel:+917019844639"
-              className="font-semibold"
-              style={{ color: c.orange }}
-            >
+            Student discount available with valid ID &nbsp;·&nbsp; Free trial session for new
+            members &nbsp;·&nbsp;
+            <a href="tel:+917019844639" className="font-semibold" style={{ color: c.orange }}>
               {" "}
               Call +91 7019844639
             </a>
@@ -3447,9 +3478,15 @@ function Memberships() {
                         background: i % 2 === 0 ? c.faint : "transparent",
                       }}
                     >
-                      <td className="px-5 py-3 font-medium" style={{ color: c.text }}>{r.d}</td>
-                      <td className="px-5 py-3 line-through" style={{ color: c.muted }}>{r.p}</td>
-                      <td className="px-5 py-3 font-bold" style={{ color: c.orange }}>{r.o}</td>
+                      <td className="px-5 py-3 font-medium" style={{ color: c.text }}>
+                        {r.d}
+                      </td>
+                      <td className="px-5 py-3 line-through" style={{ color: c.muted }}>
+                        {r.p}
+                      </td>
+                      <td className="px-5 py-3 font-bold" style={{ color: c.orange }}>
+                        {r.o}
+                      </td>
                     </tr>
                   ))}
                 </tbody>
@@ -3498,9 +3535,15 @@ function Memberships() {
                         background: i % 2 === 0 ? c.faint : "transparent",
                       }}
                     >
-                      <td className="px-5 py-3 font-medium" style={{ color: c.text }}>{r.d}</td>
-                      <td className="px-5 py-3 line-through" style={{ color: c.muted }}>{r.p}</td>
-                      <td className="px-5 py-3 font-bold" style={{ color: c.orange }}>{r.o}</td>
+                      <td className="px-5 py-3 font-medium" style={{ color: c.text }}>
+                        {r.d}
+                      </td>
+                      <td className="px-5 py-3 line-through" style={{ color: c.muted }}>
+                        {r.p}
+                      </td>
+                      <td className="px-5 py-3 font-bold" style={{ color: c.orange }}>
+                        {r.o}
+                      </td>
                     </tr>
                   ))}
                 </tbody>
@@ -3549,9 +3592,15 @@ function Memberships() {
                           background: i % 2 === 0 ? c.faint : "transparent",
                         }}
                       >
-                        <td className="px-4 py-3 font-medium" style={{ color: c.text }}>{r.t}</td>
-                        <td className="px-4 py-3 font-bold" style={{ color: c.orange }}>{r.d12}</td>
-                        <td className="px-4 py-3 font-bold" style={{ color: c.orange }}>{r.d24}</td>
+                        <td className="px-4 py-3 font-medium" style={{ color: c.text }}>
+                          {r.t}
+                        </td>
+                        <td className="px-4 py-3 font-bold" style={{ color: c.orange }}>
+                          {r.d12}
+                        </td>
+                        <td className="px-4 py-3 font-bold" style={{ color: c.orange }}>
+                          {r.d24}
+                        </td>
                       </tr>
                     ))}
                   </tbody>
@@ -3598,9 +3647,15 @@ function Memberships() {
                           background: i % 2 === 0 ? c.faint : "transparent",
                         }}
                       >
-                        <td className="px-4 py-3 font-medium" style={{ color: c.text }}>{r.t}</td>
-                        <td className="px-4 py-3 font-bold" style={{ color: c.orange }}>{r.d12}</td>
-                        <td className="px-4 py-3 font-bold" style={{ color: c.orange }}>{r.d24}</td>
+                        <td className="px-4 py-3 font-medium" style={{ color: c.text }}>
+                          {r.t}
+                        </td>
+                        <td className="px-4 py-3 font-bold" style={{ color: c.orange }}>
+                          {r.d12}
+                        </td>
+                        <td className="px-4 py-3 font-bold" style={{ color: c.orange }}>
+                          {r.d24}
+                        </td>
                       </tr>
                     ))}
                   </tbody>
@@ -3635,7 +3690,9 @@ function Memberships() {
                     <span style={{ color: c.muted }}>{r.label}</span>
                     <div className="flex items-center gap-3">
                       {r.offer && (
-                        <span className="line-through text-[12px]" style={{ color: c.muted }}>{r.price}</span>
+                        <span className="line-through text-[12px]" style={{ color: c.muted }}>
+                          {r.price}
+                        </span>
                       )}
                       <span className="font-bold" style={{ color: c.orange }}>
                         {r.offer ?? r.price}
@@ -3667,7 +3724,9 @@ function Memberships() {
                     <span style={{ color: c.muted }}>{r.label}</span>
                     <div className="flex items-center gap-3">
                       {r.offer && (
-                        <span className="line-through text-[12px]" style={{ color: c.muted }}>{r.price}</span>
+                        <span className="line-through text-[12px]" style={{ color: c.muted }}>
+                          {r.price}
+                        </span>
                       )}
                       <span className="font-bold" style={{ color: c.orange }}>
                         {r.offer ?? r.price}
@@ -3710,12 +3769,18 @@ function Memberships() {
                 { label: "Foot Reflexology", price: "₹550" },
                 { label: "Aromatherapy", price: "₹1,450" },
               ].map((r) => (
-                <div key={r.label} className="flex items-center justify-between text-[13px] py-1" style={{ borderBottom: `1px solid ${c.borderFaint}` }}>
+                <div
+                  key={r.label}
+                  className="flex items-center justify-between text-[13px] py-1"
+                  style={{ borderBottom: `1px solid ${c.borderFaint}` }}
+                >
                   <span className="flex items-center gap-2" style={{ color: c.muted }}>
                     <span style={{ color: c.orange, fontSize: 8 }}>■</span>
                     {r.label}
                   </span>
-                  <span className="font-bold" style={{ color: c.orange }}>{r.price}</span>
+                  <span className="font-bold" style={{ color: c.orange }}>
+                    {r.price}
+                  </span>
                 </div>
               ))}
             </div>
@@ -3723,7 +3788,7 @@ function Memberships() {
         </Reveal>
       </div>
     </Section>
-  )
+  );
 }
 
 // ─── REVIEWS ──────────────────────────────────────────────────────────────────
@@ -3791,18 +3856,18 @@ const REVIEWS = [
     initial: "A",
     color: "#ff4800",
   },
-]
+];
 
 function Reviews() {
-  const c = useC()
-  const [active, setActive] = useState(0)
-  const total = REVIEWS.length
+  const c = useC();
+  const [active, setActive] = useState(0);
+  const total = REVIEWS.length;
 
-  const prev = () => setActive((a) => (a - 1 + total) % total)
-  const next = () => setActive((a) => (a + 1) % total)
+  const prev = () => setActive((a) => (a - 1 + total) % total);
+  const next = () => setActive((a) => (a + 1) % total);
 
   // Show 3 cards on desktop (active, active+1, active+2)
-  const visible = [0, 1, 2].map((offset) => REVIEWS[(active + offset) % total])
+  const visible = [0, 1, 2].map((offset) => REVIEWS[(active + offset) % total]);
 
   return (
     <Section bg={c.surface} border>
@@ -3818,10 +3883,7 @@ function Reviews() {
               .map((_, i) => (
                 <Icon key={i} name="star" size={18} color="#f59e0b" />
               ))}
-            <span
-              className="ml-2 text-[13px] font-bold"
-              style={{ color: c.text }}
-            >
+            <span className="ml-2 text-[13px] font-bold" style={{ color: c.text }}>
               5.0
             </span>
             <span className="text-[13px]" style={{ color: c.muted }}>
@@ -3903,7 +3965,7 @@ function Reviews() {
         <TrustSummary c={c} />
       </div>
     </Section>
-  )
+  );
 }
 
 function ReviewCard({
@@ -3911,9 +3973,9 @@ function ReviewCard({
   c,
   highlight,
 }: {
-  r: typeof REVIEWS[0]
-  c: Colors
-  highlight: boolean
+  r: (typeof REVIEWS)[0];
+  c: Colors;
+  highlight: boolean;
 }) {
   return (
     <div
@@ -3937,22 +3999,14 @@ function ReviewCard({
           {r.initial}
         </div>
         <div className="flex-1 min-w-0">
-          <div
-            className="font-bold text-[13px] truncate"
-            style={{ color: c.text }}
-          >
+          <div className="font-bold text-[13px] truncate" style={{ color: c.text }}>
             {r.name}
           </div>
           <div className="text-[11px]" style={{ color: c.muted }}>
             {r.reviewCount} review{r.reviewCount > 1 ? "s" : ""}
           </div>
         </div>
-        <svg
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill={c.isDark ? "#4285f4" : "#4285f4"}
-        >
+        <svg width="16" height="16" viewBox="0 0 24 24" fill={c.isDark ? "#4285f4" : "#4285f4"}>
           <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
           <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
           <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" />
@@ -3966,13 +4020,7 @@ function ReviewCard({
           {Array(5)
             .fill(0)
             .map((_, i) => (
-              <svg
-                key={i}
-                width="13"
-                height="13"
-                viewBox="0 0 24 24"
-                fill="#f59e0b"
-              >
+              <svg key={i} width="13" height="13" viewBox="0 0 24 24" fill="#f59e0b">
                 <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
               </svg>
             ))}
@@ -3983,23 +4031,25 @@ function ReviewCard({
       </div>
 
       {/* Text */}
-      <p
-        className="text-[13px] leading-relaxed font-light flex-1"
-        style={{ color: c.text }}
-      >
+      <p className="text-[13px] leading-relaxed font-light flex-1" style={{ color: c.text }}>
         "{r.text}"
       </p>
     </div>
-  )
+  );
 }
 
 function TrustSummary({ c }: { c: Colors }) {
   const points = [
     { icon: "sparkle", color: c.cyan, label: "Great Equipment", sub: "Machines worth like heaven" },
-    { icon: "shield", color: c.lime, label: "Clean Environment", sub: "Especially clean and perfect" },
+    {
+      icon: "shield",
+      color: c.lime,
+      label: "Clean Environment",
+      sub: "Especially clean and perfect",
+    },
     { icon: "currency", color: c.orange, label: "Affordable Fees", sub: "For students and elders" },
     { icon: "hands", color: c.cyan, label: "Friendly Atmosphere", sub: "Fun and organised" },
-  ]
+  ];
   return (
     <div
       className="mt-10 rounded-[20px] p-6 sm:p-8"
@@ -4017,17 +4067,17 @@ function TrustSummary({ c }: { c: Colors }) {
             key={p.label}
             className="group flex flex-col items-center text-center gap-3 p-4 rounded-[16px] transition-all duration-300 cursor-default hover:-translate-y-1"
             style={{ border: "1px solid transparent" }}
-            onMouseEnter={e => {
-              const el = e.currentTarget as HTMLElement
-              el.style.background = p.color + "10"
-              el.style.borderColor = p.color + "33"
-              el.style.boxShadow = c.isDark ? `0 0 20px ${p.color}18` : `0 4px 16px ${p.color}22`
+            onMouseEnter={(e) => {
+              const el = e.currentTarget as HTMLElement;
+              el.style.background = p.color + "10";
+              el.style.borderColor = p.color + "33";
+              el.style.boxShadow = c.isDark ? `0 0 20px ${p.color}18` : `0 4px 16px ${p.color}22`;
             }}
-            onMouseLeave={e => {
-              const el = e.currentTarget as HTMLElement
-              el.style.background = "transparent"
-              el.style.borderColor = "transparent"
-              el.style.boxShadow = "none"
+            onMouseLeave={(e) => {
+              const el = e.currentTarget as HTMLElement;
+              el.style.background = "transparent";
+              el.style.borderColor = "transparent";
+              el.style.boxShadow = "none";
             }}
           >
             <div
@@ -4036,19 +4086,23 @@ function TrustSummary({ c }: { c: Colors }) {
             >
               <Icon name={p.icon} size={24} color={p.color} />
             </div>
-            <div className="font-bold text-[13px]" style={{ color: c.text }}>{p.label}</div>
-            <div className="text-[11px] font-light" style={{ color: c.muted }}>{p.sub}</div>
+            <div className="font-bold text-[13px]" style={{ color: c.text }}>
+              {p.label}
+            </div>
+            <div className="text-[11px] font-light" style={{ color: c.muted }}>
+              {p.sub}
+            </div>
           </div>
         ))}
       </div>
     </div>
-  )
+  );
 }
 
 // ─── GALLERY ──────────────────────────────────────────────────────────────────
 function Gallery() {
-  const c = useC()
-  const [activeIdx, setActiveIdx] = useState<number | null>(null)
+  const c = useC();
+  const [activeIdx, setActiveIdx] = useState<number | null>(null);
 
   const gallery = [
     {
@@ -4093,20 +4147,22 @@ function Gallery() {
       alt: "Member training on plate-loaded T-bar row machine with arched ambient mirrors",
       span: "col-span-1 md:col-span-1 md:row-span-1",
     },
-  ]
+  ];
 
   useEffect(() => {
-    if (activeIdx === null) return
+    if (activeIdx === null) return;
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setActiveIdx(null)
+      if (e.key === "Escape") setActiveIdx(null);
       else if (e.key === "ArrowRight")
-        setActiveIdx((prev) => (prev !== null ? (prev + 1) % gallery.length : null))
+        setActiveIdx((prev) => (prev !== null ? (prev + 1) % gallery.length : null));
       else if (e.key === "ArrowLeft")
-        setActiveIdx((prev) => (prev !== null ? (prev - 1 + gallery.length) % gallery.length : null))
-    }
-    window.addEventListener("keydown", handleKeyDown)
-    return () => window.removeEventListener("keydown", handleKeyDown)
-  }, [activeIdx, gallery.length])
+        setActiveIdx((prev) =>
+          prev !== null ? (prev - 1 + gallery.length) % gallery.length : null,
+        );
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [activeIdx, gallery.length]);
 
   return (
     <Section id="gallery" bg={c.bg} border>
@@ -4127,8 +4183,8 @@ function Gallery() {
                 onClick={() => setActiveIdx(i)}
                 onKeyDown={(e) => {
                   if (e.key === "Enter" || e.key === " ") {
-                    e.preventDefault()
-                    setActiveIdx(i)
+                    e.preventDefault();
+                    setActiveIdx(i);
                   }
                 }}
                 className="group relative overflow-hidden rounded-[18px] w-full h-full cursor-pointer focus:outline-none focus:ring-2 focus:ring-orange-500"
@@ -4200,7 +4256,7 @@ function Gallery() {
             <button
               onClick={() =>
                 setActiveIdx((prev) =>
-                  prev !== null ? (prev - 1 + gallery.length) % gallery.length : null
+                  prev !== null ? (prev - 1 + gallery.length) % gallery.length : null,
                 )
               }
               className="absolute left-2 top-1/2 -translate-y-1/2 p-2.5 sm:p-3 rounded-full text-white/90 hover:text-white transition-all hover:scale-110 z-10 cursor-pointer"
@@ -4222,9 +4278,7 @@ function Gallery() {
             {/* Next Button */}
             <button
               onClick={() =>
-                setActiveIdx((prev) =>
-                  prev !== null ? (prev + 1) % gallery.length : null
-                )
+                setActiveIdx((prev) => (prev !== null ? (prev + 1) % gallery.length : null))
               }
               className="absolute right-2 top-1/2 -translate-y-1/2 p-2.5 sm:p-3 rounded-full text-white/90 hover:text-white transition-all hover:scale-110 z-10 cursor-pointer"
               style={{ background: "rgba(0,0,0,0.6)", border: "1px solid rgba(255,255,255,0.2)" }}
@@ -4244,13 +4298,13 @@ function Gallery() {
         </div>
       )}
     </Section>
-  )
+  );
 }
 
 // ─── FAQ ──────────────────────────────────────────────────────────────────────
 function FAQ() {
-  const c = useC()
-  const [open, setOpen] = useState<number | null>(0)
+  const c = useC();
+  const [open, setOpen] = useState<number | null>(0);
   const faqs = [
     {
       q: "How do I know which membership option is right for me?",
@@ -4272,7 +4326,7 @@ function FAQ() {
       q: "What happens if I'm injured or need assistance during a workout?",
       a: "All our trainers are trained in first aid. The gym is equipped with a first aid station and we have a clear emergency protocol. Member safety is our top priority at all times.",
     },
-  ]
+  ];
   return (
     <Section bg={c.surface} border>
       <div className="max-w-3xl mx-auto px-4 sm:px-6">
@@ -4292,8 +4346,7 @@ function FAQ() {
                 className="rounded-[18px] overflow-hidden transition-all duration-200"
                 style={{
                   background: c.card,
-                  border: `1px solid ${open === i ? c.orange + "55" : c.border
-                    }`,
+                  border: `1px solid ${open === i ? c.orange + "55" : c.border}`,
                   boxShadow:
                     open === i
                       ? c.isDark
@@ -4323,8 +4376,9 @@ function FAQ() {
                   </span>
                 </button>
                 <div
-                  className={`overflow-hidden transition-all duration-300 ${open === i ? "max-h-40" : "max-h-0"
-                    }`}
+                  className={`overflow-hidden transition-all duration-300 ${
+                    open === i ? "max-h-40" : "max-h-0"
+                  }`}
                 >
                   <p
                     className="px-5 pb-5 text-[13px] font-light leading-relaxed"
@@ -4339,26 +4393,26 @@ function FAQ() {
         </div>
       </div>
     </Section>
-  )
+  );
 }
 
 // ─── EVENTS DATA ──────────────────────────────────────────────────────────────
 type EventItem = {
-  id: string
-  type: "upcoming" | "completed"
-  title: string
-  subtitle: string
-  image: string
-  date: string
-  time: string
-  location: string
-  phone: string
-  description: string
-  activities: string[]
-  prize: string
-  registrationUrl?: string
-  eventDate?: Date
-}
+  id: string;
+  type: "upcoming" | "completed";
+  title: string;
+  subtitle: string;
+  image: string;
+  date: string;
+  time: string;
+  location: string;
+  phone: string;
+  description: string;
+  activities: string[];
+  prize: string;
+  registrationUrl?: string;
+  eventDate?: Date;
+};
 
 const EVENTS: EventItem[] = [
   {
@@ -4383,14 +4437,14 @@ const EVENTS: EventItem[] = [
     ],
     prize: "Medals & Mementos to All Winners",
   },
-]
+];
 
 // ─── EVENTS ───────────────────────────────────────────────────────────────────
 function Events() {
-  const c = useC()
-  const [tab, setTab] = useState<"upcoming" | "completed">("upcoming")
-  const upcoming = EVENTS.filter((e) => e.type === "upcoming")
-  const completed = EVENTS.filter((e) => e.type === "completed")
+  const c = useC();
+  const [tab, setTab] = useState<"upcoming" | "completed">("upcoming");
+  const upcoming = EVENTS.filter((e) => e.type === "upcoming");
+  const completed = EVENTS.filter((e) => e.type === "completed");
 
   return (
     <Section id="events" bg={c.surface} border>
@@ -4401,12 +4455,8 @@ function Events() {
           <Heading center>
             AB Fitness <span style={{ color: c.orange }}>Events</span>
           </Heading>
-          <p
-            className="mt-3 text-[14px] font-light max-w-md mx-auto"
-            style={{ color: c.muted }}
-          >
-            Competitions, celebrations, and milestones that define our
-            community.
+          <p className="mt-3 text-[14px] font-light max-w-md mx-auto" style={{ color: c.muted }}>
+            Competitions, celebrations, and milestones that define our community.
           </p>
         </Reveal>
 
@@ -4424,12 +4474,10 @@ function Events() {
                 style={
                   tab === t
                     ? {
-                      background: c.orange,
-                      color: "#fff",
-                      boxShadow: c.isDark
-                        ? `0 0 16px ${c.orange}55`
-                        : `0 2px 12px ${c.orange}44`,
-                    }
+                        background: c.orange,
+                        color: "#fff",
+                        boxShadow: c.isDark ? `0 0 16px ${c.orange}55` : `0 2px 12px ${c.orange}44`,
+                      }
                     : { color: c.muted }
                 }
               >
@@ -4472,10 +4520,7 @@ function Events() {
                     >
                       No Upcoming Events
                     </div>
-                    <p
-                      className="text-[14px] font-light"
-                      style={{ color: c.muted }}
-                    >
+                    <p className="text-[14px] font-light" style={{ color: c.muted }}>
                       Stay tuned — something exciting is coming.
                     </p>
                   </div>
@@ -4503,11 +4548,7 @@ function Events() {
                       }}
                     >
                       {ev.image && (
-                        <img
-                          src={ev.image}
-                          alt={ev.title}
-                          className="w-full h-56 object-cover"
-                        />
+                        <img src={ev.image} alt={ev.title} className="w-full h-56 object-cover" />
                       )}
                       <div className="p-6">
                         <div
@@ -4519,16 +4560,10 @@ function Events() {
                         >
                           {ev.title}
                         </div>
-                        <div
-                          className="text-[13px] font-semibold mb-4"
-                          style={{ color: c.orange }}
-                        >
+                        <div className="text-[13px] font-semibold mb-4" style={{ color: c.orange }}>
                           {ev.subtitle}
                         </div>
-                        <div
-                          className="flex gap-4 text-[12px] mb-4"
-                          style={{ color: c.muted }}
-                        >
+                        <div className="flex gap-4 text-[12px] mb-4" style={{ color: c.muted }}>
                           <span className="flex items-center gap-1.5">
                             <Icon name="calendar" size={13} color={c.orange} /> {ev.date}
                           </span>
@@ -4548,8 +4583,7 @@ function Events() {
                             className="inline-flex items-center gap-2 font-bold text-[13px] px-5 py-2.5 rounded-full text-white transition-all hover:scale-105"
                             style={{ background: c.orange }}
                           >
-                            Register Now{" "}
-                            <Icon name="arrow" size={14} color="#fff" />
+                            Register Now <Icon name="arrow" size={14} color="#fff" />
                           </a>
                         )}
                       </div>
@@ -4579,17 +4613,11 @@ function Events() {
         </div>
       </div>
     </Section>
-  )
+  );
 }
 
 function CompletedEventCard({ ev, c }: { ev: EventItem; c: Colors }) {
-  const TIMELINE = [
-    "Announced",
-    "Event Day",
-    "Competitions",
-    "Winners",
-    "Memories",
-  ]
+  const TIMELINE = ["Announced", "Event Day", "Competitions", "Winners", "Memories"];
 
   return (
     <div
@@ -4597,9 +4625,7 @@ function CompletedEventCard({ ev, c }: { ev: EventItem; c: Colors }) {
       style={{
         background: c.card,
         border: `1px solid ${c.border}`,
-        boxShadow: c.isDark
-          ? `0 0 40px ${c.orange}0a`
-          : "0 4px 24px rgba(0,0,0,0.07)",
+        boxShadow: c.isDark ? `0 0 40px ${c.orange}0a` : "0 4px 24px rgba(0,0,0,0.07)",
       }}
     >
       <div className="grid lg:grid-cols-2 gap-0">
@@ -4614,8 +4640,7 @@ function CompletedEventCard({ ev, c }: { ev: EventItem; c: Colors }) {
           <div
             className="absolute inset-0"
             style={{
-              background:
-                "linear-gradient(to right, rgba(0,0,0,0.25) 0%, transparent 60%)",
+              background: "linear-gradient(to right, rgba(0,0,0,0.25) 0%, transparent 60%)",
             }}
           />
           {/* Completed badge overlay */}
@@ -4653,10 +4678,7 @@ function CompletedEventCard({ ev, c }: { ev: EventItem; c: Colors }) {
           >
             {ev.title}
           </h3>
-          <div
-            className="text-[14px] font-bold mb-4"
-            style={{ color: c.muted }}
-          >
+          <div className="text-[14px] font-bold mb-4" style={{ color: c.muted }}>
             {ev.subtitle}
           </div>
 
@@ -4680,10 +4702,17 @@ function CompletedEventCard({ ev, c }: { ev: EventItem; c: Colors }) {
               </div>
             ))}
           </div>
-          <div className="text-[12px] mb-5 flex items-center gap-3 flex-wrap" style={{ color: c.muted }}>
-            <span className="flex items-center gap-1.5"><Icon name="location" size={13} color={c.orange} /> {ev.location}</span>
+          <div
+            className="text-[12px] mb-5 flex items-center gap-3 flex-wrap"
+            style={{ color: c.muted }}
+          >
+            <span className="flex items-center gap-1.5">
+              <Icon name="location" size={13} color={c.orange} /> {ev.location}
+            </span>
             <span style={{ color: c.border }}>·</span>
-            <span className="flex items-center gap-1.5"><Icon name="phone" size={13} color={c.cyan} /> {ev.phone}</span>
+            <span className="flex items-center gap-1.5">
+              <Icon name="phone" size={13} color={c.cyan} /> {ev.phone}
+            </span>
           </div>
 
           {/* Activities */}
@@ -4730,10 +4759,8 @@ function CompletedEventCard({ ev, c }: { ev: EventItem; c: Colors }) {
             className="inline-flex items-center gap-2 text-[13px] font-semibold transition-all hover:gap-3"
             style={{ color: c.cyan }}
             onClick={(e) => {
-              e.preventDefault()
-              document
-                .getElementById("gallery")
-                ?.scrollIntoView({ behavior: "smooth" })
+              e.preventDefault();
+              document.getElementById("gallery")?.scrollIntoView({ behavior: "smooth" });
             }}
           >
             View Event Photos <Icon name="arrow" size={14} color={c.cyan} />
@@ -4742,10 +4769,7 @@ function CompletedEventCard({ ev, c }: { ev: EventItem; c: Colors }) {
       </div>
 
       {/* Timeline strip */}
-      <div
-        className="px-6 sm:px-8 py-5"
-        style={{ borderTop: `1px solid ${c.border}` }}
-      >
+      <div className="px-6 sm:px-8 py-5" style={{ borderTop: `1px solid ${c.border}` }}>
         <div
           className="text-[10px] font-black uppercase tracking-widest mb-4"
           style={{ color: c.muted }}
@@ -4780,12 +4804,12 @@ function CompletedEventCard({ ev, c }: { ev: EventItem; c: Colors }) {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 // ─── CTA BANNER ───────────────────────────────────────────────────────────────
 function CTABanner() {
-  const c = useC()
+  const c = useC();
   return (
     <section className="relative py-24 overflow-hidden">
       <img
@@ -4811,10 +4835,7 @@ function CTABanner() {
           backgroundSize: "60px 60px",
         }}
       />
-      <Reveal
-        dir="up"
-        className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 text-center"
-      >
+      <Reveal dir="up" className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 text-center">
         <Heading center>
           READY TO{" "}
           <span
@@ -4832,8 +4853,8 @@ function CTABanner() {
           className="font-light mt-4 mb-10 max-w-md mx-auto text-[14px] sm:text-[15px]"
           style={{ color: c.muted }}
         >
-          Your first trial session is completely free. Visit AB Fitness Hub in
-          Deralakatte, Mangalore.
+          Your first trial session is completely free. Visit AB Fitness Hub in Deralakatte,
+          Mangalore.
         </p>
         <div className="flex flex-wrap justify-center gap-4">
           <a
@@ -4841,9 +4862,7 @@ function CTABanner() {
             className="relative inline-flex items-center gap-2 text-white font-bold text-[14px] px-8 py-4 rounded-full transition-all hover:scale-105"
             style={{
               background: c.orange,
-              boxShadow: c.isDark
-                ? `0 0 32px ${c.orange}66`
-                : `0 4px 20px ${c.orange}55`,
+              boxShadow: c.isDark ? `0 0 32px ${c.orange}66` : `0 4px 20px ${c.orange}55`,
             }}
           >
             {/* Pulse rings */}
@@ -4874,18 +4893,18 @@ function CTABanner() {
         </div>
       </Reveal>
     </section>
-  )
+  );
 }
 
 // ─── CONTACT ──────────────────────────────────────────────────────────────────
 function Contact() {
-  const c = useC()
+  const c = useC();
   const [form, setForm] = useState({
     name: "",
     email: "",
     phone: "",
     message: "",
-  })
+  });
   return (
     <Section id="contact" bg={c.bg} border>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 grid lg:grid-cols-2 gap-10 md:gap-16">
@@ -4893,8 +4912,7 @@ function Contact() {
           <div>
             <SectionLabel text="Contact Us" />
             <Heading size="md">
-              Visit Us in <span style={{ color: c.orange }}>Deralakatte</span>,
-              Mangalore
+              Visit Us in <span style={{ color: c.orange }}>Deralakatte</span>, Mangalore
             </Heading>
             <div className="space-y-5 my-8">
               {[
@@ -4920,8 +4938,7 @@ function Contact() {
                 {
                   icon: "clock",
                   label: "Hours",
-                  value:
-                    "General: 6:00 AM – 11:00 PM\nLadies Batch: 11:00 AM – 2:00 PM",
+                  value: "General: 6:00 AM – 11:00 PM\nLadies Batch: 11:00 AM – 2:00 PM",
                   color: c.orange,
                 },
               ].map((item) => (
@@ -4971,9 +4988,7 @@ function Contact() {
             style={{
               background: c.card,
               border: `1px solid ${c.orange}33`,
-              boxShadow: c.isDark
-                ? `0 0 40px ${c.orange}10`
-                : `0 4px 24px rgba(0,0,0,0.08)`,
+              boxShadow: c.isDark ? `0 0 40px ${c.orange}10` : `0 4px 24px rgba(0,0,0,0.08)`,
             }}
           >
             <h3
@@ -4985,15 +5000,12 @@ function Contact() {
             >
               Book a Free Trial
             </h3>
-            <p
-              className="text-[13px] font-light mb-7"
-              style={{ color: c.muted }}
-            >
+            <p className="text-[13px] font-light mb-7" style={{ color: c.muted }}>
               We'll reach out within 24 hours to confirm your session.
             </p>
             <form
               onSubmit={(e) => {
-                e.preventDefault()
+                e.preventDefault();
                 const message = `🏋️ AB FITNESS HUB — FREE TRIAL ENQUIRY
 
 Hello! I'd like to book a free trial.
@@ -5003,9 +5015,9 @@ Hello! I'd like to book a free trial.
 📱 Phone: ${form.phone}
 💬 Message: ${form.message || "No message provided"}
 
-Thank you! 🙏`
-                const whatsappUrl = `https://wa.me/917019844639?text=${encodeURIComponent(message)}`
-                window.open(whatsappUrl, "_blank")
+Thank you! 🙏`;
+                const whatsappUrl = `https://wa.me/917019844639?text=${encodeURIComponent(message)}`;
+                window.open(whatsappUrl, "_blank");
               }}
               className="space-y-4"
             >
@@ -5041,22 +5053,17 @@ Thank you! 🙏`
                     id={f.id}
                     type={f.type}
                     placeholder={f.placeholder}
-                    value={form[(f.id as keyof typeof form)]}
-                    onChange={(e) =>
-                      setForm({ ...form, [f.id]: e.target.value })
-                    }
+                    value={form[f.id as keyof typeof form]}
+                    onChange={(e) => setForm({ ...form, [f.id]: e.target.value })}
+                    required={f.id === "name" || f.id === "phone"}
                     className="w-full px-4 py-3 text-[14px] rounded-[14px] outline-none transition-all"
                     style={{
                       background: c.inputBg,
                       border: `1px solid ${c.inputBorder}`,
                       color: c.text,
                     }}
-                    onFocus={(e) =>
-                      (e.target.style.borderColor = c.orange + "88")
-                    }
-                    onBlur={(e) =>
-                      (e.target.style.borderColor = c.inputBorder)
-                    }
+                    onFocus={(e) => (e.target.style.borderColor = c.orange + "88")}
+                    onBlur={(e) => (e.target.style.borderColor = c.inputBorder)}
                   />
                 </div>
               ))}
@@ -5073,18 +5080,14 @@ Thank you! 🙏`
                   rows={4}
                   placeholder="Tell us about your fitness goals..."
                   value={form.message}
-                  onChange={(e) =>
-                    setForm({ ...form, message: e.target.value })
-                  }
+                  onChange={(e) => setForm({ ...form, message: e.target.value })}
                   className="w-full px-4 py-3 text-[14px] rounded-[14px] outline-none transition-all resize-none"
                   style={{
                     background: c.inputBg,
                     border: `1px solid ${c.inputBorder}`,
                     color: c.text,
                   }}
-                  onFocus={(e) =>
-                    (e.target.style.borderColor = c.orange + "88")
-                  }
+                  onFocus={(e) => (e.target.style.borderColor = c.orange + "88")}
                   onBlur={(e) => (e.target.style.borderColor = c.inputBorder)}
                 />
               </div>
@@ -5093,9 +5096,7 @@ Thank you! 🙏`
                 className="w-full text-white font-bold text-[14px] py-4 rounded-[14px] transition-all hover:scale-[1.01]"
                 style={{
                   background: c.orange,
-                  boxShadow: c.isDark
-                    ? `0 0 24px ${c.orange}44`
-                    : `0 2px 16px ${c.orange}44`,
+                  boxShadow: c.isDark ? `0 0 24px ${c.orange}44` : `0 2px 16px ${c.orange}44`,
                 }}
               >
                 Book My Free Trial →
@@ -5105,12 +5106,12 @@ Thank you! 🙏`
         </Reveal>
       </div>
     </Section>
-  )
+  );
 }
 
 // ─── NEWSLETTER ───────────────────────────────────────────────────────────────
 function Newsletter() {
-  const c = useC()
+  const c = useC();
   return (
     <section
       className="py-12 md:py-16"
@@ -5133,10 +5134,7 @@ function Newsletter() {
         </Reveal>
         <Reveal dir="right" delay={80}>
           <div className="flex items-center justify-end gap-3">
-            <p
-              className="text-[14px] font-medium"
-              style={{ color: c.muted }}
-            >
+            <p className="text-[14px] font-medium" style={{ color: c.muted }}>
               Follow us on Instagram
             </p>
             <a
@@ -5146,9 +5144,7 @@ function Newsletter() {
               className="w-[52px] h-[52px] flex items-center justify-center rounded-[14px] transition-all hover:scale-105"
               style={{
                 background: c.orange,
-                boxShadow: c.isDark
-                  ? `0 0 16px ${c.orange}55`
-                  : `0 2px 10px ${c.orange}44`,
+                boxShadow: c.isDark ? `0 0 16px ${c.orange}55` : `0 2px 10px ${c.orange}44`,
               }}
               aria-label="Open Instagram"
               title="Instagram"
@@ -5172,16 +5168,14 @@ function Newsletter() {
         </Reveal>
       </div>
     </section>
-  )
+  );
 }
 
 // ─── FOOTER ───────────────────────────────────────────────────────────────────
 function Footer() {
-  const c = useC()
+  const c = useC();
   return (
-    <footer
-      style={{ background: c.card, borderTop: `1px solid ${c.orange}22` }}
-    >
+    <footer style={{ background: c.card, borderTop: `1px solid ${c.orange}22` }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-14 pb-8">
         <div className="grid md:grid-cols-4 gap-10 mb-12">
           <div>
@@ -5206,12 +5200,8 @@ function Footer() {
                 </div>
               </div>
             </div>
-            <p
-              className="text-[12px] leading-relaxed font-light mb-5"
-              style={{ color: c.muted }}
-            >
-              Mangalore's premier fitness destination, transforming bodies and
-              minds since 2016.
+            <p className="text-[12px] leading-relaxed font-light mb-5" style={{ color: c.muted }}>
+              Mangalore's premier fitness destination, transforming bodies and minds since 2016.
             </p>
             <div className="flex gap-2 flex-wrap">
               <a
@@ -5237,13 +5227,7 @@ function Footer() {
                 >
                   <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
                   <circle cx="12" cy="12" r="4" />
-                  <circle
-                    cx="17.5"
-                    cy="6.5"
-                    r="1"
-                    fill={c.orange}
-                    stroke="none"
-                  />
+                  <circle cx="17.5" cy="6.5" r="1" fill={c.orange} stroke="none" />
                 </svg>
               </a>
             </div>
@@ -5265,12 +5249,7 @@ function Footer() {
             },
             {
               title: "Support",
-              links: [
-                "Contact Us",
-                "Help Center",
-                "Privacy Policy",
-                "Terms & Conditions",
-              ],
+              links: ["Contact Us", "Help Center", "Privacy Policy", "Terms & Conditions"],
             },
           ].map((col) => (
             <div key={col.title}>
@@ -5287,12 +5266,8 @@ function Footer() {
                       href="#"
                       className="text-[12px] font-light transition-colors"
                       style={{ color: c.muted }}
-                      onMouseEnter={(e) =>
-                        (e.currentTarget.style.color = c.orange)
-                      }
-                      onMouseLeave={(e) =>
-                        (e.currentTarget.style.color = c.muted)
-                      }
+                      onMouseEnter={(e) => (e.currentTarget.style.color = c.orange)}
+                      onMouseLeave={(e) => (e.currentTarget.style.color = c.muted)}
                     >
                       {l}
                     </a>
@@ -5350,8 +5325,7 @@ function Footer() {
           }}
         >
           <p className="text-[12px]" style={{ color: c.muted }}>
-            © 2024 AB Fitness Hub, Hotel Plaza Avenue, Deralakatte,
-            Mangalore. All rights reserved.
+            © 2024 AB Fitness Hub, Hotel Plaza Avenue, Deralakatte, Mangalore. All rights reserved.
           </p>
           <a
             href="#"
@@ -5365,33 +5339,33 @@ function Footer() {
         </div>
       </div>
     </footer>
-  )
+  );
 }
 
 // ─── APP ROOT ─────────────────────────────────────────────────────────────────
 function AppInner() {
-  const c = useC()
+  const c = useC();
 
   const [showIntro, setShowIntro] = useState(() => {
     try {
-      return !sessionStorage.getItem(INTRO_SESSION_KEY)
+      return !sessionStorage.getItem(INTRO_SESSION_KEY);
     } catch {
-      return false
+      return false;
     }
-  })
+  });
 
   const handleIntroDone = () => {
     try {
-      sessionStorage.setItem(INTRO_SESSION_KEY, "1")
+      sessionStorage.setItem(INTRO_SESSION_KEY, "1");
     } catch {
       /* ok */
     }
-    setShowIntro(false)
-  }
+    setShowIntro(false);
+  };
 
   useEffect(() => {
-    document.title = "AB Fitness Hub - Deralakatte | Gym in Deralakatte, Mangalore"
-  }, [])
+    document.title = "AB Fitness Hub - Deralakatte | Gym in Deralakatte, Mangalore";
+  }, []);
 
   return (
     <div
@@ -5424,7 +5398,7 @@ function AppInner() {
       <Newsletter />
       <Footer />
     </div>
-  )
+  );
 }
 
 export default function App() {
@@ -5432,5 +5406,5 @@ export default function App() {
     <ThemeProvider>
       <AppInner />
     </ThemeProvider>
-  )
+  );
 }

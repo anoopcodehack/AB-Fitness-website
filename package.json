@@ -1,9 +1,9 @@
 {
   "name": "ab-fitness-website",
-  "private": true,
   "version": "1.0.0",
-  "type": "module",
+  "private": true,
   "license": "MIT",
+  "type": "module",
   "scripts": {
     "dev": "vite --host 0.0.0.0",
     "build": "vite build",
