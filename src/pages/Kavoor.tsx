@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, createContext, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { Sun, Moon, MapPin, ZoomIn, X, ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
+import { Sun, Moon, MapPin, ZoomIn, X, ChevronLeft, ChevronRight } from "lucide-react";
 import logoImg from "@/imports/image-10.png";
 import galleryImg1 from "@/imports/image.png";
 import galleryImg2 from "@/imports/image-17.png";
@@ -3318,14 +3318,14 @@ function Gallery() {
                     {p.desc}
                   </p>
                   <div
-                    className="inline-flex items-center gap-1.5 text-[10px] font-bold text-white px-2 py-0.5 rounded-md"
+                    className="inline-flex items-center gap-1.5 text-[10px] font-bold text-white px-2.5 py-0.5 rounded-full"
                     style={{
                       background: "rgba(255,255,255,0.18)",
                       border: "1px solid rgba(255,255,255,0.25)",
                       backdropFilter: "blur(6px)",
                     }}
                   >
-                    <Sparkles size={11} style={{ color: c.orange }} />
+                    <span className="w-1.5 h-1.5 rounded-full" style={{ background: c.orange }} />
                     {p.tag}
                   </div>
                 </div>
@@ -3461,7 +3461,7 @@ function Gallery() {
                   color: c.orange,
                 }}
               >
-                <Sparkles size={13} />
+                <span className="w-1.5 h-1.5 rounded-full" style={{ background: c.orange }} />
                 {gallery[activePhoto].tag}
               </div>
             </div>
