@@ -2240,13 +2240,202 @@ function ProteinHubPromo() {
                   borderLeft: "1px solid #f59e0b22",
                 }}
               >
-                <div className="text-center p-10 relative z-10">
-                  <div
-                    className="flex items-center justify-center w-24 h-24 rounded-[28px] mx-auto mb-4"
-                    style={{ background: `${c.orange}18`, border: `2px solid #f59e0b44` }}
-                  >
-                    <Icon name="cup" size={52} color="#f59e0b" />
+                <div className="text-center p-6 sm:p-8 relative z-10 w-full flex flex-col items-center justify-center">
+                  {/* Orbit Stage: Central Cup + 4 Revolving Badges */}
+                  <div className="protein-orbit-stage relative w-[270px] h-[270px] sm:w-[290px] sm:h-[290px] flex items-center justify-center mx-auto mb-4 select-none">
+                    {/* Glowing circular orbit track guide */}
+                    <div
+                      className="absolute inset-0 m-auto rounded-full pointer-events-none orbit-glow-ring"
+                      style={{
+                        width: "205px",
+                        height: "205px",
+                        border: "1.5px dashed rgba(245, 158, 11, 0.4)",
+                        boxShadow: c.isDark
+                          ? "0 0 25px rgba(245, 158, 11, 0.15), inset 0 0 25px rgba(245, 158, 11, 0.08)"
+                          : "0 0 20px rgba(245, 158, 11, 0.18)",
+                      }}
+                    />
+
+                    {/* Central Cup Box */}
+                    <div
+                      className="relative z-10 flex items-center justify-center w-20 h-20 sm:w-24 sm:h-24 rounded-[26px] transition-transform duration-300 hover:scale-105"
+                      style={{
+                        background: c.isDark
+                          ? "linear-gradient(135deg, rgba(255, 140, 0, 0.22) 0%, rgba(245, 158, 11, 0.12) 100%)"
+                          : "linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(254, 243, 199, 0.9) 100%)",
+                        border: "2px solid #f59e0b55",
+                        boxShadow: c.isDark
+                          ? "0 0 35px rgba(245, 158, 11, 0.35)"
+                          : "0 10px 25px rgba(245, 158, 11, 0.25)",
+                      }}
+                    >
+                      <Icon name="cup" size={46} color="#f59e0b" />
+                    </div>
+
+                    {/* Orbit Rotating Ring Container (revolves 360deg clockwise) */}
+                    <div
+                      className="protein-orbit-track absolute inset-0 m-auto rounded-full pointer-events-auto cursor-pointer"
+                      style={{ width: "205px", height: "205px" }}
+                      title="AB Protein Hub Menu"
+                    >
+                      {/* Satellite 1: Top (0°) - Protein Shake */}
+                      <div
+                        style={{
+                          position: "absolute",
+                          top: 0,
+                          left: "50%",
+                          transform: "translate(-50%, -50%)",
+                        }}
+                      >
+                        <div className="protein-orbit-item">
+                          <div
+                            className="text-center px-3 py-1.5 rounded-[12px] whitespace-nowrap transition-transform duration-200 hover:scale-110"
+                            style={{
+                              background: c.isDark
+                                ? "rgba(18, 14, 5, 0.92)"
+                                : "rgba(255, 255, 255, 0.96)",
+                              border: "1.5px solid rgba(245, 158, 11, 0.55)",
+                              backdropFilter: "blur(10px)",
+                              boxShadow: c.isDark
+                                ? "0 0 16px rgba(245, 158, 11, 0.3)"
+                                : "0 4px 14px rgba(0,0,0,0.12), 0 0 10px rgba(245, 158, 11, 0.2)",
+                            }}
+                          >
+                            <div className="text-[10px] font-semibold" style={{ color: c.muted }}>
+                              Protein Shake
+                            </div>
+                            <div
+                              className="text-[13px] font-black leading-tight"
+                              style={{
+                                color: "#f59e0b",
+                                fontFamily: "Barlow Condensed, sans-serif",
+                              }}
+                            >
+                              ₹130
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Satellite 2: Right (90°) - Power Combo */}
+                      <div
+                        style={{
+                          position: "absolute",
+                          top: "50%",
+                          right: 0,
+                          transform: "translate(50%, -50%)",
+                        }}
+                      >
+                        <div className="protein-orbit-item">
+                          <div
+                            className="text-center px-3 py-1.5 rounded-[12px] whitespace-nowrap transition-transform duration-200 hover:scale-110"
+                            style={{
+                              background: c.isDark
+                                ? "rgba(18, 14, 5, 0.92)"
+                                : "rgba(255, 255, 255, 0.96)",
+                              border: "1.5px solid rgba(245, 158, 11, 0.55)",
+                              backdropFilter: "blur(10px)",
+                              boxShadow: c.isDark
+                                ? "0 0 16px rgba(245, 158, 11, 0.3)"
+                                : "0 4px 14px rgba(0,0,0,0.12), 0 0 10px rgba(245, 158, 11, 0.2)",
+                            }}
+                          >
+                            <div className="text-[10px] font-semibold" style={{ color: c.muted }}>
+                              Power Combo
+                            </div>
+                            <div
+                              className="text-[13px] font-black leading-tight"
+                              style={{
+                                color: "#f59e0b",
+                                fontFamily: "Barlow Condensed, sans-serif",
+                              }}
+                            >
+                              ₹215
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Satellite 3: Bottom (180°) - Smoothie */}
+                      <div
+                        style={{
+                          position: "absolute",
+                          bottom: 0,
+                          left: "50%",
+                          transform: "translate(-50%, 50%)",
+                        }}
+                      >
+                        <div className="protein-orbit-item">
+                          <div
+                            className="text-center px-3 py-1.5 rounded-[12px] whitespace-nowrap transition-transform duration-200 hover:scale-110"
+                            style={{
+                              background: c.isDark
+                                ? "rgba(18, 14, 5, 0.92)"
+                                : "rgba(255, 255, 255, 0.96)",
+                              border: "1.5px solid rgba(245, 158, 11, 0.55)",
+                              backdropFilter: "blur(10px)",
+                              boxShadow: c.isDark
+                                ? "0 0 16px rgba(245, 158, 11, 0.3)"
+                                : "0 4px 14px rgba(0,0,0,0.12), 0 0 10px rgba(245, 158, 11, 0.2)",
+                            }}
+                          >
+                            <div className="text-[10px] font-semibold" style={{ color: c.muted }}>
+                              Smoothie
+                            </div>
+                            <div
+                              className="text-[13px] font-black leading-tight"
+                              style={{
+                                color: "#f59e0b",
+                                fontFamily: "Barlow Condensed, sans-serif",
+                              }}
+                            >
+                              ₹80
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Satellite 4: Left (270°) - Fresh Juice */}
+                      <div
+                        style={{
+                          position: "absolute",
+                          top: "50%",
+                          left: 0,
+                          transform: "translate(-50%, -50%)",
+                        }}
+                      >
+                        <div className="protein-orbit-item">
+                          <div
+                            className="text-center px-3 py-1.5 rounded-[12px] whitespace-nowrap transition-transform duration-200 hover:scale-110"
+                            style={{
+                              background: c.isDark
+                                ? "rgba(18, 14, 5, 0.92)"
+                                : "rgba(255, 255, 255, 0.96)",
+                              border: "1.5px solid rgba(245, 158, 11, 0.55)",
+                              backdropFilter: "blur(10px)",
+                              boxShadow: c.isDark
+                                ? "0 0 16px rgba(245, 158, 11, 0.3)"
+                                : "0 4px 14px rgba(0,0,0,0.12), 0 0 10px rgba(245, 158, 11, 0.2)",
+                            }}
+                          >
+                            <div className="text-[10px] font-semibold" style={{ color: c.muted }}>
+                              Fresh Juice
+                            </div>
+                            <div
+                              className="text-[13px] font-black leading-tight"
+                              style={{
+                                color: "#f59e0b",
+                                fontFamily: "Barlow Condensed, sans-serif",
+                              }}
+                            >
+                              ₹50
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
+
                   <div
                     className="font-black uppercase"
                     style={{
@@ -2265,39 +2454,6 @@ function ProteinHubPromo() {
                   >
                     Deralakatte · Mangalore
                   </div>
-
-                  {/* Floating price tags */}
-                  {[
-                    { label: "Protein Shake", price: "₹130", top: "10%", left: "5%" },
-                    { label: "Power Combo", price: "₹215", top: "10%", right: "5%" },
-                    { label: "Fresh Juice", price: "₹50", bottom: "12%", left: "8%" },
-                    { label: "Smoothie", price: "₹80", bottom: "12%", right: "8%" },
-                  ].map((tag) => (
-                    <div
-                      key={tag.label}
-                      className="absolute text-center px-2.5 py-1.5 rounded-[10px]"
-                      style={{
-                        top: tag.top,
-                        bottom: tag.bottom,
-                        left: tag.left,
-                        right: tag.right,
-                        background: c.isDark ? "rgba(15,15,5,0.85)" : "rgba(255,255,255,0.9)",
-                        border: "1px solid #f59e0b44",
-                        backdropFilter: "blur(8px)",
-                        boxShadow: c.isDark ? "0 0 12px #f59e0b22" : "0 2px 10px rgba(0,0,0,0.1)",
-                      }}
-                    >
-                      <div className="text-[9px] font-medium" style={{ color: c.muted }}>
-                        {tag.label}
-                      </div>
-                      <div
-                        className="text-[13px] font-black"
-                        style={{ color: "#f59e0b", fontFamily: "Barlow Condensed, sans-serif" }}
-                      >
-                        {tag.price}
-                      </div>
-                    </div>
-                  ))}
                 </div>
 
                 {/* Ambient glow */}

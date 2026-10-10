@@ -558,3 +558,61 @@ html.theme-switching *::after {
 .logo-hover-wrap:hover .logo-glow-pulse {
   animation: logo-glow-pop 0.55s ease forwards;
 }
+
+/* ── PROTEIN HUB ORBIT ANIMATION ── */
+@keyframes protein-orbit-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes protein-orbit-counter {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+@keyframes orbit-pulse {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.03);
+  }
+}
+
+.protein-orbit-track {
+  animation: protein-orbit-spin 22s linear infinite;
+  will-change: transform;
+}
+
+.protein-orbit-item {
+  animation: protein-orbit-counter 22s linear infinite;
+  will-change: transform;
+}
+
+.protein-orbit-stage:hover .protein-orbit-track,
+.protein-orbit-stage:hover .protein-orbit-item {
+  animation-play-state: paused;
+}
+
+.orbit-glow-ring {
+  animation: orbit-pulse 4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .protein-orbit-track,
+  .protein-orbit-item,
+  .orbit-glow-ring {
+    animation: none !important;
+  }
+}
