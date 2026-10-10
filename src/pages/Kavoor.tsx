@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, createContext, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { Sun, Moon, MapPin } from "lucide-react";
+import { Sun, Moon, MapPin, ZoomIn, X, ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
 import logoImg from "@/imports/image-10.png";
 import galleryImg1 from "@/imports/image.png";
 import galleryImg2 from "@/imports/image-17.png";
@@ -3161,78 +3161,313 @@ function TrustSummary({ c }: { c: Colors }) {
 // ─── GALLERY ──────────────────────────────────────────────────────────────────
 function Gallery() {
   const c = useC();
+  const [activePhoto, setActivePhoto] = useState<number | null>(null);
+
   const gallery = [
     {
       src: galleryImg1,
-      alt: "Dumbbell rack with LED mirror wall",
-      span: "row-span-2",
+      title: "Free Weights & Dumbbell Zone",
+      category: "Strength Zone",
+      desc: "Full range 5kg–40kg pro hex dumbbells with backlit LED mirror wall",
+      tag: "5kg – 40kg Pairs",
+      span: "row-span-2 md:row-span-2",
     },
     {
       src: galleryImg2,
-      alt: "Yellow gym machines and cable stations",
+      title: "Selectorized Stations",
+      category: "Isolation",
+      desc: "Commercial cable pulleys and ergonomic muscle isolation units",
+      tag: "Precision Targeting",
       span: "",
     },
     {
       src: galleryImg3,
-      alt: "Cardio equipment — Energie Fitness treadmills",
+      title: "Commercial Cardio Row",
+      category: "Endurance Deck",
+      desc: "High-spec Energie Fitness motorized treadmills with live telemetry",
+      tag: "Energie Pro Runners",
       span: "",
     },
     {
       src: galleryImg4,
-      alt: "Supplement and protein powder display",
+      title: "Nutrition & Supplement Bar",
+      category: "Recovery & Fuel",
+      desc: "100% certified authentic whey proteins, pre-workouts and BCAAs",
+      tag: "Certified Brands",
       span: "",
     },
-    { src: galleryImg5, alt: "AB Fitness Hub reception and logo", span: "" },
+    {
+      src: galleryImg5,
+      title: "Member Lounge & Reception",
+      category: "Welcome Desk",
+      desc: "Signature illuminated AB emblem with trainer consultation desk",
+      tag: "Trainer Consultation",
+      span: "",
+    },
     {
       src: galleryImg6,
-      alt: "Treadmill row with AB Fitness branding",
-      span: "row-span-2",
+      title: "HIIT & Cardio Deck",
+      category: "Fat Burn Zone",
+      desc: "Shock-absorbent high-traction decks with full wall panoramic mirrors",
+      tag: "Shock-Absorbing Decks",
+      span: "row-span-2 md:row-span-2",
     },
   ];
+
+  // Lightbox keyboard navigation
+  useEffect(() => {
+    if (activePhoto === null) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setActivePhoto(null);
+      if (e.key === "ArrowLeft") {
+        setActivePhoto((prev) =>
+          prev === null ? null : (prev - 1 + gallery.length) % gallery.length,
+        );
+      }
+      if (e.key === "ArrowRight") {
+        setActivePhoto((prev) => (prev === null ? null : (prev + 1) % gallery.length));
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [activePhoto, gallery.length]);
+
   return (
     <Section id="gallery" bg={c.bg} border>
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <Reveal className="text-center mb-12">
-          <SectionLabel text="Gallery" center />
+          <SectionLabel text="Gym Floor" center />
           <Heading center>
-            Inside <span style={{ color: c.orange }}>AB Fitness</span> Hub
+            Inside <span style={{ color: c.orange }}>AB Fitness</span> Kavoor
           </Heading>
+          <p className="text-[14px] max-w-lg mx-auto mt-2" style={{ color: c.muted }}>
+            Hover or tap any photo to explore our training zones, equipment, and facilities.
+          </p>
         </Reveal>
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 auto-rows-[140px] sm:auto-rows-[180px]">
+
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-3.5 sm:gap-4 auto-rows-[160px] sm:auto-rows-[200px] md:auto-rows-[225px]">
           {gallery.map((p, i) => (
             <Reveal key={i} delay={i * 60} dir="scale" className={p.span}>
               <div
-                className={`group relative overflow-hidden rounded-[18px] w-full h-full`}
+                onClick={() => setActivePhoto(i)}
+                className="group relative overflow-hidden rounded-[20px] w-full h-full cursor-pointer transition-all duration-300"
                 style={{
                   background: c.card,
                   border: `1px solid ${c.borderFaint}`,
+                  boxShadow: c.isDark
+                    ? "0 4px 20px rgba(0,0,0,0.5)"
+                    : "0 4px 20px rgba(0,0,0,0.08)",
                 }}
               >
+                {/* Image with zoom and smooth filter transition */}
                 <img
                   src={p.src}
-                  alt={p.alt}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 grayscale-[20%] group-hover:grayscale-0"
+                  alt={p.title}
+                  className="w-full h-full object-cover transition-all duration-700 ease-out group-hover:scale-110 group-hover:brightness-[0.82]"
                 />
+
+                {/* Multi-layered cinematic gradient overlay */}
                 <div
-                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                  style={{ background: "rgba(0,0,0,0.28)" }}
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                  style={{
+                    background:
+                      "linear-gradient(180deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.08) 35%, rgba(0,0,0,0.92) 100%)",
+                  }}
                 />
-                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-                  <div
-                    className="w-10 h-10 rounded-full flex items-center justify-center"
+
+                {/* Top bar: Category badge + Zoom icon */}
+                <div className="absolute top-3 left-3 right-3 flex items-center justify-between pointer-events-none opacity-0 group-hover:opacity-100 transition-all duration-300 transform -translate-y-2 group-hover:translate-y-0 z-10">
+                  <span
+                    className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-wider"
                     style={{
-                      background: c.orange,
-                      boxShadow: `0 0 20px ${c.orange}88`,
+                      background: "rgba(0,0,0,0.7)",
+                      color: c.orange,
+                      border: `1px solid ${c.orange}66`,
+                      backdropFilter: "blur(10px)",
+                      boxShadow: `0 0 12px ${c.orange}33`,
                     }}
                   >
-                    <span className="text-white font-bold text-xl">+</span>
+                    <span
+                      className="w-1.5 h-1.5 rounded-full animate-pulse"
+                      style={{ background: c.orange }}
+                    />
+                    {p.category}
+                  </span>
+                  <div
+                    className="w-8 h-8 rounded-full flex items-center justify-center transition-transform duration-200 group-hover:scale-110"
+                    style={{
+                      background: "rgba(0,0,0,0.7)",
+                      color: "#fff",
+                      border: "1px solid rgba(255,255,255,0.25)",
+                      backdropFilter: "blur(10px)",
+                    }}
+                  >
+                    <ZoomIn size={14} />
                   </div>
                 </div>
+
+                {/* Bottom bar: Title, description, tag */}
+                <div className="absolute bottom-0 left-0 right-0 p-3.5 sm:p-5 pointer-events-none opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-3 group-hover:translate-y-0 z-10">
+                  <h4
+                    className="font-black text-[15px] sm:text-[18px] uppercase tracking-wide leading-tight text-white mb-1 drop-shadow-md"
+                    style={{ fontFamily: "Barlow Condensed, sans-serif" }}
+                  >
+                    {p.title}
+                  </h4>
+                  <p className="text-[11px] sm:text-[12px] text-gray-200 leading-snug line-clamp-2 mb-2.5 font-normal drop-shadow">
+                    {p.desc}
+                  </p>
+                  <div
+                    className="inline-flex items-center gap-1.5 text-[10px] font-bold text-white px-2 py-0.5 rounded-md"
+                    style={{
+                      background: "rgba(255,255,255,0.18)",
+                      border: "1px solid rgba(255,255,255,0.25)",
+                      backdropFilter: "blur(6px)",
+                    }}
+                  >
+                    <Sparkles size={11} style={{ color: c.orange }} />
+                    {p.tag}
+                  </div>
+                </div>
+
+                {/* Glowing neon orange bottom edge indicator */}
+                <div
+                  className="absolute bottom-0 left-0 right-0 h-[3px] opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  style={{
+                    background: `linear-gradient(90deg, transparent, ${c.orange}, transparent)`,
+                    boxShadow: `0 0 14px ${c.orange}`,
+                  }}
+                />
               </div>
             </Reveal>
           ))}
         </div>
       </div>
+
+      {/* ─── FULL-SCREEN LIGHTBOX MODAL ───────────────────────── */}
+      {activePhoto !== null && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6"
+          style={{
+            background: "rgba(0, 0, 0, 0.92)",
+            backdropFilter: "blur(16px)",
+          }}
+          onClick={() => setActivePhoto(null)}
+        >
+          {/* Modal Container */}
+          <div
+            className="relative max-w-4xl w-full rounded-[24px] overflow-hidden flex flex-col items-center"
+            style={{
+              background: c.isDark ? "#0f0f0f" : "#1a1a1a",
+              border: `1.5px solid ${c.orange}44`,
+              boxShadow: `0 0 60px rgba(0,0,0,0.8), 0 0 30px ${c.orange}22`,
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Top Bar with Title & Close */}
+            <div
+              className="w-full flex items-center justify-between px-5 py-3.5"
+              style={{
+                background: "rgba(0,0,0,0.5)",
+                borderBottom: `1px solid ${c.borderFaint}`,
+              }}
+            >
+              <div className="flex items-center gap-2">
+                <span
+                  className="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider"
+                  style={{
+                    background: `${c.orange}22`,
+                    color: c.orange,
+                    border: `1px solid ${c.orange}55`,
+                  }}
+                >
+                  {gallery[activePhoto].category}
+                </span>
+                <span className="text-[12px] text-gray-400">
+                  Photo {activePhoto + 1} of {gallery.length}
+                </span>
+              </div>
+              <button
+                onClick={() => setActivePhoto(null)}
+                className="w-8 h-8 rounded-full flex items-center justify-center text-white/80 hover:text-white transition-colors"
+                style={{ background: "rgba(255,255,255,0.1)" }}
+                aria-label="Close photo"
+              >
+                <X size={18} />
+              </button>
+            </div>
+
+            {/* Main Image with Navigation Arrows */}
+            <div className="relative w-full flex items-center justify-center bg-black/60 max-h-[68vh] overflow-hidden">
+              <img
+                src={gallery[activePhoto].src}
+                alt={gallery[activePhoto].title}
+                className="w-full h-auto max-h-[68vh] object-contain select-none"
+              />
+
+              {/* Prev Button */}
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setActivePhoto((prev) =>
+                    prev === null ? null : (prev - 1 + gallery.length) % gallery.length,
+                  );
+                }}
+                className="absolute left-3 w-11 h-11 rounded-full flex items-center justify-center text-white transition-all hover:scale-110 active:scale-95"
+                style={{
+                  background: "rgba(0,0,0,0.65)",
+                  border: "1px solid rgba(255,255,255,0.2)",
+                  backdropFilter: "blur(8px)",
+                }}
+                aria-label="Previous photo"
+              >
+                <ChevronLeft size={22} />
+              </button>
+
+              {/* Next Button */}
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setActivePhoto((prev) => (prev === null ? null : (prev + 1) % gallery.length));
+                }}
+                className="absolute right-3 w-11 h-11 rounded-full flex items-center justify-center text-white transition-all hover:scale-110 active:scale-95"
+                style={{
+                  background: "rgba(0,0,0,0.65)",
+                  border: "1px solid rgba(255,255,255,0.2)",
+                  backdropFilter: "blur(8px)",
+                }}
+                aria-label="Next photo"
+              >
+                <ChevronRight size={22} />
+              </button>
+            </div>
+
+            {/* Bottom Caption & Specs */}
+            <div className="w-full px-6 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-black/40 border-t border-white/5">
+              <div>
+                <h3
+                  className="font-black text-[20px] uppercase text-white leading-tight"
+                  style={{ fontFamily: "Barlow Condensed, sans-serif" }}
+                >
+                  {gallery[activePhoto].title}
+                </h3>
+                <p className="text-[13px] text-gray-300 mt-0.5">{gallery[activePhoto].desc}</p>
+              </div>
+              <div
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-bold text-white self-start sm:self-auto"
+                style={{
+                  background: `${c.orange}22`,
+                  border: `1px solid ${c.orange}55`,
+                  color: c.orange,
+                }}
+              >
+                <Sparkles size={13} />
+                {gallery[activePhoto].tag}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </Section>
   );
 }
