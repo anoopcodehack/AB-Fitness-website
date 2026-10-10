@@ -14,7 +14,7 @@ import thareshImg from "@/imports/THARESH.png";
 import sujayImg from "@/imports/SUJAY.png";
 import gymVideo from "@/imports/AB_fitness_v.mp4";
 import abtImg from "@/imports/ABabt.jpeg";
-import eventFlyerImg from "@/imports/IMG-20260816-WA0003-1.jpg";
+import eventFlyerImg from "@/imports/eventcard.png";
 
 // ─── THEME SYSTEM ─────────────────────────────────────────────────────────────
 type Colors = {

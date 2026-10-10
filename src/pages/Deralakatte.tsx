@@ -15,7 +15,7 @@ import prakashImg from "@/imports/Prakash P.jpeg";
 import vishnuImg from "@/imports/Vishnu.jpeg";
 import gymVideo from "@/imports/Derelekatte video.mp4";
 import abtImg from "@/imports/ABabt.jpeg";
-import eventFlyerImg from "@/imports/IMG-20260816-WA0003-1.jpg";
+import eventFlyerImg from "@/imports/eventcard.png";
 
 // ─── THEME SYSTEM ─────────────────────────────────────────────────────────────
 type Colors = {
