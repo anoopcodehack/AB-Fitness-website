@@ -16,6 +16,7 @@ import vishnuImg from "@/imports/Vishnu.jpeg";
 import gymVideo from "@/imports/Derelekatte video.mp4";
 import abtImg from "@/imports/ABabt.jpeg";
 import eventFlyerImg from "@/imports/eventcard.png";
+import upcomingEvent1Img from "@/imports/upcoming event1.jpeg";
 
 // ─── THEME SYSTEM ─────────────────────────────────────────────────────────────
 type Colors = {
@@ -4577,6 +4578,16 @@ function FAQ() {
 }
 
 // ─── EVENTS DATA ──────────────────────────────────────────────────────────────
+type EventScheduleItem = {
+  date: string;
+  day: string;
+  title: string;
+  time: string;
+  badge: string;
+  badgeType: "warning" | "success" | "info";
+  desc: string;
+};
+
 type EventItem = {
   id: string;
   type: "upcoming" | "completed";
@@ -4589,12 +4600,63 @@ type EventItem = {
   phone: string;
   description: string;
   activities: string[];
-  prize: string;
+  prize?: string;
+  notice?: string;
+  schedule?: EventScheduleItem[];
   registrationUrl?: string;
   eventDate?: Date;
 };
 
 const EVENTS: EventItem[] = [
+  {
+    id: "dasara-ayudha-pooja-2026",
+    type: "upcoming",
+    title: "Dasara & Ayudha Pooja Celebration",
+    subtitle: "Special Notice & Festive Ceremony",
+    notice: "SPECIAL NOTICE",
+    image: upcomingEvent1Img,
+    date: "20.10.2026 – 22.10.2026",
+    time: "Ayudha Pooja: 21 Oct at 9:30 AM",
+    location: "Hotel Plaza Avenue, Deralakatte, Mangalore",
+    phone: "+91 7019844639",
+    description:
+      "Let's celebrate the spirit of Dasara with devotion, tradition and togetherness at AB Fitness Hub Gym Deralakatte. All members, families, and friends are warmly invited to join the auspicious Ayudha Pooja celebration.",
+    activities: [
+      "20/10/2026 (Tue): Gym Cleaning & Pooja Preparation (Closed from 3:00 PM)",
+      "21/10/2026 (Wed): Ayudha Pooja Ceremony starts at 9:30 AM (All Welcome)",
+      "22/10/2026 (Thu): Gym Reopened (Regular Workout Sessions Resume)",
+    ],
+    prize: "Special Prasadam & Festive Blessings · All Are Welcome",
+    schedule: [
+      {
+        date: "20/10/2026",
+        day: "Tuesday",
+        title: "Gym Cleaning",
+        time: "Afternoon 3:00 PM Onwards",
+        badge: "Gym Closed",
+        badgeType: "warning",
+        desc: "Gym closed from 3:00 PM onwards for deep cleaning and pooja preparations.",
+      },
+      {
+        date: "21/10/2026",
+        day: "Wednesday",
+        title: "Ayudha Pooja",
+        time: "Starts from 9:30 AM",
+        badge: "All Are Welcome",
+        badgeType: "success",
+        desc: "Auspicious Ayudha Pooja ceremony & prasadam distribution. Open to all members & families.",
+      },
+      {
+        date: "22/10/2026",
+        day: "Thursday",
+        title: "Gym Reopened",
+        time: "Regular Workout Hours",
+        badge: "Workouts Resume",
+        badgeType: "info",
+        desc: "The gym reopens with regular operating hours for all training sessions.",
+      },
+    ],
+  },
   {
     id: "annual-2025",
     type: "completed",
@@ -4717,57 +4779,9 @@ function Events() {
                   </div>
                 </div>
               ) : (
-                <div className="grid md:grid-cols-2 gap-5">
+                <div className="space-y-8">
                   {upcoming.map((ev) => (
-                    <div
-                      key={ev.id}
-                      className="rounded-[20px] overflow-hidden"
-                      style={{
-                        background: c.card,
-                        border: `1px solid ${c.orange}44`,
-                      }}
-                    >
-                      {ev.image && (
-                        <img src={ev.image} alt={ev.title} className="w-full h-56 object-cover" />
-                      )}
-                      <div className="p-6">
-                        <div
-                          className="font-black text-[18px] uppercase mb-1"
-                          style={{
-                            fontFamily: "Barlow Condensed, sans-serif",
-                            color: c.text,
-                          }}
-                        >
-                          {ev.title}
-                        </div>
-                        <div className="text-[13px] font-semibold mb-4" style={{ color: c.orange }}>
-                          {ev.subtitle}
-                        </div>
-                        <div className="flex gap-4 text-[12px] mb-4" style={{ color: c.muted }}>
-                          <span className="flex items-center gap-1.5">
-                            <Icon name="calendar" size={13} color={c.orange} /> {ev.date}
-                          </span>
-                          <span className="flex items-center gap-1.5">
-                            <Icon name="time" size={13} color={c.cyan} /> {ev.time}
-                          </span>
-                        </div>
-                        <div
-                          className="text-[12px] mb-5 flex items-center gap-1.5"
-                          style={{ color: c.muted }}
-                        >
-                          <Icon name="location" size={13} color={c.orange} /> {ev.location}
-                        </div>
-                        {ev.registrationUrl && (
-                          <a
-                            href={ev.registrationUrl}
-                            className="inline-flex items-center gap-2 font-bold text-[13px] px-5 py-2.5 rounded-full text-white transition-all hover:scale-105"
-                            style={{ background: c.orange }}
-                          >
-                            Register Now <Icon name="arrow" size={14} color="#fff" />
-                          </a>
-                        )}
-                      </div>
-                    </div>
+                    <UpcomingEventCard key={ev.id} ev={ev} c={c} />
                   ))}
                 </div>
               )}
@@ -4793,6 +4807,343 @@ function Events() {
         </div>
       </div>
     </Section>
+  );
+}
+
+function UpcomingEventCard({ ev, c }: { ev: EventItem; c: Colors }) {
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+
+  return (
+    <>
+      <div
+        className="rounded-[24px] overflow-hidden transition-all duration-300"
+        style={{
+          background: c.card,
+          border: `1px solid ${c.isDark ? `${c.orange}33` : `${c.orange}25`}`,
+          boxShadow: c.isDark ? `0 0 40px ${c.orange}0d` : "0 4px 24px rgba(0,0,0,0.07)",
+        }}
+      >
+        <div className="grid lg:grid-cols-2 gap-0">
+          {/* Left — poster flyer with clickable zoom */}
+          <div
+            className="relative overflow-hidden group cursor-pointer"
+            style={{ minHeight: 380 }}
+            onClick={() => setLightboxOpen(true)}
+          >
+            <img
+              src={ev.image}
+              alt={ev.title}
+              className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+              style={{ minHeight: 380, maxHeight: 520 }}
+            />
+            <div
+              className="absolute inset-0 transition-opacity duration-300 opacity-60 group-hover:opacity-40"
+              style={{
+                background:
+                  "linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.2) 60%, transparent 100%)",
+              }}
+            />
+
+            {/* Badges Overlay */}
+            <div className="absolute top-4 left-4 right-4 flex items-center justify-between gap-2 pointer-events-none">
+              <div
+                className="flex items-center gap-2 text-[11px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full"
+                style={{
+                  background: "rgba(0,0,0,0.8)",
+                  color: "#f59e0b",
+                  border: "1px solid rgba(245, 158, 11, 0.4)",
+                  backdropFilter: "blur(6px)",
+                }}
+              >
+                <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse inline-block" />
+                Upcoming Event
+              </div>
+
+              {ev.notice && (
+                <div
+                  className="flex items-center gap-1.5 text-[11px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full"
+                  style={{
+                    background: "rgba(220, 38, 38, 0.9)",
+                    color: "#fff",
+                    boxShadow: "0 0 12px rgba(220, 38, 38, 0.5)",
+                  }}
+                >
+                  {ev.notice}
+                </div>
+              )}
+            </div>
+
+            {/* Tap to zoom hint on bottom left */}
+            <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between">
+              <div
+                className="inline-flex items-center gap-2 text-[12px] font-bold px-3.5 py-1.5 rounded-full text-white transition-all group-hover:scale-105"
+                style={{
+                  background: "rgba(0,0,0,0.75)",
+                  backdropFilter: "blur(6px)",
+                  border: "1px solid rgba(255,255,255,0.2)",
+                }}
+              >
+                <ZoomIn size={14} className="text-orange-400" /> Click to enlarge flyer
+              </div>
+            </div>
+          </div>
+
+          {/* Right — detailed information */}
+          <div className="p-6 sm:p-8 flex flex-col justify-between">
+            <div>
+              {/* Org & subtitle */}
+              <div className="flex items-center justify-between gap-2 mb-1.5">
+                <span
+                  className="text-[11px] font-black uppercase tracking-[0.25em]"
+                  style={{ color: c.orange }}
+                >
+                  AB FITNESS HUB GYM • DERALAKATTE
+                </span>
+              </div>
+
+              <h3
+                className="font-black text-[24px] sm:text-[28px] leading-tight mb-2 uppercase"
+                style={{
+                  fontFamily: "Barlow Condensed, sans-serif",
+                  color: c.text,
+                }}
+              >
+                {ev.title}
+              </h3>
+
+              {/* Festive motto quote banner */}
+              <div
+                className="p-3.5 rounded-[14px] mb-5 text-[13px] italic font-medium leading-relaxed"
+                style={{
+                  background: `${c.orange}10`,
+                  borderLeft: `3px solid ${c.orange}`,
+                  color: c.text,
+                }}
+              >
+                "{ev.description}"
+              </div>
+
+              {/* Meta details pills */}
+              <div className="flex flex-wrap gap-2 mb-5">
+                <div
+                  className="flex items-center gap-1.5 text-[12px] font-semibold px-3 py-1.5 rounded-full"
+                  style={{
+                    background: `${c.orange}14`,
+                    border: `1px solid ${c.orange}33`,
+                    color: c.text,
+                  }}
+                >
+                  <Icon name="calendar" size={13} color={c.orange} />
+                  <span>{ev.date}</span>
+                </div>
+                <div
+                  className="flex items-center gap-1.5 text-[12px] font-semibold px-3 py-1.5 rounded-full"
+                  style={{
+                    background: `${c.cyan}14`,
+                    border: `1px solid ${c.cyan}33`,
+                    color: c.text,
+                  }}
+                >
+                  <Icon name="time" size={13} color={c.cyan} />
+                  <span>{ev.time}</span>
+                </div>
+              </div>
+
+              <div
+                className="text-[12px] mb-5 flex items-center gap-3 flex-wrap"
+                style={{ color: c.muted }}
+              >
+                <span className="flex items-center gap-1.5">
+                  <Icon name="location" size={13} color={c.orange} /> {ev.location}
+                </span>
+                <span style={{ color: c.border }}>·</span>
+                <span className="flex items-center gap-1.5">
+                  <Icon name="phone" size={13} color={c.cyan} /> {ev.phone}
+                </span>
+              </div>
+
+              {/* 3-day Program Schedule */}
+              {ev.schedule && ev.schedule.length > 0 && (
+                <div className="mb-5">
+                  <div
+                    className="text-[11px] font-black uppercase tracking-widest mb-3 flex items-center justify-between"
+                    style={{ color: c.muted }}
+                  >
+                    <span>Event Schedule & Notice</span>
+                    <span
+                      className="text-[10px] font-bold uppercase tracking-wider"
+                      style={{ color: c.orange }}
+                    >
+                      3-Day Breakdown
+                    </span>
+                  </div>
+
+                  <div className="space-y-2.5">
+                    {ev.schedule.map((item, idx) => {
+                      const isClosed = item.badgeType === "warning";
+                      const isPooja = item.badgeType === "success";
+                      return (
+                        <div
+                          key={idx}
+                          className="p-3 rounded-[14px] transition-all"
+                          style={{
+                            background: c.surface,
+                            border: `1px solid ${
+                              isPooja
+                                ? `${c.orange}55`
+                                : isClosed
+                                  ? "rgba(239, 68, 68, 0.3)"
+                                  : c.border
+                            }`,
+                          }}
+                        >
+                          <div className="flex items-center justify-between gap-2 mb-1">
+                            <div className="flex items-center gap-2">
+                              <span
+                                className="font-bold text-[12px] px-2 py-0.5 rounded-md"
+                                style={{
+                                  background: isPooja ? `${c.orange}20` : `${c.card}`,
+                                  color: isPooja ? c.orange : c.text,
+                                  border: `1px solid ${isPooja ? `${c.orange}40` : c.border}`,
+                                }}
+                              >
+                                {item.date} ({item.day})
+                              </span>
+                              <span className="font-bold text-[13px]" style={{ color: c.text }}>
+                                {item.title}
+                              </span>
+                            </div>
+                            <span
+                              className="text-[10px] font-black uppercase tracking-wide px-2 py-0.5 rounded-full whitespace-nowrap"
+                              style={{
+                                background: isClosed
+                                  ? "rgba(239, 68, 68, 0.15)"
+                                  : isPooja
+                                    ? "rgba(34, 197, 94, 0.15)"
+                                    : `${c.cyan}20`,
+                                color: isClosed ? "#ef4444" : isPooja ? "#22c55e" : c.cyan,
+                                border: `1px solid ${
+                                  isClosed
+                                    ? "rgba(239, 68, 68, 0.35)"
+                                    : isPooja
+                                      ? "rgba(34, 197, 94, 0.35)"
+                                      : `${c.cyan}35`
+                                }`,
+                              }}
+                            >
+                              {item.badge}
+                            </span>
+                          </div>
+                          <div className="text-[12px] flex items-center justify-between gap-2">
+                            <span style={{ color: c.muted }}>{item.desc}</span>
+                            <span
+                              className="font-semibold text-[11px] whitespace-nowrap"
+                              style={{ color: c.orange }}
+                            >
+                              {item.time}
+                            </span>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
+              {/* Note banner */}
+              <div
+                className="flex items-center gap-2 text-[12px] font-semibold px-4 py-2.5 rounded-[12px] mb-6"
+                style={{
+                  background: `${c.orange}12`,
+                  border: `1px solid ${c.orange}33`,
+                  color: c.text,
+                }}
+              >
+                <Icon name="target" size={14} color={c.orange} />
+                <span>Thank you for your support & understanding! All are warmly welcome.</span>
+              </div>
+            </div>
+
+            {/* Action buttons */}
+            <div
+              className="flex flex-wrap items-center gap-3 pt-3"
+              style={{ borderTop: `1px solid ${c.border}` }}
+            >
+              <a
+                href={`https://wa.me/917019844639?text=${encodeURIComponent(
+                  "Hi AB Fitness Deralakatte, I have a question regarding the Dasara & Ayudha Pooja Celebration.",
+                )}`}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-2 font-bold text-[13px] px-5 py-2.5 rounded-full text-white transition-all hover:scale-105"
+                style={{
+                  background: "#25D366",
+                  boxShadow: "0 2px 12px rgba(37, 211, 102, 0.3)",
+                }}
+              >
+                <Icon name="message" size={14} color="#fff" /> WhatsApp Inquiry
+              </a>
+
+              <a
+                href={`tel:${ev.phone}`}
+                className="inline-flex items-center gap-2 font-bold text-[13px] px-5 py-2.5 rounded-full transition-all hover:scale-105"
+                style={{
+                  background: c.surface,
+                  border: `1px solid ${c.border}`,
+                  color: c.text,
+                }}
+              >
+                <Icon name="phone" size={14} color={c.orange} /> Call Branch
+              </a>
+
+              <button
+                type="button"
+                onClick={() => setLightboxOpen(true)}
+                className="inline-flex items-center gap-1.5 text-[12px] font-semibold px-4 py-2 rounded-full transition-colors ml-auto cursor-pointer"
+                style={{ color: c.muted }}
+              >
+                <ZoomIn size={14} /> View Full Poster
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Lightbox Modal */}
+      {lightboxOpen && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6"
+          style={{ background: "rgba(0,0,0,0.92)", backdropFilter: "blur(10px)" }}
+          onClick={() => setLightboxOpen(false)}
+        >
+          <div
+            className="relative max-w-2xl w-full max-h-[92vh] flex flex-col items-center"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={() => setLightboxOpen(false)}
+              className="absolute -top-12 right-0 sm:-right-4 w-10 h-10 rounded-full flex items-center justify-center text-white transition-colors cursor-pointer"
+              style={{ background: "rgba(255,255,255,0.15)" }}
+              aria-label="Close flyer"
+            >
+              <X size={20} />
+            </button>
+            <img
+              src={ev.image}
+              alt={ev.title}
+              className="w-full h-auto max-h-[82vh] object-contain rounded-2xl shadow-2xl"
+              style={{ border: `1px solid ${c.orange}55` }}
+            />
+            <div className="mt-3 text-center">
+              <p className="text-white font-bold text-sm tracking-wide">{ev.title}</p>
+              <p className="text-xs text-stone-300 mt-0.5">
+                {ev.subtitle} · Hotel Plaza Avenue, Deralakatte
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   );
 }
 
