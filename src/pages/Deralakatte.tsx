@@ -17,6 +17,11 @@ import gymVideo from "@/imports/Derelekatte video.mp4";
 import abtImg from "@/imports/ABabt.jpeg";
 import eventFlyerImg from "@/imports/eventcard.png";
 import upcomingEvent1Img from "@/imports/upcoming event1.jpeg";
+import GymStatusBadge from "@/components/GymStatusBadge";
+import FreeTrialModal from "@/components/FreeTrialModal";
+import MobileQuickBar from "@/components/MobileQuickBar";
+import GoogleReviewsBadge from "@/components/GoogleReviewsBadge";
+import FitnessCalculator from "@/components/FitnessCalculator";
 
 // ─── THEME SYSTEM ─────────────────────────────────────────────────────────────
 type Colors = {
@@ -888,7 +893,7 @@ function Logo({ size = 42 }: { size?: number }) {
 }
 
 // ─── NAV ──────────────────────────────────────────────────────────────────────
-function Nav() {
+function Nav({ onOpenTrial }: { onOpenTrial?: () => void }) {
   const c = useC();
   const navigate = useNavigate();
   const [scrolled, setScrolled] = useState(false);
@@ -904,6 +909,7 @@ function Nav() {
     { label: "About", href: "#about" },
     { label: "Services", href: "#programs" },
     { label: "Pricing", href: "#memberships" },
+    { label: "Calculator", href: "#calculator" },
     { label: "Gallery", href: "#gallery" },
   ];
 
@@ -939,7 +945,7 @@ function Nav() {
           </div>
         </a>
 
-        <div className="hidden md:flex items-center gap-7">
+        <div className="hidden md:flex items-center gap-6">
           {links.map((l) => (
             <a
               key={l.label}
@@ -958,9 +964,10 @@ function Nav() {
           ))}
         </div>
 
-        <div className="hidden md:flex items-center gap-3">
+        <div className="hidden md:flex items-center gap-2.5">
+          <GymStatusBadge branch="deralakatte" variant="pill" />
           <button
-            onClick={() => navigate("/")}
+            onClick={() => navigate("/kavoor")}
             className="inline-flex items-center gap-1.5 text-[11px] font-bold px-3 py-1.5 rounded-full transition-all duration-200 hover:scale-105"
             style={{
               background: `${c.cyan}18`,
@@ -968,15 +975,15 @@ function Nav() {
               border: `1px solid ${c.cyan}44`,
               cursor: "pointer",
             }}
-            title="Switch Branch (Kavoor / Deralakatte)"
+            title="Switch to Kavoor Branch"
           >
-            <MapPin size={12} />
-            Switch Branch
+            <MapPin size={11} />
+            Kavoor Branch
           </button>
           <ThemeToggle />
           <button
             onClick={() => navigate("/protein-hub")}
-            className="inline-flex items-center gap-2 font-semibold text-[13px] px-4 py-2.5 rounded-full transition-all duration-200 hover:scale-105"
+            className="inline-flex items-center gap-1.5 font-semibold text-[12px] px-3.5 py-1.5 rounded-full transition-all duration-200 hover:scale-105 cursor-pointer"
             style={{
               background: c.isDark ? "#1a1a0a" : "#fffbe6",
               color: "#f59e0b",
@@ -984,19 +991,18 @@ function Nav() {
               boxShadow: c.isDark ? "0 0 16px #f59e0b33" : "none",
             }}
           >
-            <Icon name="cup" size={15} color="#f59e0b" /> Protein Hub
+            <Icon name="cup" size={14} color="#f59e0b" /> Protein Hub
           </button>
-          <a
-            href="#contact"
-            className="inline-flex items-center gap-2 font-semibold text-[13px] px-5 py-2.5 rounded-full transition-all duration-200 hover:scale-105"
+          <button
+            onClick={() => onOpenTrial?.()}
+            className="inline-flex items-center gap-1.5 font-bold text-[12px] uppercase tracking-wider px-4 py-2 rounded-full transition-all duration-200 hover:scale-105 cursor-pointer text-white"
             style={{
               background: c.orange,
-              color: "#fff",
               boxShadow: c.isDark ? `0 0 20px ${c.orange}55` : `0 2px 12px ${c.orange}55`,
             }}
           >
-            Contact Us
-          </a>
+            Free Pass
+          </button>
         </div>
 
         <div className="md:hidden flex items-center gap-3">
@@ -1037,16 +1043,22 @@ function Nav() {
         }}
       >
         <div className="px-6 py-4 flex flex-col gap-4">
-          <button
-            onClick={() => {
-              setOpen(false);
-              navigate("/");
-            }}
-            className="inline-flex items-center gap-2 text-xs font-bold text-left py-1"
-            style={{ color: c.cyan, background: "none", border: "none", cursor: "pointer" }}
+          <div
+            className="flex items-center justify-between pb-2 border-b"
+            style={{ borderColor: c.border }}
           >
-            <MapPin size={13} /> Switch Branch (Kavoor / Deralakatte)
-          </button>
+            <GymStatusBadge branch="deralakatte" />
+            <button
+              onClick={() => {
+                setOpen(false);
+                navigate("/kavoor");
+              }}
+              className="inline-flex items-center gap-1.5 text-xs font-bold text-left py-1 cursor-pointer"
+              style={{ color: c.orange, background: "none", border: "none" }}
+            >
+              <MapPin size={12} /> Kavoor Branch
+            </button>
+          </div>
           {links.map((l) => (
             <a
               key={l.label}
@@ -1075,11 +1087,22 @@ function Nav() {
           </button>
           <a
             href="#contact"
+            onClick={() => setOpen(false)}
             className="text-white text-center font-semibold text-sm px-5 py-2.5 rounded-full"
             style={{ background: c.orange }}
           >
             Contact Us
           </a>
+          <button
+            onClick={() => {
+              setOpen(false);
+              onOpenTrial?.();
+            }}
+            className="text-white text-center font-bold text-xs uppercase tracking-wider px-5 py-3 rounded-full mt-1 cursor-pointer"
+            style={{ background: c.orange }}
+          >
+            Claim Free 1-Day Pass
+          </button>
         </div>
       </div>
     </nav>
@@ -1087,7 +1110,7 @@ function Nav() {
 }
 
 // ─── HERO ─────────────────────────────────────────────────────────────────────
-function Hero() {
+function Hero({ onOpenTrial }: { onOpenTrial?: () => void }) {
   const c = useC();
   const contentRef = useRef<HTMLDivElement>(null);
   const [count, setCount] = useState({ members: 0, trainers: 0, years: 0 });
@@ -1269,7 +1292,7 @@ function Hero() {
               Our mission is to transform your health and fitness through incremental achievements,
               proving that even the smallest steps can lead to significant results.
             </p>
-            <div className="flex flex-wrap gap-3 mb-8">
+            <div className="flex flex-wrap gap-3 mb-6">
               <a
                 href="#programs"
                 className="inline-flex items-center gap-2 text-white font-bold text-[13px] px-5 py-3 rounded-full transition-all hover:scale-105"
@@ -1280,13 +1303,17 @@ function Hero() {
               >
                 Explore Courses <Icon name="arrow" size={16} color="#fff" />
               </a>
-              <a
-                href="#contact"
-                className="inline-flex items-center gap-2 font-semibold text-[13px] px-5 py-3 rounded-full transition-all"
+              <button
+                type="button"
+                onClick={onOpenTrial}
+                className="inline-flex items-center gap-2 font-bold text-[13px] px-5 py-3 rounded-full transition-all hover:scale-105 cursor-pointer"
                 style={{ border: `1.5px solid ${c.orange}55`, color: c.orange }}
               >
                 Book Free Trial
-              </a>
+              </button>
+            </div>
+            <div className="mb-6">
+              <GoogleReviewsBadge branch="deralakatte" variant="badge" isDark={c.isDark} />
             </div>
             <div className="flex gap-6 pt-5" style={{ borderTop: `1px solid ${c.border}` }}>
               {[
@@ -1410,7 +1437,7 @@ function Hero() {
               Our mission is to transform your health and fitness through incremental achievements,
               proving that even the smallest steps can lead to significant results.
             </p>
-            <div className="flex gap-4 mb-12">
+            <div className="flex gap-4 mb-6">
               <a
                 href="#programs"
                 className="inline-flex items-center gap-2 text-white font-bold text-[14px] px-7 py-4 rounded-full transition-all hover:scale-105"
@@ -1421,13 +1448,18 @@ function Hero() {
               >
                 Explore Courses <Icon name="arrow" size={18} color="#fff" />
               </a>
-              <a
-                href="#contact"
-                className="inline-flex items-center gap-2 font-semibold text-[14px] px-7 py-4 rounded-full transition-all"
-                style={{ border: `1.5px solid ${c.orange}55`, color: c.orange }}
+              <button
+                type="button"
+                onClick={onOpenTrial}
+                className="inline-flex items-center gap-2 font-bold text-[14px] px-7 py-4 rounded-full transition-all hover:scale-105 cursor-pointer"
+                style={{ border: `1.5px solid ${c.orange}66`, color: c.orange }}
               >
-                Book Free Trial
-              </a>
+                Book Free Trial Pass
+              </button>
+            </div>
+            <div className="flex items-center gap-3 mb-8">
+              <GymStatusBadge branch="deralakatte" variant="pill" />
+              <GoogleReviewsBadge branch="deralakatte" variant="badge" isDark={c.isDark} />
             </div>
             <div className="flex gap-10 pt-8" style={{ borderTop: `1px solid ${c.border}` }}>
               {[
@@ -5913,6 +5945,7 @@ function AppInner() {
       return false;
     }
   });
+  const [trialModalOpen, setTrialModalOpen] = useState(false);
 
   const handleIntroDone = () => {
     try {
@@ -5939,8 +5972,8 @@ function AppInner() {
       }}
     >
       {showIntro && <CinematicIntro onDone={handleIntroDone} />}
-      <Nav />
-      <Hero />
+      <Nav onOpenTrial={() => setTrialModalOpen(true)} />
+      <Hero onOpenTrial={() => setTrialModalOpen(true)} />
       <Ticker />
       <About />
       <ProteinHubPromo />
@@ -5949,6 +5982,9 @@ function AppInner() {
       <Trainers />
       <Schedule />
       <Memberships />
+      <section id="calculator" className="py-16 sm:py-24 px-4 sm:px-6 max-w-6xl mx-auto">
+        <FitnessCalculator isDark={c.isDark} onBookTrial={() => setTrialModalOpen(true)} />
+      </section>
       <Reviews />
       <Gallery />
       <Events />
@@ -5957,6 +5993,17 @@ function AppInner() {
       <Contact />
       <Newsletter />
       <Footer />
+      <MobileQuickBar
+        branch="deralakatte"
+        onOpenTrial={() => setTrialModalOpen(true)}
+        isDark={c.isDark}
+      />
+      <FreeTrialModal
+        isOpen={trialModalOpen}
+        onClose={() => setTrialModalOpen(false)}
+        defaultBranch="deralakatte"
+        theme={c.isDark ? "dark" : "light"}
+      />
     </div>
   );
 }

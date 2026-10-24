@@ -1,8 +1,11 @@
 // Branch Selector - AB Fitness multi-branch landing
 import { useState, useEffect, createContext, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { Sun, Moon, MapPin } from "lucide-react";
+import { Sun, Moon, MapPin, Dumbbell } from "lucide-react";
 import logoImg from "@/imports/image-10.png";
+import GymStatusBadge from "@/components/GymStatusBadge";
+import FreeTrialModal from "@/components/FreeTrialModal";
+import GoogleReviewsBadge from "@/components/GoogleReviewsBadge";
 
 type Colors = {
   bg: string;
@@ -340,11 +343,18 @@ function BranchCard({
             >
               {name}
             </h2>
-            <div
-              className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-widest mt-1.5"
-              style={{ color: accent }}
-            >
-              <MapPin size={11} /> {location}
+            <div className="flex items-center gap-3 mt-1.5 flex-wrap">
+              <div
+                className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-widest"
+                style={{ color: accent }}
+              >
+                <MapPin size={11} /> {location}
+              </div>
+              <span className="opacity-30">•</span>
+              <GymStatusBadge
+                branch={name.toLowerCase() === "kavoor" ? "kavoor" : "deralakatte"}
+                variant="compact"
+              />
             </div>
           </div>
         </div>
@@ -374,6 +384,7 @@ function BranchCard({
 
 function BranchSelectorContent() {
   const c = useC();
+  const navigate = useNavigate();
   const { isDark, toggle } = useTheme();
   const [showIntro, setShowIntro] = useState<boolean>(() => {
     try {
@@ -382,6 +393,7 @@ function BranchSelectorContent() {
       return false;
     }
   });
+  const [trialModalOpen, setTrialModalOpen] = useState(false);
   const done = () => {
     try {
       sessionStorage.setItem(IK, "1");
@@ -536,10 +548,13 @@ function BranchSelectorContent() {
                 >
                   Choose Your <span style={{ color: c.orange }}>Branch</span>
                 </h1>
-                <p className="text-[15px] max-w-lg mx-auto" style={{ color: c.muted }}>
+                <p className="text-[15px] max-w-lg mx-auto mb-5" style={{ color: c.muted }}>
                   Select the AB Fitness Hub location closest to you to explore our facilities,
                   trainers, and programs.
                 </p>
+                <div className="flex justify-center">
+                  <GoogleReviewsBadge branch="kavoor" variant="badge" isDark={isDark} />
+                </div>
               </div>
 
               <div className="grid md:grid-cols-2 gap-6 sm:gap-8">
@@ -561,13 +576,71 @@ function BranchSelectorContent() {
                 />
               </div>
 
-              <div className="text-center mt-14">
+              {/* Protein Hub Cafe Promo Banner */}
+              <div
+                className="mt-8 p-5 sm:p-6 rounded-[24px] border flex flex-col sm:flex-row items-center justify-between gap-4 transition-all hover:scale-[1.01]"
+                style={{
+                  background: isDark ? "rgba(18, 18, 18, 0.85)" : "rgba(255, 255, 255, 0.88)",
+                  borderColor: isDark ? "rgba(0, 212, 255, 0.25)" : "rgba(0, 122, 170, 0.2)",
+                  backdropFilter: "blur(12px)",
+                }}
+              >
+                <div className="flex items-center gap-3.5 text-center sm:text-left">
+                  <div
+                    className="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 text-2xl"
+                    style={{ background: "rgba(0, 212, 255, 0.12)" }}
+                  >
+                    🥤
+                  </div>
+                  <div>
+                    <div className="text-[10px] font-black uppercase tracking-widest text-cyan-400">
+                      Located inside Deralakatte Branch
+                    </div>
+                    <h3
+                      className="text-lg font-black uppercase"
+                      style={{ fontFamily: "Barlow Condensed, sans-serif", color: c.text }}
+                    >
+                      AB Protein Hub &amp; Health Cafe
+                    </h3>
+                    <p className="text-xs opacity-70">
+                      Whey protein shakes, fresh cold-pressed juices &amp; post-workout recovery
+                      nutrition.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2.5 shrink-0">
+                  <button
+                    onClick={() => navigate("/protein-hub")}
+                    className="px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider text-black transition-transform hover:scale-105 cursor-pointer"
+                    style={{ background: "#00d4ff" }}
+                  >
+                    View Menu
+                  </button>
+                  <button
+                    onClick={() => setTrialModalOpen(true)}
+                    className="px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider text-white transition-transform hover:scale-105 cursor-pointer flex items-center gap-1.5"
+                    style={{ background: "#ff4800" }}
+                  >
+                    <Dumbbell size={13} /> Free Trial Pass
+                  </button>
+                </div>
+              </div>
+
+              <div className="text-center mt-12">
                 <p className="text-[12px]" style={{ color: c.muted }}>
-                  More locations coming soon. Stay tuned!
+                  More locations coming soon across Mangalore. Stay tuned!
                 </p>
               </div>
             </div>
           </main>
+
+          <FreeTrialModal
+            isOpen={trialModalOpen}
+            onClose={() => setTrialModalOpen(false)}
+            defaultBranch="kavoor"
+            theme={isDark ? "dark" : "light"}
+          />
 
           <footer
             className="py-8 px-6 text-center relative z-10"
