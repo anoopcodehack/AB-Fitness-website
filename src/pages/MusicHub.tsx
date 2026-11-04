@@ -17,7 +17,9 @@ import {
   Share2,
   Check,
   Disc3,
-  Sparkles,
+  ListMusic,
+  Heart,
+  TrendingUp,
 } from "lucide-react";
 import logoImg from "@/imports/image-10.png";
 import GymStatusBadge from "@/components/GymStatusBadge";
@@ -172,7 +174,7 @@ function ThemeToggle() {
   );
 }
 
-// ─── PLAYLIST DATA ────────────────────────────────────────────────────────────
+// ─── PLAYLIST & MARQUEE DATA ──────────────────────────────────────────────────
 type PlaylistCategory = "all" | "beast" | "cardio" | "hiphop" | "desi" | "cooldown";
 
 type Playlist = {
@@ -186,6 +188,7 @@ type Playlist = {
   tracksCount: string;
   accent: string;
   accentBg: string;
+  coverImage: string;
   genre: string;
   bestFor: string;
   spotifyId: string;
@@ -193,6 +196,17 @@ type Playlist = {
   youtubeId: string;
   youtubeUrl: string;
   highlights: string[];
+};
+
+type MarqueeTrack = {
+  id: string;
+  title: string;
+  artist: string;
+  bpm: string;
+  coverImage: string;
+  categoryTag: string;
+  accent: string;
+  targetPlaylistId: string;
 };
 
 const PLAYLISTS: Playlist[] = [
@@ -206,12 +220,14 @@ const PLAYLISTS: Playlist[] = [
     duration: "3h 45m",
     tracksCount: "68 Tracks",
     accent: "#ff4800",
-    accentBg: "rgba(255, 72, 0, 0.12)",
+    accentBg: "rgba(255, 72, 0, 0.14)",
+    coverImage:
+      "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=800&auto=format&fit=crop&q=80",
     genre: "Drift Phonk • Hardstyle • Heavy Bass • Metal Trap",
     bestFor: "Max Deadlifts, Squat Sets, Bench PRs & Powerlifting",
-    spotifyId: "37i9dQZF1DX76Wlfdnj7AP", // Spotify Official Beast Mode
+    spotifyId: "37i9dQZF1DX76Wlfdnj7AP",
     spotifyUrl: "https://open.spotify.com/playlist/37i9dQZF1DX76Wlfdnj7AP",
-    youtubeId: "Wp6F5w5hY9M", // High intensity workout mix
+    youtubeId: "Wp6F5w5hY9M",
     youtubeUrl: "https://music.youtube.com/search?q=beast+mode+gym+phonk+workout",
     highlights: ["Ghostface Playa", "Kordhell", "DVRST", "Mick Gordon", "Gravechill"],
   },
@@ -225,12 +241,14 @@ const PLAYLISTS: Playlist[] = [
     duration: "2h 55m",
     tracksCount: "54 Tracks",
     accent: "#00d4ff",
-    accentBg: "rgba(0, 212, 255, 0.12)",
+    accentBg: "rgba(0, 212, 255, 0.14)",
+    coverImage:
+      "https://images.unsplash.com/photo-1538805060514-97d9cc17730c?w=800&auto=format&fit=crop&q=80",
     genre: "Tech House • Progressive EDM • Melodic Drum & Bass",
     bestFor: "Treadmill Sprints, Assault Bike, Rowing, Speed Rope & HIIT",
-    spotifyId: "37i9dQZF1DXdURbg6aqWOh", // Spotify Official Workout Beats
+    spotifyId: "37i9dQZF1DXdURbg6aqWOh",
     spotifyUrl: "https://open.spotify.com/playlist/37i9dQZF1DXdURbg6aqWOh",
-    youtubeId: "vB6t5jYc1Lg", // EDM Workout Mix
+    youtubeId: "vB6t5jYc1Lg",
     youtubeUrl: "https://music.youtube.com/search?q=cardio+hiit+workout+edm+beats",
     highlights: ["Fisher", "Fred Again..", "Sub Focus", "John Summit", "Dimension"],
   },
@@ -244,12 +262,14 @@ const PLAYLISTS: Playlist[] = [
     duration: "3h 20m",
     tracksCount: "62 Tracks",
     accent: "#b3ff00",
-    accentBg: "rgba(179, 255, 0, 0.12)",
+    accentBg: "rgba(179, 255, 0, 0.14)",
+    coverImage:
+      "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=800&auto=format&fit=crop&q=80",
     genre: "Modern Trap • 90s Hardcore Rap • Grime • Gym Edits",
     bestFor: "Push / Pull / Legs, Dumbbell Isolations, Arm Day & Cable Dropsets",
-    spotifyId: "37i9dQZF1DWTl4ym9csNA2", // Spotify Power Workout
+    spotifyId: "37i9dQZF1DWTl4ym9csNA2",
     spotifyUrl: "https://open.spotify.com/playlist/37i9dQZF1DWTl4ym9csNA2",
-    youtubeId: "1-xGerv5FOk", // Hip Hop Gym mix
+    youtubeId: "1-xGerv5FOk",
     youtubeUrl: "https://music.youtube.com/search?q=hip+hop+gym+workout+motivation+trap",
     highlights: ["Travis Scott", "Eminem", "DMX", "Pop Smoke", "21 Savage"],
   },
@@ -263,12 +283,14 @@ const PLAYLISTS: Playlist[] = [
     duration: "2h 40m",
     tracksCount: "48 Tracks",
     accent: "#f59e0b",
-    accentBg: "rgba(245, 158, 11, 0.12)",
+    accentBg: "rgba(245, 158, 11, 0.14)",
+    coverImage:
+      "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&auto=format&fit=crop&q=80",
     genre: "Dhol Bass Remixes • South Cinema Hype Tracks • Street Metal",
     bestFor: "Peak Evening Rush Hours, Group Motivation & High Energy Lifting",
-    spotifyId: "37i9dQZF1DX89tqXwB6z5g", // Spotify Bollywood Workout
+    spotifyId: "37i9dQZF1DX89tqXwB6z5g",
     spotifyUrl: "https://open.spotify.com/playlist/37i9dQZF1DX89tqXwB6z5g",
-    youtubeId: "ZgI4i2xX76Y", // Desi Gym Mix
+    youtubeId: "ZgI4i2xX76Y",
     youtubeUrl: "https://music.youtube.com/search?q=desi+gym+workout+bass+remix",
     highlights: ["Anirudh", "Bloodywood", "DIVINE", "Nucleya", "KGF Anthem Remixed"],
   },
@@ -282,18 +304,125 @@ const PLAYLISTS: Playlist[] = [
     duration: "2h 15m",
     tracksCount: "45 Tracks",
     accent: "#a855f7",
-    accentBg: "rgba(168, 85, 247, 0.12)",
+    accentBg: "rgba(168, 85, 247, 0.14)",
+    coverImage:
+      "https://images.unsplash.com/photo-1518611012118-696072aa579a?w=800&auto=format&fit=crop&q=80",
     genre: "Chillhop • Ambient Soundscapes • Low-Fi Beats",
     bestFor: "Post-Workout Stretching, Foam Rolling, Sauna & Protein Hub Shakes",
-    spotifyId: "37i9dQZF1DX4WYpdgoIcn6", // Chill Lofi
+    spotifyId: "37i9dQZF1DX4WYpdgoIcn6",
     spotifyUrl: "https://open.spotify.com/playlist/37i9dQZF1DX4WYpdgoIcn6",
-    youtubeId: "jfKfPfyJRdk", // Lofi Girl Chill
+    youtubeId: "jfKfPfyJRdk",
     youtubeUrl: "https://music.youtube.com/search?q=lofi+workout+cool+down+stretch",
     highlights: ["Kupla", "Idealism", "Kavv", "Jinsang", "Nujabes Inspired"],
   },
 ];
 
-// ─── MAIN MUSIC HUB PAGE ──────────────────────────────────────────────────────
+const MARQUEE_TRACKS: MarqueeTrack[] = [
+  {
+    id: "t1",
+    title: "Sahara",
+    artist: "Hensonn",
+    bpm: "160 BPM",
+    coverImage:
+      "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=400&auto=format&fit=crop&q=80",
+    categoryTag: "Beast Mode Phonk",
+    accent: "#ff4800",
+    targetPlaylistId: "beast-mode-phonk",
+  },
+  {
+    id: "t2",
+    title: "Losing It",
+    artist: "FISHER",
+    bpm: "126 BPM",
+    coverImage:
+      "https://images.unsplash.com/photo-1538805060514-97d9cc17730c?w=400&auto=format&fit=crop&q=80",
+    categoryTag: "Cardio HIIT Rush",
+    accent: "#00d4ff",
+    targetPlaylistId: "cardio-hiit-rush",
+  },
+  {
+    id: "t3",
+    title: "Till I Collapse",
+    artist: "Eminem ft. Nate Dogg",
+    bpm: "171 BPM",
+    coverImage:
+      "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=400&auto=format&fit=crop&q=80",
+    categoryTag: "Gym Floor Classic",
+    accent: "#b3ff00",
+    targetPlaylistId: "gym-floor-hiphop",
+  },
+  {
+    id: "t4",
+    title: "Metamorphosis",
+    artist: "INTERWORLD",
+    bpm: "165 BPM",
+    coverImage:
+      "https://images.unsplash.com/photo-1574680096145-d05b474e2155?w=400&auto=format&fit=crop&q=80",
+    categoryTag: "Deadlift PR Vibe",
+    accent: "#ff4800",
+    targetPlaylistId: "beast-mode-phonk",
+  },
+  {
+    id: "t5",
+    title: "KGF Monster Bass Edit",
+    artist: "Ravi Basrur & Bass Boost",
+    bpm: "142 BPM",
+    coverImage:
+      "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=400&auto=format&fit=crop&q=80",
+    categoryTag: "South Bass Energy",
+    accent: "#f59e0b",
+    targetPlaylistId: "desi-south-bass",
+  },
+  {
+    id: "t6",
+    title: "Can't Be Touched",
+    artist: "Roy Jones Jr.",
+    bpm: "145 BPM",
+    coverImage:
+      "https://images.unsplash.com/photo-1549060279-7e168fcee0c2?w=400&auto=format&fit=crop&q=80",
+    categoryTag: "Fighter Stamina",
+    accent: "#00d4ff",
+    targetPlaylistId: "cardio-hiit-rush",
+  },
+  {
+    id: "t7",
+    title: "Bones",
+    artist: "Imagine Dragons",
+    bpm: "114 BPM",
+    coverImage:
+      "https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=400&auto=format&fit=crop&q=80",
+    categoryTag: "Heavy Barbell Reps",
+    accent: "#b3ff00",
+    targetPlaylistId: "gym-floor-hiphop",
+  },
+  {
+    id: "t8",
+    title: "Aarambh Hai Prachand",
+    artist: "Piyush Mishra (Bass Boost)",
+    bpm: "138 BPM",
+    coverImage:
+      "https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?w=400&auto=format&fit=crop&q=80",
+    categoryTag: "Indian Gym Anthem",
+    accent: "#f59e0b",
+    targetPlaylistId: "desi-south-bass",
+  },
+  {
+    id: "t9",
+    title: "Midnight City",
+    artist: "M83 (Workout Edit)",
+    bpm: "105 BPM",
+    coverImage:
+      "https://images.unsplash.com/photo-1518611012118-696072aa579a?w=400&auto=format&fit=crop&q=80",
+    categoryTag: "Recovery Stretch",
+    accent: "#a855f7",
+    targetPlaylistId: "cool-down-mobility",
+  },
+];
+
+// Duplicate tracks for infinite seamless horizontal scrolling loop
+const INFINITE_MARQUEE_TRACKS = [...MARQUEE_TRACKS, ...MARQUEE_TRACKS];
+
+// ─── MAIN COMPONENT ───────────────────────────────────────────────────────────
 function MusicHubContent() {
   const c = useC();
   const navigate = useNavigate();
@@ -301,6 +430,7 @@ function MusicHubContent() {
   const [activeCategory, setActiveCategory] = useState<PlaylistCategory>("all");
   const [selectedPlaylist, setSelectedPlaylist] = useState<Playlist>(PLAYLISTS[0]);
   const [copiedLink, setCopiedLink] = useState(false);
+  const [marqueePaused, setMarqueePaused] = useState(false);
 
   // Song request state
   const [reqBranch, setReqBranch] = useState<"kavoor" | "deralakatte">("kavoor");
@@ -324,6 +454,22 @@ function MusicHubContent() {
     }
   };
 
+  const handleMarqueeCardClick = (track: MarqueeTrack) => {
+    const matched = PLAYLISTS.find((p) => p.id === track.targetPlaylistId);
+    if (matched) {
+      setSelectedPlaylist(matched);
+      const stageEl = document.getElementById("active-stage");
+      stageEl?.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  const handleQuickRequestFromTrack = (track: MarqueeTrack) => {
+    setReqSong(track.title);
+    setReqArtist(track.artist);
+    const reqSection = document.getElementById("request-track-section");
+    reqSection?.scrollIntoView({ behavior: "smooth" });
+  };
+
   const handleSongRequestSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!reqSong.trim()) return;
@@ -337,7 +483,7 @@ function MusicHubContent() {
       reqArtist || "Not specified",
     )}%0A⏰ *Workout Slot:* ${encodeURIComponent(
       reqTime,
-    )}%0A%0A_Please play this track on the gym floor speakers during my workout session!_ 🔥`;
+    )}%0A%0A_Please queue this track on the gym floor audio system today!_ 🔥`;
 
     window.open(`https://wa.me/${branchPhone}?text=${text}`, "_blank", "noopener,noreferrer");
     setReqSent(true);
@@ -353,6 +499,30 @@ function MusicHubContent() {
         color: c.text,
       }}
     >
+      {/* Scoped CSS animations for horizontal marquee ticker & rotating vinyl disc */}
+      <style>{`
+        @keyframes marquee-scroll-slow {
+          0% {
+            transform: translate3d(0, 0, 0);
+          }
+          100% {
+            transform: translate3d(-50%, 0, 0);
+          }
+        }
+        @keyframes vinyl-spin {
+          from {
+            transform: rotate(0deg);
+          }
+          to {
+            transform: rotate(360deg);
+          }
+        }
+        @keyframes bar-bounce {
+          0%, 100% { height: 25%; }
+          50% { height: 100%; }
+        }
+      `}</style>
+
       {/* ─── STICKY HEADER ─────────────────────────────────────────────────── */}
       <header
         className="fixed top-0 left-0 right-0 z-50 transition-all border-b"
@@ -447,10 +617,10 @@ function MusicHubContent() {
       </header>
 
       {/* ─── HERO SECTION ──────────────────────────────────────────────────── */}
-      <section className="pt-28 pb-12 sm:pt-36 sm:pb-16 px-4 sm:px-6 relative overflow-hidden">
+      <section className="pt-28 pb-6 sm:pt-36 sm:pb-8 px-4 sm:px-6 relative overflow-hidden">
         {/* Ambient background glows */}
         <div
-          className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[350px] rounded-full pointer-events-none opacity-20"
+          className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[650px] h-[350px] rounded-full pointer-events-none opacity-20"
           style={{
             background: `radial-gradient(ellipse at center, ${c.orange} 0%, transparent 70%)`,
             filter: "blur(60px)",
@@ -474,30 +644,13 @@ function MusicHubContent() {
             className="text-4xl sm:text-6xl md:text-7xl font-black uppercase tracking-tight leading-[0.95] mb-5"
             style={{ fontFamily: "Barlow Condensed, sans-serif" }}
           >
-            Tuned for Maximum <span style={{ color: c.orange }}>PRs & Energy</span>
+            Tuned for Maximum <span style={{ color: c.orange }}>PRs &amp; Energy</span>
           </h1>
 
-          <p className="text-sm sm:text-base max-w-2xl mx-auto leading-relaxed mb-8 opacity-80">
-            Music is 80% of gym intensity. Fuel your workouts with official AB Fitness Hub
-            playlists, handcrafted for heavy lifting, high-cadence cardio intervals, and peak gym
-            floor hype.
+          <p className="text-sm sm:text-base max-w-2xl mx-auto leading-relaxed mb-6 opacity-80">
+            Music is 80% of workout motivation. Fuel your sets with high-BPM gym playlists curated
+            specifically for heavy lifting, high-cadence cardio intervals, and peak gym floor hype.
           </p>
-
-          {/* Sound bar visualizer animation */}
-          <div className="flex items-center justify-center gap-1.5 h-8 mb-8">
-            {[45, 80, 60, 100, 75, 90, 50, 100, 65, 85, 40, 95, 70, 85].map((h, i) => (
-              <span
-                key={i}
-                className="w-1 sm:w-1.5 rounded-full transition-all duration-300"
-                style={{
-                  height: `${h}%`,
-                  background: i % 3 === 0 ? c.orange : i % 3 === 1 ? c.cyan : c.lime,
-                  opacity: 0.85,
-                  animation: `pulse ${0.6 + (i % 4) * 0.25}s ease-in-out infinite alternate`,
-                }}
-              />
-            ))}
-          </div>
 
           {/* Platform Switcher (Spotify vs YouTube) */}
           <div
@@ -554,8 +707,184 @@ function MusicHubContent() {
         </div>
       </section>
 
+      {/* ─── SLOW-MOVING HORIZONTAL MUSIC IMAGES MARQUEE ───────────────────── */}
+      <section
+        className="w-full py-8 overflow-hidden relative border-y"
+        style={{ borderColor: c.border }}
+      >
+        {/* Section title & hover instruction */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 mb-3 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <TrendingUp size={15} className="text-orange-500" />
+            <span
+              className="text-xs font-black uppercase tracking-wider"
+              style={{ color: c.text, fontFamily: "Barlow Condensed, sans-serif" }}
+            >
+              Floor Anthems &amp; Track Highlights
+            </span>
+          </div>
+          <span className="text-[11px] font-semibold opacity-60 hidden sm:inline-block">
+            Hover to pause • Click image to load vibe
+          </span>
+        </div>
+
+        {/* Gradient edge masks for smooth infinite look */}
+        <div
+          className="absolute left-0 top-0 bottom-0 w-16 sm:w-28 z-20 pointer-events-none"
+          style={{
+            background: `linear-gradient(to right, ${c.bg}, transparent)`,
+          }}
+        />
+        <div
+          className="absolute right-0 top-0 bottom-0 w-16 sm:w-28 z-20 pointer-events-none"
+          style={{
+            background: `linear-gradient(to left, ${c.bg}, transparent)`,
+          }}
+        />
+
+        {/* The moving track row */}
+        <div
+          className="overflow-hidden w-full select-none cursor-pointer"
+          onMouseEnter={() => setMarqueePaused(true)}
+          onMouseLeave={() => setMarqueePaused(false)}
+        >
+          <div
+            className="flex gap-4 sm:gap-6"
+            style={{
+              animation: "marquee-scroll-slow 48s linear infinite",
+              animationPlayState: marqueePaused ? "paused" : "running",
+              width: "max-content",
+              willChange: "transform",
+            }}
+          >
+            {INFINITE_MARQUEE_TRACKS.map((track, idx) => (
+              <div
+                key={`${track.id}-${idx}`}
+                onClick={() => handleMarqueeCardClick(track)}
+                className="group relative w-64 sm:w-72 rounded-[22px] overflow-hidden border transition-all duration-300 hover:scale-[1.03] shrink-0"
+                style={{
+                  background: c.card,
+                  borderColor: `${track.accent}33`,
+                  boxShadow: c.isDark
+                    ? "0 8px 24px rgba(0,0,0,0.5)"
+                    : "0 4px 16px rgba(0,0,0,0.08)",
+                }}
+              >
+                {/* Image Container with Vinyl Peeking Effect */}
+                <div className="relative h-44 w-full overflow-hidden">
+                  <img
+                    src={track.coverImage}
+                    alt={track.title}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    loading="lazy"
+                  />
+                  {/* Dark gradient vignette */}
+                  <div
+                    className="absolute inset-0"
+                    style={{
+                      background:
+                        "linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.3) 50%, transparent 100%)",
+                    }}
+                  />
+
+                  {/* Category Pill Overlay */}
+                  <div className="absolute top-3 left-3 z-10">
+                    <span
+                      className="px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-wider text-white backdrop-blur-md"
+                      style={{
+                        background: "rgba(0,0,0,0.65)",
+                        border: `1px solid ${track.accent}55`,
+                      }}
+                    >
+                      {track.categoryTag}
+                    </span>
+                  </div>
+
+                  {/* BPM badge */}
+                  <div className="absolute top-3 right-3 z-10">
+                    <span
+                      className="px-2 py-0.5 rounded-full text-[10px] font-bold text-white backdrop-blur-md"
+                      style={{
+                        background: `${track.accent}cc`,
+                        boxShadow: `0 2px 8px ${track.accent}66`,
+                      }}
+                    >
+                      {track.bpm}
+                    </span>
+                  </div>
+
+                  {/* Interactive audio equalizers on hover */}
+                  <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between z-10">
+                    <div className="flex items-center gap-1 h-4">
+                      {[40, 90, 60, 100, 75].map((h, bIdx) => (
+                        <span
+                          key={bIdx}
+                          className="w-1 rounded-full bg-white transition-all"
+                          style={{
+                            height: `${h}%`,
+                            animation: `bar-bounce ${0.5 + bIdx * 0.15}s ease-in-out infinite alternate`,
+                          }}
+                        />
+                      ))}
+                    </div>
+
+                    <span
+                      className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md text-white transition-all group-hover:scale-105"
+                      style={{ background: "rgba(0,0,0,0.7)" }}
+                    >
+                      ▶ Load Vibe
+                    </span>
+                  </div>
+                </div>
+
+                {/* Card Info Details */}
+                <div className="p-4 flex flex-col justify-between">
+                  <div>
+                    <h4
+                      className="font-black text-base uppercase leading-tight line-clamp-1"
+                      style={{
+                        color: c.text,
+                        fontFamily: "Barlow Condensed, sans-serif",
+                      }}
+                    >
+                      {track.title}
+                    </h4>
+                    <p className="text-xs opacity-70 line-clamp-1 mt-0.5">{track.artist}</p>
+                  </div>
+
+                  {/* Quick Action Button */}
+                  <div
+                    className="mt-3 pt-2.5 border-t flex items-center justify-between text-[11px]"
+                    style={{ borderColor: c.border }}
+                  >
+                    <span
+                      className="font-bold flex items-center gap-1"
+                      style={{ color: track.accent }}
+                    >
+                      <Activity size={12} /> {track.bpm}
+                    </span>
+
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleQuickRequestFromTrack(track);
+                      }}
+                      className="font-semibold opacity-70 hover:opacity-100 transition-opacity hover:underline cursor-pointer"
+                      title="Request track on gym floor"
+                    >
+                      Request on Floor 💬
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ─── ACTIVE STAGE PLAYER ────────────────────────────────────────────── */}
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 mb-16">
+      <section id="active-stage" className="max-w-6xl mx-auto px-4 sm:px-6 my-16">
         <div
           className="rounded-[28px] border overflow-hidden p-6 sm:p-8 relative"
           style={{
@@ -623,7 +952,7 @@ function MusicHubContent() {
             </div>
           </div>
 
-          {/* Player Embed (Interactive) */}
+          {/* Player Embed & Interactive Vinyl Disc Display */}
           <div className="grid lg:grid-cols-12 gap-8 items-center">
             {/* Embed container (7 cols) */}
             <div
@@ -654,8 +983,61 @@ function MusicHubContent() {
               )}
             </div>
 
-            {/* Playlist Meta & Vibe specs (5 cols) */}
+            {/* Playlist Meta & Vinyl Disc Turntable (5 cols) */}
             <div className="lg:col-span-5 space-y-4 text-xs">
+              {/* Interactive Vinyl Spinning Card */}
+              <div
+                className="p-4 rounded-2xl border relative overflow-hidden flex items-center gap-4"
+                style={{
+                  background: c.surface,
+                  borderColor: selectedPlaylist.accent + "44",
+                }}
+              >
+                {/* Rotating Vinyl Record Graphic */}
+                <div className="relative w-20 h-20 shrink-0">
+                  <div
+                    className="w-full h-full rounded-full flex items-center justify-center shadow-lg border border-neutral-700"
+                    style={{
+                      background: "radial-gradient(circle, #222 0%, #0d0d0d 60%, #1a1a1a 100%)",
+                      animation: "vinyl-spin 8s linear infinite",
+                    }}
+                  >
+                    {/* Vinyl grooves rings */}
+                    <div className="w-14 h-14 rounded-full border border-neutral-700 flex items-center justify-center">
+                      <div className="w-9 h-9 rounded-full overflow-hidden border border-neutral-800">
+                        <img
+                          src={selectedPlaylist.coverImage}
+                          alt=""
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  {/* Center needle dot */}
+                  <div className="absolute inset-0 m-auto w-2 h-2 rounded-full bg-white shadow" />
+                </div>
+
+                <div className="flex-1">
+                  <div className="flex items-center gap-2 mb-1">
+                    <span
+                      className="w-2 h-2 rounded-full animate-pulse"
+                      style={{ background: selectedPlaylist.accent }}
+                    />
+                    <span className="text-[10px] font-black uppercase tracking-widest text-orange-400">
+                      Active Vinyl Deck
+                    </span>
+                  </div>
+                  <div
+                    className="font-black text-sm uppercase leading-tight line-clamp-1"
+                    style={{ fontFamily: "Barlow Condensed, sans-serif" }}
+                  >
+                    {selectedPlaylist.title}
+                  </div>
+                  <p className="text-[11px] opacity-70 mt-0.5">{selectedPlaylist.genre}</p>
+                </div>
+              </div>
+
+              {/* Target Training Zone */}
               <div
                 className="p-4 rounded-xl border"
                 style={{ background: c.surface, borderColor: c.border }}
@@ -725,7 +1107,7 @@ function MusicHubContent() {
         </div>
       </section>
 
-      {/* ─── PLAYLIST BROWSER & CARDS ──────────────────────────────────────── */}
+      {/* ─── PLAYLIST BROWSER & IMAGE CARDS ─────────────────────────────────── */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 mb-20">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
           <div>
@@ -733,7 +1115,7 @@ function MusicHubContent() {
               className="text-[11px] font-black uppercase tracking-widest"
               style={{ color: c.orange }}
             >
-              Explore All Vibes
+              Workout Sound Library
             </div>
             <h3
               className="text-2xl sm:text-3xl font-black uppercase tracking-tight"
@@ -769,7 +1151,7 @@ function MusicHubContent() {
           </div>
         </div>
 
-        {/* Playlist Grid */}
+        {/* Playlist Grid with Cover Images */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredPlaylists.map((pl) => {
             const isSelected = selectedPlaylist.id === pl.id;
@@ -777,100 +1159,131 @@ function MusicHubContent() {
             return (
               <div
                 key={pl.id}
-                onClick={() => setSelectedPlaylist(pl)}
-                className="rounded-[24px] p-6 border flex flex-col justify-between transition-all duration-300 hover:scale-[1.02] cursor-pointer relative overflow-hidden"
+                onClick={() => {
+                  setSelectedPlaylist(pl);
+                  const stageEl = document.getElementById("active-stage");
+                  stageEl?.scrollIntoView({ behavior: "smooth" });
+                }}
+                className="group rounded-[24px] overflow-hidden border flex flex-col justify-between transition-all duration-300 hover:scale-[1.02] cursor-pointer relative"
                 style={{
                   background: c.card,
                   borderColor: isSelected ? pl.accent : c.border,
                   boxShadow: isSelected
-                    ? `0 8px 30px ${pl.accent}25`
+                    ? `0 10px 30px ${pl.accent}25`
                     : c.isDark
                       ? "0 4px 20px rgba(0,0,0,0.4)"
                       : "0 2px 12px rgba(0,0,0,0.05)",
                 }}
               >
-                {/* Top strip highlight if selected */}
-                {isSelected && (
-                  <div
-                    className="absolute top-0 left-0 right-0 h-1.5"
-                    style={{ background: pl.accent }}
+                {/* Visual Cover Art Container */}
+                <div className="relative h-48 w-full overflow-hidden">
+                  <img
+                    src={pl.coverImage}
+                    alt={pl.title}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    loading="lazy"
                   />
-                )}
+                  <div
+                    className="absolute inset-0"
+                    style={{
+                      background:
+                        "linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.2) 60%, transparent 100%)",
+                    }}
+                  />
 
-                <div>
-                  <div className="flex items-start justify-between gap-2 mb-3">
+                  {/* Top Badges */}
+                  <div className="absolute top-3 left-3 right-3 flex items-center justify-between">
                     <span
-                      className="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider"
+                      className="px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-wider text-white backdrop-blur-md"
                       style={{
-                        background: pl.accentBg,
-                        color: pl.accent,
-                        border: `1px solid ${pl.accent}33`,
+                        background: `${pl.accent}dd`,
+                        boxShadow: `0 2px 8px ${pl.accent}55`,
                       }}
                     >
                       {pl.bpm}
                     </span>
 
-                    <span className="text-[10px] font-bold opacity-60 uppercase">
-                      {pl.duration} • {pl.tracksCount}
+                    <span
+                      className="px-2.5 py-1 rounded-full text-[10px] font-bold text-white backdrop-blur-md"
+                      style={{ background: "rgba(0,0,0,0.6)" }}
+                    >
+                      {pl.duration}
                     </span>
                   </div>
 
-                  <h4
-                    className="text-xl font-black uppercase leading-tight mb-1.5"
-                    style={{ fontFamily: "Barlow Condensed, sans-serif" }}
-                  >
-                    {pl.title}
-                  </h4>
-                  <p className="text-xs opacity-75 mb-4 line-clamp-2 leading-relaxed">
-                    {pl.tagline}
-                  </p>
+                  {/* Play on Stage Hint Overlay */}
+                  <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between">
+                    <span
+                      className="inline-flex items-center gap-1.5 text-[11px] font-bold px-3 py-1 rounded-full text-white backdrop-blur-md transition-all group-hover:scale-105"
+                      style={{
+                        background: isSelected ? pl.accent : "rgba(0,0,0,0.75)",
+                        border: "1px solid rgba(255,255,255,0.2)",
+                      }}
+                    >
+                      <Play size={12} fill="#fff" />{" "}
+                      {isSelected ? "Playing in Stage" : "Load in Stage"}
+                    </span>
 
-                  <div className="text-[11px] font-semibold opacity-60 mb-4">
-                    Genre: <span className="opacity-90">{pl.genre}</span>
+                    <span className="text-[10px] font-bold text-white opacity-80">
+                      {pl.tracksCount}
+                    </span>
                   </div>
                 </div>
 
-                {/* Bottom actions */}
-                <div
-                  className="pt-4 border-t flex items-center justify-between"
-                  style={{ borderColor: c.border }}
-                >
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setSelectedPlaylist(pl);
-                      window.scrollTo({ top: 400, behavior: "smooth" });
-                    }}
-                    className="inline-flex items-center gap-1.5 text-xs font-bold transition-transform hover:scale-105 cursor-pointer"
-                    style={{ color: pl.accent }}
-                  >
-                    <Play size={13} /> {isSelected ? "Playing in Stage" : "Load in Stage"}
-                  </button>
+                {/* Card Text Info */}
+                <div className="p-5 flex-1 flex flex-col justify-between">
+                  <div>
+                    <h4
+                      className="text-xl font-black uppercase leading-tight mb-1"
+                      style={{ fontFamily: "Barlow Condensed, sans-serif" }}
+                    >
+                      {pl.title}
+                    </h4>
+                    <p className="text-xs opacity-75 mb-3 line-clamp-2 leading-relaxed">
+                      {pl.tagline}
+                    </p>
 
-                  <div className="flex items-center gap-2">
-                    <a
-                      href={pl.spotifyUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                      onClick={(e) => e.stopPropagation()}
-                      className="w-7 h-7 rounded-full flex items-center justify-center transition-transform hover:scale-110"
-                      style={{ background: "#1DB954", color: "#000" }}
-                      title="Open in Spotify"
+                    <div className="text-[11px] font-semibold opacity-60 mb-3">
+                      Best For: <span className="opacity-90">{pl.bestFor}</span>
+                    </div>
+                  </div>
+
+                  {/* Bottom Streaming App Links */}
+                  <div
+                    className="pt-3 border-t flex items-center justify-between"
+                    style={{ borderColor: c.border }}
+                  >
+                    <span
+                      className="text-xs font-bold flex items-center gap-1.5 cursor-pointer"
+                      style={{ color: pl.accent }}
                     >
-                      <Disc3 size={14} />
-                    </a>
-                    <a
-                      href={pl.youtubeUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                      onClick={(e) => e.stopPropagation()}
-                      className="w-7 h-7 rounded-full flex items-center justify-center transition-transform hover:scale-110"
-                      style={{ background: "#FF0000", color: "#fff" }}
-                      title="Open in YouTube Music"
-                    >
-                      <Play size={12} />
-                    </a>
+                      <ListMusic size={14} /> Listen Now
+                    </span>
+
+                    <div className="flex items-center gap-2">
+                      <a
+                        href={pl.spotifyUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        onClick={(e) => e.stopPropagation()}
+                        className="w-7 h-7 rounded-full flex items-center justify-center transition-transform hover:scale-110"
+                        style={{ background: "#1DB954", color: "#000" }}
+                        title="Open in Spotify"
+                      >
+                        <Disc3 size={14} />
+                      </a>
+                      <a
+                        href={pl.youtubeUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        onClick={(e) => e.stopPropagation()}
+                        className="w-7 h-7 rounded-full flex items-center justify-center transition-transform hover:scale-110"
+                        style={{ background: "#FF0000", color: "#fff" }}
+                        title="Open in YouTube Music"
+                      >
+                        <Play size={12} />
+                      </a>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -880,7 +1293,7 @@ function MusicHubContent() {
       </section>
 
       {/* ─── REQUEST A TRACK FOR GYM FLOOR ─────────────────────────────────── */}
-      <section className="max-w-4xl mx-auto px-4 sm:px-6 mb-24">
+      <section id="request-track-section" className="max-w-4xl mx-auto px-4 sm:px-6 mb-24">
         <div
           className="rounded-[28px] p-6 sm:p-10 border relative overflow-hidden"
           style={{
