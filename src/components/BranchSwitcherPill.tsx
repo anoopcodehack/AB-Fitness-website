@@ -55,6 +55,17 @@ export default function BranchSwitcherPill({
       >
         Protein Hub 🥤
       </button>
+
+      <span className="opacity-30">|</span>
+
+      <button
+        onClick={() => navigate("/music-hub")}
+        className="px-2.5 py-1 rounded-full font-bold text-[11px] transition-colors hover:text-orange-400 cursor-pointer"
+        style={{ color: isDark ? "#ff4800" : "#d93c08" }}
+        title="Listen to AB Music Hub Playlists"
+      >
+        Music Hub 🎧
+      </button>
     </div>
   );
 }

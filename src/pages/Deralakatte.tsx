@@ -967,6 +967,18 @@ function Nav({ onOpenTrial }: { onOpenTrial?: () => void }) {
         <div className="hidden md:flex items-center gap-2.5">
           <GymStatusBadge branch="deralakatte" variant="pill" />
           <button
+            onClick={() => navigate("/music-hub")}
+            className="inline-flex items-center gap-1.5 text-[11px] font-bold px-3 py-1.5 rounded-full transition-all duration-200 hover:scale-105 cursor-pointer"
+            style={{
+              background: `${c.orange}14`,
+              color: c.orange,
+              border: `1px solid ${c.orange}33`,
+            }}
+            title="AB Music Hub Playlists"
+          >
+            Music Hub 🎧
+          </button>
+          <button
             onClick={() => navigate("/kavoor")}
             className="inline-flex items-center gap-1.5 text-[11px] font-bold px-3 py-1.5 rounded-full transition-all duration-200 hover:scale-105"
             style={{
@@ -1084,6 +1096,21 @@ function Nav({ onOpenTrial }: { onOpenTrial?: () => void }) {
             }}
           >
             <Icon name="cup" size={15} color="#f59e0b" /> Protein Hub
+          </button>
+          <button
+            onClick={() => {
+              setOpen(false);
+              navigate("/music-hub");
+            }}
+            className="font-semibold text-sm text-left px-4 py-2.5 rounded-full"
+            style={{
+              background: c.isDark ? "#1a0a00" : "#fff5f0",
+              color: c.orange,
+              border: `1.5px solid ${c.orange}55`,
+              cursor: "pointer",
+            }}
+          >
+            AB Music Hub 🎧
           </button>
           <a
             href="#contact"

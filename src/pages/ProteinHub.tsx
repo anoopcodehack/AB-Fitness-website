@@ -378,6 +378,17 @@ function Nav() {
         <div className="hidden md:flex items-center gap-4">
           <ThemeToggle />
           <button
+            onClick={() => navigate("/music-hub")}
+            className="inline-flex items-center gap-1.5 font-semibold text-[13px] px-4 py-2 rounded-full border transition-all duration-200 hover:scale-105 cursor-pointer"
+            style={{
+              borderColor: `${c.orange}44`,
+              background: `${c.orange}12`,
+              color: c.orange,
+            }}
+          >
+            Music Hub 🎧
+          </button>
+          <button
             onClick={() => navigate("/deralakatte")}
             className="inline-flex items-center gap-2 font-semibold text-[13px] px-5 py-2.5 rounded-full transition-all duration-200 hover:scale-105"
             style={{
@@ -421,6 +432,16 @@ function Nav() {
         style={{ background: c.mobileMenuBg, borderTop: `1px solid ${c.navBorder}` }}
       >
         <div className="px-6 py-4 flex flex-col gap-4">
+          <button
+            onClick={() => {
+              setOpen(false);
+              navigate("/music-hub");
+            }}
+            className="font-semibold text-sm text-left"
+            style={{ color: c.orange, background: "none", border: "none", cursor: "pointer" }}
+          >
+            AB Music Hub 🎧
+          </button>
           <button
             onClick={() => {
               setOpen(false);

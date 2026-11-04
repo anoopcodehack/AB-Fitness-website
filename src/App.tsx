@@ -1,5 +1,5 @@
 // AB Fitness - Multi-Branch Website
-// Routes: / → BranchSelector, /kavoor → Kavoor, /deralakatte → Deralakatte, /protein-hub → ProteinHub, * → NotFound
+// Routes: / → BranchSelector, /kavoor → Kavoor, /deralakatte → Deralakatte, /protein-hub → ProteinHub, /music-hub → MusicHub, * → NotFound
 
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { Analytics } from "@vercel/analytics/react";
@@ -7,6 +7,7 @@ import BranchSelector from "./pages/BranchSelector";
 import KavoorPage from "./pages/Kavoor";
 import DeralakattePage from "./pages/Deralakatte";
 import ProteinHubPage from "./pages/ProteinHub";
+import MusicHubPage from "./pages/MusicHub";
 import NotFound from "./pages/NotFound";
 
 function AppRoutes() {
@@ -19,6 +20,7 @@ function AppRoutes() {
         <Route path="/kavoor" element={<KavoorPage />} />
         <Route path="/deralakatte" element={<DeralakattePage />} />
         <Route path="/protein-hub" element={<ProteinHubPage />} />
+        <Route path="/music-hub" element={<MusicHubPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       {/* Vercel Web Analytics tracker */}

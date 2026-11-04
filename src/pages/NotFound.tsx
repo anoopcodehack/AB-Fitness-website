@@ -181,6 +181,14 @@ export default function NotFound() {
           >
             Protein Hub Cafe
           </button>
+          <span style={{ color: c.border }}>•</span>
+          <button
+            onClick={() => navigate("/music-hub")}
+            className="inline-flex items-center gap-2 text-xs font-bold transition-opacity hover:opacity-80 cursor-pointer"
+            style={{ color: c.orange }}
+          >
+            Music Hub 🎧
+          </button>
         </div>
       </div>
     </div>

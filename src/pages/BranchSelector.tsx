@@ -576,55 +576,118 @@ function BranchSelectorContent() {
                 />
               </div>
 
-              {/* Protein Hub Cafe Promo Banner */}
-              <div
-                className="mt-8 p-5 sm:p-6 rounded-[24px] border flex flex-col sm:flex-row items-center justify-between gap-4 transition-all hover:scale-[1.01]"
-                style={{
-                  background: isDark ? "rgba(18, 18, 18, 0.85)" : "rgba(255, 255, 255, 0.88)",
-                  borderColor: isDark ? "rgba(0, 212, 255, 0.25)" : "rgba(0, 122, 170, 0.2)",
-                  backdropFilter: "blur(12px)",
-                }}
-              >
-                <div className="flex items-center gap-3.5 text-center sm:text-left">
-                  <div
-                    className="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 text-2xl"
-                    style={{ background: "rgba(0, 212, 255, 0.12)" }}
-                  >
-                    🥤
-                  </div>
-                  <div>
-                    <div className="text-[10px] font-black uppercase tracking-widest text-cyan-400">
-                      Located inside Deralakatte Branch
-                    </div>
-                    <h3
-                      className="text-lg font-black uppercase"
-                      style={{ fontFamily: "Barlow Condensed, sans-serif", color: c.text }}
+              {/* Lifestyle & Hub Features (Protein Hub + Music Hub) */}
+              <div className="grid sm:grid-cols-2 gap-4 mt-8">
+                {/* Protein Hub Cafe */}
+                <div
+                  className="p-5 rounded-[24px] border flex flex-col justify-between gap-4 transition-all hover:scale-[1.01]"
+                  style={{
+                    background: isDark ? "rgba(18, 18, 18, 0.85)" : "rgba(255, 255, 255, 0.88)",
+                    borderColor: isDark ? "rgba(0, 212, 255, 0.25)" : "rgba(0, 122, 170, 0.2)",
+                    backdropFilter: "blur(12px)",
+                  }}
+                >
+                  <div className="flex items-start gap-3.5">
+                    <div
+                      className="w-11 h-11 rounded-2xl flex items-center justify-center shrink-0 text-xl"
+                      style={{ background: "rgba(0, 212, 255, 0.12)" }}
                     >
-                      AB Protein Hub &amp; Health Cafe
-                    </h3>
-                    <p className="text-xs opacity-70">
-                      Whey protein shakes, fresh cold-pressed juices &amp; post-workout recovery
-                      nutrition.
-                    </p>
+                      🥤
+                    </div>
+                    <div>
+                      <div className="text-[10px] font-black uppercase tracking-widest text-cyan-400">
+                        At Deralakatte Branch
+                      </div>
+                      <h3
+                        className="text-lg font-black uppercase"
+                        style={{ fontFamily: "Barlow Condensed, sans-serif", color: c.text }}
+                      >
+                        AB Protein Hub &amp; Cafe
+                      </h3>
+                      <p className="text-xs opacity-70 mt-0.5">
+                        Whey shakes, fresh cold-pressed juices &amp; post-workout recovery
+                        nutrition.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div
+                    className="flex items-center justify-between pt-2 border-t"
+                    style={{ borderColor: c.border }}
+                  >
+                    <span className="text-[11px] font-bold text-cyan-500">100% Pure Whey</span>
+                    <button
+                      onClick={() => navigate("/protein-hub")}
+                      className="px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider text-black transition-transform hover:scale-105 cursor-pointer"
+                      style={{ background: "#00d4ff" }}
+                    >
+                      View Menu
+                    </button>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-2.5 shrink-0">
-                  <button
-                    onClick={() => navigate("/protein-hub")}
-                    className="px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider text-black transition-transform hover:scale-105 cursor-pointer"
-                    style={{ background: "#00d4ff" }}
+                {/* Music Hub */}
+                <div
+                  className="p-5 rounded-[24px] border flex flex-col justify-between gap-4 transition-all hover:scale-[1.01]"
+                  style={{
+                    background: isDark ? "rgba(18, 18, 18, 0.85)" : "rgba(255, 255, 255, 0.88)",
+                    borderColor: isDark ? "rgba(255, 72, 0, 0.25)" : "rgba(217, 60, 8, 0.2)",
+                    backdropFilter: "blur(12px)",
+                  }}
+                >
+                  <div className="flex items-start gap-3.5">
+                    <div
+                      className="w-11 h-11 rounded-2xl flex items-center justify-center shrink-0 text-xl"
+                      style={{ background: "rgba(255, 72, 0, 0.12)" }}
+                    >
+                      🎧
+                    </div>
+                    <div>
+                      <div className="text-[10px] font-black uppercase tracking-widest text-orange-500">
+                        Official Sound System
+                      </div>
+                      <h3
+                        className="text-lg font-black uppercase"
+                        style={{ fontFamily: "Barlow Condensed, sans-serif", color: c.text }}
+                      >
+                        AB Music Hub &amp; Playlists
+                      </h3>
+                      <p className="text-xs opacity-70 mt-0.5">
+                        Curated Spotify &amp; YouTube workout mixes tuned for heavy PRs and cardio.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div
+                    className="flex items-center justify-between pt-2 border-t"
+                    style={{ borderColor: c.border }}
                   >
-                    View Menu
-                  </button>
-                  <button
-                    onClick={() => setTrialModalOpen(true)}
-                    className="px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider text-white transition-transform hover:scale-105 cursor-pointer flex items-center gap-1.5"
-                    style={{ background: "#ff4800" }}
-                  >
-                    <Dumbbell size={13} /> Free Trial Pass
-                  </button>
+                    <span className="text-[11px] font-bold text-orange-500">120 - 165 BPM</span>
+                    <button
+                      onClick={() => navigate("/music-hub")}
+                      className="px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider text-white transition-transform hover:scale-105 cursor-pointer"
+                      style={{ background: "#ff4800" }}
+                    >
+                      Listen Now
+                    </button>
+                  </div>
                 </div>
+              </div>
+
+              {/* Free Trial Pass Quick Banner */}
+              <div className="mt-4 text-center">
+                <button
+                  onClick={() => setTrialModalOpen(true)}
+                  className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider text-white transition-transform hover:scale-105 cursor-pointer border"
+                  style={{
+                    background: c.surface,
+                    borderColor: `${c.orange}55`,
+                    color: c.text,
+                  }}
+                >
+                  <Dumbbell size={13} className="text-orange-500" />
+                  <span>Not a member yet? Claim Free 1-Day Trial Pass</span>
+                </button>
               </div>
 
               <div className="text-center mt-12">
