@@ -1,4 +1,7 @@
-import { useState, useEffect, createContext, useContext } from "react";
+// AB Fitness - Official Gym Music Hub & Floor Audio System
+// Real AB Gym Sound System, Infinite Slow-Moving Marquee, Vinyl Turntable, Curated Playlists & Metronome Cadence
+
+import { useState, useEffect, useRef, createContext, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Sun,
@@ -6,10 +9,12 @@ import {
   Headphones,
   Radio,
   Play,
+  Pause,
   ExternalLink,
   Flame,
   Activity,
   Volume2,
+  VolumeX,
   Clock,
   Dumbbell,
   MapPin,
@@ -20,8 +25,25 @@ import {
   ListMusic,
   Heart,
   TrendingUp,
+  Menu,
+  X,
+  Sliders,
+  RotateCcw,
+  Music,
+  Zap,
 } from "lucide-react";
+
+// Local gym assets
 import logoImg from "@/imports/image-10.png";
+import gymImg1 from "@/imports/deralakatte-gallery-1.jpg";
+import gymImg2 from "@/imports/deralakatte-gallery-2.jpg";
+import gymImg3 from "@/imports/deralakatte-gallery-3.jpg";
+import gymImg4 from "@/imports/deralakatte-gallery-4.jpg";
+import gymImg5 from "@/imports/deralakatte-gallery-5.jpg";
+import gymImg6 from "@/imports/deralakatte-gallery-6.jpg";
+import gymImg7 from "@/imports/deralakatte-gallery-7.jpg";
+import gymFacilityPhoto from "@/imports/ABabt.jpeg";
+
 import GymStatusBadge from "@/components/GymStatusBadge";
 
 // ─── THEME SYSTEM ─────────────────────────────────────────────────────────────
@@ -119,7 +141,7 @@ function ThemeToggle() {
         position: "relative",
         display: "inline-flex",
         alignItems: "center",
-        width: 62,
+        width: 60,
         height: 30,
         borderRadius: 15,
         background: isDark ? "#1c1c1c" : "#e0e0e0",
@@ -160,7 +182,7 @@ function ThemeToggle() {
           height: 22,
           borderRadius: "50%",
           background: isDark ? "#ff4800" : "#d93c08",
-          left: isDark ? 34 : 4,
+          left: isDark ? 32 : 4,
           transition: "left 0.3s cubic-bezier(0.34,1.56,0.64,1), background 0.3s",
           display: "flex",
           alignItems: "center",
@@ -174,7 +196,7 @@ function ThemeToggle() {
   );
 }
 
-// ─── PLAYLIST & MARQUEE DATA ──────────────────────────────────────────────────
+// ─── PLAYLIST & MARQUEE DATA TYPES ────────────────────────────────────────────
 type PlaylistCategory = "all" | "beast" | "cardio" | "hiphop" | "desi" | "cooldown";
 
 type Playlist = {
@@ -183,6 +205,7 @@ type Playlist = {
   title: string;
   tagline: string;
   bpm: string;
+  bpmNum: number;
   intensity: "Maximum" | "High" | "Mid-High" | "Peak Bass" | "Low / Recovery";
   duration: string;
   tracksCount: string;
@@ -216,18 +239,18 @@ const PLAYLISTS: Playlist[] = [
     title: "Beast Mode & Heavy Phonk",
     tagline: "Uncompromising Bass & Aggressive Rhythms for Heavy PRs",
     bpm: "155 - 165 BPM",
+    bpmNum: 160,
     intensity: "Maximum",
     duration: "3h 45m",
     tracksCount: "68 Tracks",
     accent: "#ff4800",
     accentBg: "rgba(255, 72, 0, 0.14)",
-    coverImage:
-      "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=800&auto=format&fit=crop&q=80",
+    coverImage: gymImg2,
     genre: "Drift Phonk • Hardstyle • Heavy Bass • Metal Trap",
     bestFor: "Max Deadlifts, Squat Sets, Bench PRs & Powerlifting",
     spotifyId: "37i9dQZF1DX76Wlfdnj7AP",
     spotifyUrl: "https://open.spotify.com/playlist/37i9dQZF1DX76Wlfdnj7AP",
-    youtubeId: "Wp6F5w5hY9M",
+    youtubeId: "V1bFr2KGq1g",
     youtubeUrl: "https://music.youtube.com/search?q=beast+mode+gym+phonk+workout",
     highlights: ["Ghostface Playa", "Kordhell", "DVRST", "Mick Gordon", "Gravechill"],
   },
@@ -237,18 +260,18 @@ const PLAYLISTS: Playlist[] = [
     title: "Cardio Rush & HIIT Stamina",
     tagline: "High-Cadence Four-on-the-Floor Electronic Driving Pulse",
     bpm: "130 - 138 BPM",
+    bpmNum: 134,
     intensity: "High",
     duration: "2h 55m",
     tracksCount: "54 Tracks",
     accent: "#00d4ff",
     accentBg: "rgba(0, 212, 255, 0.14)",
-    coverImage:
-      "https://images.unsplash.com/photo-1538805060514-97d9cc17730c?w=800&auto=format&fit=crop&q=80",
+    coverImage: gymImg4,
     genre: "Tech House • Progressive EDM • Melodic Drum & Bass",
     bestFor: "Treadmill Sprints, Assault Bike, Rowing, Speed Rope & HIIT",
     spotifyId: "37i9dQZF1DXdURbg6aqWOh",
     spotifyUrl: "https://open.spotify.com/playlist/37i9dQZF1DXdURbg6aqWOh",
-    youtubeId: "vB6t5jYc1Lg",
+    youtubeId: "tAGnKpE4NCI",
     youtubeUrl: "https://music.youtube.com/search?q=cardio+hiit+workout+edm+beats",
     highlights: ["Fisher", "Fred Again..", "Sub Focus", "John Summit", "Dimension"],
   },
@@ -258,18 +281,18 @@ const PLAYLISTS: Playlist[] = [
     title: "AB Daily Floor Pump (Trap & Rap)",
     tagline: "Heavy 808s and Certified Anthems for Pure Hypertrophy",
     bpm: "120 - 128 BPM",
+    bpmNum: 125,
     intensity: "Mid-High",
     duration: "3h 20m",
     tracksCount: "62 Tracks",
     accent: "#b3ff00",
     accentBg: "rgba(179, 255, 0, 0.14)",
-    coverImage:
-      "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=800&auto=format&fit=crop&q=80",
+    coverImage: gymImg1,
     genre: "Modern Trap • 90s Hardcore Rap • Grime • Gym Edits",
     bestFor: "Push / Pull / Legs, Dumbbell Isolations, Arm Day & Cable Dropsets",
     spotifyId: "37i9dQZF1DWTl4ym9csNA2",
     spotifyUrl: "https://open.spotify.com/playlist/37i9dQZF1DWTl4ym9csNA2",
-    youtubeId: "1-xGerv5FOk",
+    youtubeId: "36YnV9STBqc",
     youtubeUrl: "https://music.youtube.com/search?q=hip+hop+gym+workout+motivation+trap",
     highlights: ["Travis Scott", "Eminem", "DMX", "Pop Smoke", "21 Savage"],
   },
@@ -279,18 +302,18 @@ const PLAYLISTS: Playlist[] = [
     title: "Desi & South Bass Floor Pump",
     tagline: "High-Energy Indian & Regional Heavy Bass Anthems",
     bpm: "135 - 150 BPM",
+    bpmNum: 140,
     intensity: "Peak Bass",
     duration: "2h 40m",
     tracksCount: "48 Tracks",
     accent: "#f59e0b",
     accentBg: "rgba(245, 158, 11, 0.14)",
-    coverImage:
-      "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&auto=format&fit=crop&q=80",
+    coverImage: gymImg6,
     genre: "Dhol Bass Remixes • South Cinema Hype Tracks • Street Metal",
     bestFor: "Peak Evening Rush Hours, Group Motivation & High Energy Lifting",
     spotifyId: "37i9dQZF1DX89tqXwB6z5g",
     spotifyUrl: "https://open.spotify.com/playlist/37i9dQZF1DX89tqXwB6z5g",
-    youtubeId: "ZgI4i2xX76Y",
+    youtubeId: "hT_nvWreIhg",
     youtubeUrl: "https://music.youtube.com/search?q=desi+gym+workout+bass+remix",
     highlights: ["Anirudh", "Bloodywood", "DIVINE", "Nucleya", "KGF Anthem Remixed"],
   },
@@ -300,18 +323,18 @@ const PLAYLISTS: Playlist[] = [
     title: "Cool-Down & Mobility Stretch",
     tagline: "Slow-Tempo Atmospheric Lo-Fi for Post-Workout Recovery",
     bpm: "82 - 96 BPM",
+    bpmNum: 88,
     intensity: "Low / Recovery",
     duration: "2h 15m",
     tracksCount: "45 Tracks",
     accent: "#a855f7",
     accentBg: "rgba(168, 85, 247, 0.14)",
-    coverImage:
-      "https://images.unsplash.com/photo-1518611012118-696072aa579a?w=800&auto=format&fit=crop&q=80",
+    coverImage: gymImg7,
     genre: "Chillhop • Ambient Soundscapes • Low-Fi Beats",
     bestFor: "Post-Workout Stretching, Foam Rolling, Sauna & Protein Hub Shakes",
     spotifyId: "37i9dQZF1DX4WYpdgoIcn6",
     spotifyUrl: "https://open.spotify.com/playlist/37i9dQZF1DX4WYpdgoIcn6",
-    youtubeId: "jfKfPfyJRdk",
+    youtubeId: "5qap5aO4i9A",
     youtubeUrl: "https://music.youtube.com/search?q=lofi+workout+cool+down+stretch",
     highlights: ["Kupla", "Idealism", "Kavv", "Jinsang", "Nujabes Inspired"],
   },
@@ -323,8 +346,7 @@ const MARQUEE_TRACKS: MarqueeTrack[] = [
     title: "Sahara",
     artist: "Hensonn",
     bpm: "160 BPM",
-    coverImage:
-      "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=400&auto=format&fit=crop&q=80",
+    coverImage: gymImg2,
     categoryTag: "Beast Mode Phonk",
     accent: "#ff4800",
     targetPlaylistId: "beast-mode-phonk",
@@ -334,8 +356,7 @@ const MARQUEE_TRACKS: MarqueeTrack[] = [
     title: "Losing It",
     artist: "FISHER",
     bpm: "126 BPM",
-    coverImage:
-      "https://images.unsplash.com/photo-1538805060514-97d9cc17730c?w=400&auto=format&fit=crop&q=80",
+    coverImage: gymImg4,
     categoryTag: "Cardio HIIT Rush",
     accent: "#00d4ff",
     targetPlaylistId: "cardio-hiit-rush",
@@ -345,8 +366,7 @@ const MARQUEE_TRACKS: MarqueeTrack[] = [
     title: "Till I Collapse",
     artist: "Eminem ft. Nate Dogg",
     bpm: "171 BPM",
-    coverImage:
-      "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=400&auto=format&fit=crop&q=80",
+    coverImage: gymImg1,
     categoryTag: "Gym Floor Classic",
     accent: "#b3ff00",
     targetPlaylistId: "gym-floor-hiphop",
@@ -356,8 +376,7 @@ const MARQUEE_TRACKS: MarqueeTrack[] = [
     title: "Metamorphosis",
     artist: "INTERWORLD",
     bpm: "165 BPM",
-    coverImage:
-      "https://images.unsplash.com/photo-1574680096145-d05b474e2155?w=400&auto=format&fit=crop&q=80",
+    coverImage: gymFacilityPhoto,
     categoryTag: "Deadlift PR Vibe",
     accent: "#ff4800",
     targetPlaylistId: "beast-mode-phonk",
@@ -367,8 +386,7 @@ const MARQUEE_TRACKS: MarqueeTrack[] = [
     title: "KGF Monster Bass Edit",
     artist: "Ravi Basrur & Bass Boost",
     bpm: "142 BPM",
-    coverImage:
-      "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=400&auto=format&fit=crop&q=80",
+    coverImage: gymImg6,
     categoryTag: "South Bass Energy",
     accent: "#f59e0b",
     targetPlaylistId: "desi-south-bass",
@@ -378,8 +396,7 @@ const MARQUEE_TRACKS: MarqueeTrack[] = [
     title: "Can't Be Touched",
     artist: "Roy Jones Jr.",
     bpm: "145 BPM",
-    coverImage:
-      "https://images.unsplash.com/photo-1549060279-7e168fcee0c2?w=400&auto=format&fit=crop&q=80",
+    coverImage: gymImg5,
     categoryTag: "Fighter Stamina",
     accent: "#00d4ff",
     targetPlaylistId: "cardio-hiit-rush",
@@ -389,8 +406,7 @@ const MARQUEE_TRACKS: MarqueeTrack[] = [
     title: "Bones",
     artist: "Imagine Dragons",
     bpm: "114 BPM",
-    coverImage:
-      "https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=400&auto=format&fit=crop&q=80",
+    coverImage: gymImg3,
     categoryTag: "Heavy Barbell Reps",
     accent: "#b3ff00",
     targetPlaylistId: "gym-floor-hiphop",
@@ -400,8 +416,7 @@ const MARQUEE_TRACKS: MarqueeTrack[] = [
     title: "Aarambh Hai Prachand",
     artist: "Piyush Mishra (Bass Boost)",
     bpm: "138 BPM",
-    coverImage:
-      "https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?w=400&auto=format&fit=crop&q=80",
+    coverImage: gymImg6,
     categoryTag: "Indian Gym Anthem",
     accent: "#f59e0b",
     targetPlaylistId: "desi-south-bass",
@@ -411,26 +426,40 @@ const MARQUEE_TRACKS: MarqueeTrack[] = [
     title: "Midnight City",
     artist: "M83 (Workout Edit)",
     bpm: "105 BPM",
-    coverImage:
-      "https://images.unsplash.com/photo-1518611012118-696072aa579a?w=400&auto=format&fit=crop&q=80",
+    coverImage: gymImg7,
     categoryTag: "Recovery Stretch",
     accent: "#a855f7",
     targetPlaylistId: "cool-down-mobility",
   },
 ];
 
-// Duplicate tracks for infinite seamless horizontal scrolling loop
+// Duplicate for seamless infinite marquee loop
 const INFINITE_MARQUEE_TRACKS = [...MARQUEE_TRACKS, ...MARQUEE_TRACKS];
 
-// ─── MAIN COMPONENT ───────────────────────────────────────────────────────────
+// ─── MAIN MUSIC HUB CONTENT ───────────────────────────────────────────────────
 function MusicHubContent() {
   const c = useC();
   const navigate = useNavigate();
+
+  // Navigation & UI States
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [platform, setPlatform] = useState<"spotify" | "youtube">("spotify");
   const [activeCategory, setActiveCategory] = useState<PlaylistCategory>("all");
   const [selectedPlaylist, setSelectedPlaylist] = useState<Playlist>(PLAYLISTS[0]);
   const [copiedLink, setCopiedLink] = useState(false);
+
+  // Marquee controls
   const [marqueePaused, setMarqueePaused] = useState(false);
+  const [marqueeDuration, setMarqueeDuration] = useState<number>(50); // seconds per full loop
+
+  // Vinyl Turntable Spin state
+  const [isVinylSpinning, setIsVinylSpinning] = useState(true);
+
+  // Metronome Cadence Sound Generator
+  const [metronomeActive, setMetronomeActive] = useState(false);
+  const [metronomeBpm, setMetronomeBpm] = useState<number>(PLAYLISTS[0].bpmNum);
+  const audioCtxRef = useRef<AudioContext | null>(null);
+  const metronomeTimerRef = useRef<number | null>(null);
 
   // Song request state
   const [reqBranch, setReqBranch] = useState<"kavoor" | "deralakatte">("kavoor");
@@ -442,6 +471,61 @@ function MusicHubContent() {
   useEffect(() => {
     document.title = "AB Music Hub | Gym Workout Playlists & Floor Beats • AB Fitness";
   }, []);
+
+  // Update metronome BPM when selected playlist changes
+  useEffect(() => {
+    setMetronomeBpm(selectedPlaylist.bpmNum);
+  }, [selectedPlaylist]);
+
+  // Metronome audio engine via Web Audio API (100% pure client-side, zero lag)
+  useEffect(() => {
+    if (!metronomeActive) {
+      if (metronomeTimerRef.current) {
+        window.clearInterval(metronomeTimerRef.current);
+        metronomeTimerRef.current = null;
+      }
+      return;
+    }
+
+    const intervalMs = (60 / metronomeBpm) * 1000;
+
+    const playClick = () => {
+      try {
+        if (!audioCtxRef.current) {
+          const AudioContextClass =
+            window.AudioContext ||
+            (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+          audioCtxRef.current = new AudioContextClass();
+        }
+        if (audioCtxRef.current.state === "suspended") {
+          audioCtxRef.current.resume();
+        }
+
+        const osc = audioCtxRef.current.createOscillator();
+        const gain = audioCtxRef.current.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtxRef.current.destination);
+
+        osc.type = "sine";
+        osc.frequency.setValueAtTime(880, audioCtxRef.current.currentTime);
+        gain.gain.setValueAtTime(0.2, audioCtxRef.current.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtxRef.current.currentTime + 0.06);
+
+        osc.start(audioCtxRef.current.currentTime);
+        osc.stop(audioCtxRef.current.currentTime + 0.06);
+      } catch {}
+    };
+
+    playClick();
+    metronomeTimerRef.current = window.setInterval(playClick, intervalMs);
+
+    return () => {
+      if (metronomeTimerRef.current) {
+        window.clearInterval(metronomeTimerRef.current);
+        metronomeTimerRef.current = null;
+      }
+    };
+  }, [metronomeActive, metronomeBpm]);
 
   const filteredPlaylists =
     activeCategory === "all" ? PLAYLISTS : PLAYLISTS.filter((p) => p.category === activeCategory);
@@ -499,7 +583,7 @@ function MusicHubContent() {
         color: c.text,
       }}
     >
-      {/* Scoped CSS animations for horizontal marquee ticker & rotating vinyl disc */}
+      {/* ─── SCOPED CSS KEYFRAMES ─────────────────────────────────────────── */}
       <style>{`
         @keyframes marquee-scroll-slow {
           0% {
@@ -521,9 +605,14 @@ function MusicHubContent() {
           0%, 100% { height: 25%; }
           50% { height: 100%; }
         }
+        @keyframes pulse-ring {
+          0% { transform: scale(0.95); opacity: 0.8; }
+          50% { transform: scale(1.08); opacity: 0.3; }
+          100% { transform: scale(0.95); opacity: 0.8; }
+        }
       `}</style>
 
-      {/* ─── STICKY HEADER ─────────────────────────────────────────────────── */}
+      {/* ─── STICKY HEADER & RESPONSIVE NAVIGATION ─────────────────────────── */}
       <header
         className="fixed top-0 left-0 right-0 z-50 transition-all border-b"
         style={{
@@ -533,6 +622,7 @@ function MusicHubContent() {
         }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 h-[66px] flex items-center justify-between">
+          {/* Logo & Branding */}
           <div className="flex items-center gap-3">
             <button
               onClick={() => navigate("/")}
@@ -561,8 +651,8 @@ function MusicHubContent() {
             </button>
           </div>
 
-          {/* Center branch quick links */}
-          <div className="hidden md:flex items-center gap-2 text-xs font-semibold">
+          {/* Desktop Center Branch Links & Anchors */}
+          <div className="hidden lg:flex items-center gap-2 text-xs font-semibold">
             <button
               onClick={() => navigate("/kavoor")}
               className="px-3 py-1.5 rounded-full border transition-colors hover:text-orange-400 cursor-pointer"
@@ -587,16 +677,39 @@ function MusicHubContent() {
             </button>
             <button
               onClick={() => navigate("/protein-hub")}
-              className="px-3 py-1.5 rounded-full border transition-colors hover:text-cyan-400 cursor-pointer text-cyan-500"
+              className="px-3 py-1.5 rounded-full border transition-colors hover:text-cyan-400 cursor-pointer"
               style={{
                 borderColor: "rgba(0, 212, 255, 0.3)",
                 background: "rgba(0, 212, 255, 0.08)",
+                color: c.cyan,
               }}
             >
-              Protein Hub Cafe 🥤
+              Protein Hub Cafe
             </button>
+            <a
+              href="#active-stage"
+              className="px-3 py-1.5 rounded-full border transition-colors hover:text-orange-400 cursor-pointer"
+              style={{ borderColor: c.border, background: c.surface, color: c.muted }}
+            >
+              Player Stage
+            </a>
+            <a
+              href="#workout-library"
+              className="px-3 py-1.5 rounded-full border transition-colors hover:text-orange-400 cursor-pointer"
+              style={{ borderColor: c.border, background: c.surface, color: c.muted }}
+            >
+              Playlists
+            </a>
+            <a
+              href="#request-track-section"
+              className="px-3 py-1.5 rounded-full border transition-colors hover:text-orange-400 cursor-pointer"
+              style={{ borderColor: c.border, background: c.surface, color: c.muted }}
+            >
+              Request Track
+            </a>
           </div>
 
+          {/* Right Action Tools */}
           <div className="flex items-center gap-2.5">
             <GymStatusBadge branch="kavoor" variant="compact" className="hidden sm:inline-flex" />
             <ThemeToggle />
@@ -612,6 +725,136 @@ function MusicHubContent() {
             >
               {copiedLink ? <Check size={16} /> : <Share2 size={16} />}
             </button>
+
+            {/* Mobile Hamburger Button */}
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="lg:hidden p-2 rounded-xl border transition-colors cursor-pointer"
+              style={{
+                borderColor: c.border,
+                background: c.surface,
+                color: c.text,
+              }}
+              aria-label="Toggle Navigation Menu"
+            >
+              {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile Navigation Drawer */}
+        <div
+          className={`lg:hidden overflow-hidden transition-all duration-300 ${
+            mobileMenuOpen ? "max-h-[28rem] border-t" : "max-h-0"
+          }`}
+          style={{
+            background: c.mobileMenuBg,
+            borderColor: c.border,
+          }}
+        >
+          <div className="px-5 py-4 space-y-3 text-sm">
+            <div
+              className="flex items-center justify-between pb-3 border-b text-xs font-semibold"
+              style={{ borderColor: c.border }}
+            >
+              <GymStatusBadge branch="kavoor" />
+              <button
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  navigate("/deralakatte");
+                }}
+                className="text-orange-500 font-bold flex items-center gap-1"
+              >
+                <MapPin size={13} /> Deralakatte
+              </button>
+            </div>
+
+            <div className="grid grid-cols-2 gap-2 pt-1">
+              <button
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  navigate("/kavoor");
+                }}
+                className="p-2.5 rounded-xl border text-left text-xs font-bold"
+                style={{ background: c.surface, borderColor: c.border }}
+              >
+                Kavoor Gym
+              </button>
+              <button
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  navigate("/deralakatte");
+                }}
+                className="p-2.5 rounded-xl border text-left text-xs font-bold"
+                style={{ background: c.surface, borderColor: c.border }}
+              >
+                Deralakatte Gym
+              </button>
+              <button
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  navigate("/protein-hub");
+                }}
+                className="p-2.5 rounded-xl border text-left text-xs font-bold text-cyan-400"
+                style={{
+                  background: "rgba(0, 212, 255, 0.08)",
+                  borderColor: "rgba(0, 212, 255, 0.25)",
+                }}
+              >
+                Protein Hub Cafe
+              </button>
+              <button
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  navigate("/");
+                }}
+                className="p-2.5 rounded-xl border text-left text-xs font-bold text-orange-400"
+                style={{
+                  background: "rgba(255, 72, 0, 0.08)",
+                  borderColor: "rgba(255, 72, 0, 0.25)",
+                }}
+              >
+                Branch Selector
+              </button>
+            </div>
+
+            <div className="flex flex-col gap-2 pt-2 border-t" style={{ borderColor: c.border }}>
+              <a
+                href="#active-stage"
+                onClick={() => setMobileMenuOpen(false)}
+                className="py-1 text-xs font-semibold opacity-80 hover:opacity-100"
+              >
+                ▶ Active Player Stage
+              </a>
+              <a
+                href="#floor-marquee"
+                onClick={() => setMobileMenuOpen(false)}
+                className="py-1 text-xs font-semibold opacity-80 hover:opacity-100"
+              >
+                ⚡ Floor Anthems Marquee
+              </a>
+              <a
+                href="#workout-library"
+                onClick={() => setMobileMenuOpen(false)}
+                className="py-1 text-xs font-semibold opacity-80 hover:opacity-100"
+              >
+                🎧 Curated Workout Playlists
+              </a>
+              <a
+                href="#cadence-trainer"
+                onClick={() => setMobileMenuOpen(false)}
+                className="py-1 text-xs font-semibold opacity-80 hover:opacity-100"
+              >
+                ⏱ AB BPM Cadence Metronome
+              </a>
+              <a
+                href="#request-track-section"
+                onClick={() => setMobileMenuOpen(false)}
+                className="py-1 text-xs font-semibold text-orange-500 font-bold"
+              >
+                💬 Request Song for Gym Floor
+              </a>
+            </div>
           </div>
         </div>
       </header>
@@ -687,17 +930,17 @@ function MusicHubContent() {
             </button>
           </div>
 
-          {/* Quick Info Pill */}
+          {/* Quick Info Badges */}
           <div
             className="flex flex-wrap items-center justify-center gap-4 text-xs font-semibold"
             style={{ color: c.muted }}
           >
             <span className="flex items-center gap-1.5">
-              <Headphones size={13} className="text-orange-500" /> Free to stream directly
+              <Headphones size={13} className="text-orange-500" /> Free streaming in browser
             </span>
             <span>•</span>
             <span className="flex items-center gap-1.5">
-              <Activity size={13} className="text-cyan-500" /> BPM matched for training zones
+              <Activity size={13} className="text-cyan-500" /> BPM matched training zones
             </span>
             <span>•</span>
             <span className="flex items-center gap-1.5">
@@ -709,23 +952,69 @@ function MusicHubContent() {
 
       {/* ─── SLOW-MOVING HORIZONTAL MUSIC IMAGES MARQUEE ───────────────────── */}
       <section
+        id="floor-marquee"
         className="w-full py-8 overflow-hidden relative border-y"
         style={{ borderColor: c.border }}
       >
-        {/* Section title & hover instruction */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 mb-3 flex items-center justify-between">
+        {/* Section title, hover instruction & pause/resume button */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 mb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div className="flex items-center gap-2">
-            <TrendingUp size={15} className="text-orange-500" />
-            <span
-              className="text-xs font-black uppercase tracking-wider"
+            <TrendingUp size={16} className="text-orange-500" />
+            <h3
+              className="text-sm font-black uppercase tracking-wider"
               style={{ color: c.text, fontFamily: "Barlow Condensed, sans-serif" }}
             >
               Floor Anthems &amp; Track Highlights
+            </h3>
+            <span
+              className="text-[10px] font-black uppercase px-2 py-0.5 rounded-full"
+              style={{ background: `${c.orange}22`, color: c.orange }}
+            >
+              Live Marquee
             </span>
           </div>
-          <span className="text-[11px] font-semibold opacity-60 hidden sm:inline-block">
-            Hover to pause • Click image to load vibe
-          </span>
+
+          <div className="flex items-center gap-3">
+            {/* Speed pills */}
+            <div
+              className="hidden md:flex items-center gap-1 p-1 rounded-lg border text-[10px] font-bold uppercase"
+              style={{ background: c.surface, borderColor: c.border }}
+            >
+              <span className="px-2 opacity-60">Speed:</span>
+              <button
+                onClick={() => setMarqueeDuration(70)}
+                className={`px-2 py-0.5 rounded ${marqueeDuration === 70 ? "bg-orange-600 text-white" : "opacity-75"}`}
+              >
+                Chill
+              </button>
+              <button
+                onClick={() => setMarqueeDuration(50)}
+                className={`px-2 py-0.5 rounded ${marqueeDuration === 50 ? "bg-orange-600 text-white" : "opacity-75"}`}
+              >
+                Normal
+              </button>
+              <button
+                onClick={() => setMarqueeDuration(30)}
+                className={`px-2 py-0.5 rounded ${marqueeDuration === 30 ? "bg-orange-600 text-white" : "opacity-75"}`}
+              >
+                Fast
+              </button>
+            </div>
+
+            {/* Direct Pause / Resume Toggle */}
+            <button
+              onClick={() => setMarqueePaused(!marqueePaused)}
+              className="px-3 py-1.5 rounded-full border text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer"
+              style={{
+                borderColor: marqueePaused ? c.orange : c.border,
+                background: marqueePaused ? `${c.orange}22` : c.surface,
+                color: marqueePaused ? c.orange : c.muted,
+              }}
+            >
+              {marqueePaused ? <Play size={12} /> : <Pause size={12} />}
+              <span>{marqueePaused ? "Resume Marquee" : "Pause Marquee"}</span>
+            </button>
+          </div>
         </div>
 
         {/* Gradient edge masks for smooth infinite look */}
@@ -742,16 +1031,18 @@ function MusicHubContent() {
           }}
         />
 
-        {/* The moving track row */}
+        {/* The moving track row (Hover/Touch pauses it, click loads track) */}
         <div
           className="overflow-hidden w-full select-none cursor-pointer"
           onMouseEnter={() => setMarqueePaused(true)}
           onMouseLeave={() => setMarqueePaused(false)}
+          onTouchStart={() => setMarqueePaused(true)}
+          onTouchEnd={() => setMarqueePaused(false)}
         >
           <div
             className="flex gap-4 sm:gap-6"
             style={{
-              animation: "marquee-scroll-slow 48s linear infinite",
+              animation: `marquee-scroll-slow ${marqueeDuration}s linear infinite`,
               animationPlayState: marqueePaused ? "paused" : "running",
               width: "max-content",
               willChange: "transform",
@@ -813,7 +1104,7 @@ function MusicHubContent() {
                     </span>
                   </div>
 
-                  {/* Interactive audio equalizers on hover */}
+                  {/* Interactive audio equalizers */}
                   <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between z-10">
                     <div className="flex items-center gap-1 h-4">
                       {[40, 90, 60, 100, 75].map((h, bIdx) => (
@@ -832,7 +1123,7 @@ function MusicHubContent() {
                       className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md text-white transition-all group-hover:scale-105"
                       style={{ background: "rgba(0,0,0,0.7)" }}
                     >
-                      ▶ Load Vibe
+                      Load in Stage
                     </span>
                   </div>
                 </div>
@@ -870,10 +1161,10 @@ function MusicHubContent() {
                         e.stopPropagation();
                         handleQuickRequestFromTrack(track);
                       }}
-                      className="font-semibold opacity-70 hover:opacity-100 transition-opacity hover:underline cursor-pointer"
+                      className="font-semibold opacity-70 hover:opacity-100 transition-opacity hover:underline cursor-pointer flex items-center gap-1"
                       title="Request track on gym floor"
                     >
-                      Request on Floor 💬
+                      <MessageCircle size={12} /> Request on Floor
                     </button>
                   </div>
                 </div>
@@ -901,7 +1192,7 @@ function MusicHubContent() {
             style={{ borderColor: c.border }}
           >
             <div>
-              <div className="flex items-center gap-2 mb-1.5">
+              <div className="flex items-center gap-2 mb-1.5 flex-wrap">
                 <span
                   className="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-widest"
                   style={{
@@ -910,7 +1201,7 @@ function MusicHubContent() {
                     border: `1px solid ${selectedPlaylist.accent}44`,
                   }}
                 >
-                  ⚡ NOW ACTIVE: {selectedPlaylist.bpm}
+                  NOW ACTIVE: {selectedPlaylist.bpm}
                 </span>
                 <span
                   className="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider"
@@ -987,11 +1278,13 @@ function MusicHubContent() {
             <div className="lg:col-span-5 space-y-4 text-xs">
               {/* Interactive Vinyl Spinning Card */}
               <div
-                className="p-4 rounded-2xl border relative overflow-hidden flex items-center gap-4"
+                className="p-4 rounded-2xl border relative overflow-hidden flex items-center gap-4 cursor-pointer"
+                onClick={() => setIsVinylSpinning(!isVinylSpinning)}
                 style={{
                   background: c.surface,
                   borderColor: selectedPlaylist.accent + "44",
                 }}
+                title="Click to toggle vinyl rotation"
               >
                 {/* Rotating Vinyl Record Graphic */}
                 <div className="relative w-20 h-20 shrink-0">
@@ -999,7 +1292,7 @@ function MusicHubContent() {
                     className="w-full h-full rounded-full flex items-center justify-center shadow-lg border border-neutral-700"
                     style={{
                       background: "radial-gradient(circle, #222 0%, #0d0d0d 60%, #1a1a1a 100%)",
-                      animation: "vinyl-spin 8s linear infinite",
+                      animation: isVinylSpinning ? "vinyl-spin 8s linear infinite" : "none",
                     }}
                   >
                     {/* Vinyl grooves rings */}
@@ -1018,14 +1311,17 @@ function MusicHubContent() {
                 </div>
 
                 <div className="flex-1">
-                  <div className="flex items-center gap-2 mb-1">
-                    <span
-                      className="w-2 h-2 rounded-full animate-pulse"
-                      style={{ background: selectedPlaylist.accent }}
-                    />
-                    <span className="text-[10px] font-black uppercase tracking-widest text-orange-400">
-                      Active Vinyl Deck
-                    </span>
+                  <div className="flex items-center justify-between mb-1">
+                    <div className="flex items-center gap-2">
+                      <span
+                        className={`w-2 h-2 rounded-full ${isVinylSpinning ? "animate-pulse" : ""}`}
+                        style={{ background: selectedPlaylist.accent }}
+                      />
+                      <span className="text-[10px] font-black uppercase tracking-widest text-orange-400">
+                        {isVinylSpinning ? "Vinyl Deck (33 RPM)" : "Vinyl Deck (Paused)"}
+                      </span>
+                    </div>
+                    <span className="text-[10px] opacity-60">Click disc</span>
                   </div>
                   <div
                     className="font-black text-sm uppercase leading-tight line-clamp-1"
@@ -1050,6 +1346,7 @@ function MusicHubContent() {
                 </div>
               </div>
 
+              {/* Stats Grid */}
               <div className="grid grid-cols-2 gap-3">
                 <div
                   className="p-3 rounded-xl border"
@@ -1072,6 +1369,7 @@ function MusicHubContent() {
                 </div>
               </div>
 
+              {/* Featured Artists */}
               <div
                 className="p-4 rounded-xl border"
                 style={{ background: c.surface, borderColor: c.border }}
@@ -1107,8 +1405,99 @@ function MusicHubContent() {
         </div>
       </section>
 
+      {/* ─── AB BPM CADENCE METRONOME (INTERACTIVE SOUND TOOL) ─────────────── */}
+      <section id="cadence-trainer" className="max-w-6xl mx-auto px-4 sm:px-6 mb-16">
+        <div
+          className="rounded-[26px] p-6 sm:p-8 border relative overflow-hidden"
+          style={{
+            background: c.card,
+            borderColor: `${c.cyan}33`,
+            boxShadow: c.isDark ? "0 10px 40px rgba(0,0,0,0.4)" : "0 4px 20px rgba(0,0,0,0.05)",
+          }}
+        >
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div className="max-w-lg">
+              <div
+                className="inline-flex items-center gap-1.5 text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full mb-2"
+                style={{
+                  background: `${c.cyan}18`,
+                  color: c.cyan,
+                  border: `1px solid ${c.cyan}35`,
+                }}
+              >
+                <Activity size={12} />
+                <span>Workout Tempo Assistant</span>
+              </div>
+              <h3
+                className="text-2xl sm:text-3xl font-black uppercase tracking-tight"
+                style={{ fontFamily: "Barlow Condensed, sans-serif" }}
+              >
+                AB Rep Cadence Metronome
+              </h3>
+              <p className="text-xs sm:text-sm opacity-70 mt-1">
+                Pace your reps for optimal muscular tension and power. Start the tempo clicker at
+                your training cadence right inside your browser!
+              </p>
+            </div>
+
+            {/* Metronome Controls */}
+            <div className="flex items-center gap-4 flex-wrap">
+              {/* Live BPM Dial */}
+              <div
+                className="flex items-center gap-3 px-4 py-3 rounded-2xl border"
+                style={{ background: c.surface, borderColor: c.border }}
+              >
+                <div className="text-center">
+                  <div
+                    className="text-2xl font-black leading-none"
+                    style={{ color: c.orange, fontFamily: "Barlow Condensed, sans-serif" }}
+                  >
+                    {metronomeBpm}
+                  </div>
+                  <div className="text-[9px] font-bold uppercase tracking-wider opacity-60">
+                    BPM TEMPO
+                  </div>
+                </div>
+
+                <div className="flex flex-col gap-1">
+                  <button
+                    onClick={() => setMetronomeBpm((prev) => Math.min(200, prev + 5))}
+                    className="px-2 py-0.5 rounded text-[11px] font-bold border transition-colors hover:bg-orange-500 hover:text-white"
+                    style={{ borderColor: c.border }}
+                  >
+                    +5
+                  </button>
+                  <button
+                    onClick={() => setMetronomeBpm((prev) => Math.max(60, prev - 5))}
+                    className="px-2 py-0.5 rounded text-[11px] font-bold border transition-colors hover:bg-orange-500 hover:text-white"
+                    style={{ borderColor: c.border }}
+                  >
+                    -5
+                  </button>
+                </div>
+              </div>
+
+              {/* Start / Stop Button */}
+              <button
+                onClick={() => setMetronomeActive(!metronomeActive)}
+                className="px-6 py-3.5 rounded-2xl text-xs sm:text-sm font-bold uppercase tracking-wider transition-all flex items-center gap-2 cursor-pointer text-white shadow-lg"
+                style={{
+                  background: metronomeActive ? "#ef4444" : c.orange,
+                  boxShadow: metronomeActive
+                    ? "0 4px 16px rgba(239, 68, 68, 0.4)"
+                    : "0 4px 16px rgba(255, 72, 0, 0.4)",
+                }}
+              >
+                {metronomeActive ? <VolumeX size={16} /> : <Volume2 size={16} />}
+                <span>{metronomeActive ? "Stop Audio Click" : "Start Cadence Click"}</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ─── PLAYLIST BROWSER & IMAGE CARDS ─────────────────────────────────── */}
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 mb-20">
+      <section id="workout-library" className="max-w-6xl mx-auto px-4 sm:px-6 mb-20">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
           <div>
             <div
@@ -1220,7 +1609,7 @@ function MusicHubContent() {
                         border: "1px solid rgba(255,255,255,0.2)",
                       }}
                     >
-                      <Play size={12} fill="#fff" />{" "}
+                      <Play size={12} fill="#fff" />
                       {isSelected ? "Playing in Stage" : "Load in Stage"}
                     </span>
 
@@ -1437,7 +1826,7 @@ function MusicHubContent() {
 
             {reqSent && (
               <div className="text-center text-xs font-semibold text-emerald-500 pt-1">
-                ✓ Track request ready on WhatsApp! Enjoy your training session.
+                Track request ready on WhatsApp! Enjoy your training session.
               </div>
             )}
           </form>
@@ -1503,8 +1892,8 @@ function MusicHubContent() {
           </div>
 
           <p className="text-[11px] opacity-50">
-            © 2026 AB Fitness Hub Mangalore. Workout audio playlists curated for member training
-            motivation.
+            &copy; 2026 AB Fitness Hub Mangalore. Workout audio playlists curated for member
+            training motivation.
           </p>
         </div>
       </footer>
